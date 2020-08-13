@@ -37,6 +37,23 @@ const UserSchema = new Schema({
         ref: "Project"
     }]
 });
+// use this function to hash the password before saving to database
+// this is mongoose midleware, once saved it will go to next
+// use old function wants to access to "this"
+UserSchema.pre('save',function(next){
+    // if password already modified
+    if(!this.isModified('password'))
+    return next();
+    bcrypt.hash(this.password, 10, (err, passwordHash) => {
+        if(err)
+        return next(err);
+        this.password = passwordHash;
+        next();
+    });
+});
+
+
+
 
 const User = mongoose.model("User", UserSchema);
 
