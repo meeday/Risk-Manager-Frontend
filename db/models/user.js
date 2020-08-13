@@ -52,7 +52,27 @@ UserSchema.pre('save',function(next){
     });
 });
 
-
+//creating a comparePassword method as parameters password which is we are getting from the user and (cb as done) 
+UserSchema.methods.comparePassword = function(password, cb){
+    //  compare password, we getting from user and the one saved in database
+        bcrypt.compare(password, this.password, (err, isMatch) => {
+           // if we got any error with comparing
+            if(err)
+            //call cb with error
+            return cb(err);
+            // if there are no errors with compareing
+            else{
+                // if passwords match?
+                if(!isMatch)
+                // is not match call done function isMatch will be false
+                return cb(null, isMatch);
+                // if there is a match call done and return user object
+                // "this" mean user 
+                return cb(null, this);
+            }
+        });
+    }
+    
 
 
 const User = mongoose.model("User", UserSchema);
