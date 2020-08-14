@@ -77,7 +77,6 @@ class SignUp extends Component {
       jobTitle,
     } = this.state;
     return (
-      <div className="wrapper">
         <div className="form-wrapper">
           <h2>Create Account</h2>
           <form onSubmit={this.handleSubmit} noValidate>
@@ -145,11 +144,11 @@ class SignUp extends Component {
             <div className="jobTitle">
             <label htmlFor="jobTitle">Select Job Title: </label>
                 <select name="jobTitle" id="jobTitle" onChange={this.handleChange}>
-                  <option value="Project Manager">Project Manager</option>
-                  <option value="Architect/Design">Architect/Design</option>
-                  <option value="Supervisor/Foreman">Supervisor/Foreman</option>
-                  <option value="Risk Advisory">Risk Advisory</option>
-                  <option value="Safety Manager">Safety Manager</option>
+                  <option value={jobTitle}>Project Manager</option>
+                  <option value={jobTitle}>Architect/Design</option>
+                  <option value={jobTitle}>Supervisor/Foreman</option>
+                  <option value={jobTitle}>Risk Advisory</option>
+                  <option value={jobTitle}>Safety Manager</option>
                 </select>
               </div>
             <div className="submit">
@@ -157,7 +156,6 @@ class SignUp extends Component {
             </div>
           </form>
         </div>
-      </div>
     );
   }
 }
