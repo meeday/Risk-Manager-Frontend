@@ -67,7 +67,7 @@ class SignUp extends Component {
     if (validateForm(this.state.errors)) {
       console.info("Valid Form");
     } else {
-      console.error("Invalid Form");
+      alert("Invalid Form");
     }
   };
 
