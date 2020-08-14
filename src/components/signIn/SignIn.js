@@ -15,7 +15,7 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      
         <div className="form-wrapper">
           <h2>Sign In</h2>
           <form onSubmit={this.handleSubmit} noValidate>
@@ -42,7 +42,6 @@ class SignIn extends Component {
             </div>
           </form>
         </div>
-      </div>
     );
   }
 }
