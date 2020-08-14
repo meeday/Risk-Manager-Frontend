@@ -1,52 +1,6 @@
-p, div {
-  font-family: Lato;
+h2 {
+  color: white;
 }
-
-.wrapper {
-  height: 97vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: url("./image/wp3756109.jpg");
-}
-
-.form-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 280px;
-  max-width: 80%;
-  min-width: 100px;
-  min-height: 400px;
-  padding: 20px 40px;
-  border-radius: 6px;
-  box-shadow: 0px 8px 36px #222;
-  background-color: #fefefe;
-}
-
-.form-wrapper > h2 {
-  display: flex;
-  justify-content: center;
-  font-family: "Segoe UI", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 2em;
-  font-weight: lighter;
-  margin-top: 0.25em;
-  color: #222;
-}
-
-form {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.info {
-  padding-bottom: 1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
 label {
   margin-bottom: 0.5em;
   color: #444;
@@ -67,18 +21,19 @@ input::placeholder {
 }
 
 button {
-  min-width: 100%;
+  justify-content: center;
+  width: auto;
   cursor: pointer;
-  margin-right: 0.25em;
-  margin-top: 0.5em;
-  padding: 	0.938em;
+  margin-right: 5px;
+  /* margin-top: 0.5em; */
+  /* padding: 	0.938em; */
   border: none;
   border-radius: 4px;
-  background-color: #22223B;
+  background-color: #2196f3;
   color: #fefefe;
 }
 button:hover {
-  background-color: #4A4E69;
+  background-color: #2196f3;
   color: #fefefe;
 }
 
@@ -104,8 +59,10 @@ input.error {
   width: 100%;
 }
 
-.submit {
-  width: 100%;
+.submit > button {
+  width: auto;
   display: flex;
   flex-wrap: wrap;
-}
+  background-color: #2196f3;
+  color: white;
+}  
