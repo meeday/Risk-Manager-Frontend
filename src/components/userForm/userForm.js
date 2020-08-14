@@ -38,7 +38,7 @@ class UserForm extends React.Component {
           <div className="toggle"
             style={{
               transform: `translate(${
-                this.state.form === "login" ? 0 : -200
+                this.state.form === "login" ? 0 : -300
               }px, 0px)`,
             }}
             className="button-div"
