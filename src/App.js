@@ -1,12 +1,10 @@
 import React from 'react';
-import SignUp from './components/signUp/signUp';
-import SignIn from './components/signIn/SignIn';
+import UserForm from "./components/userForm/userForm"
 
 function App() {
   return (
     <div className="App">
-      <SignUp />
-      <SignIn />
+     <UserForm />
     </div>
   );
 }
