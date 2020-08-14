@@ -25,6 +25,7 @@ class SignUp extends Component {
         lastName: "",
         email: "",
         password: "",
+        company: "",
       },
     };
   }
@@ -49,6 +50,10 @@ class SignUp extends Component {
           value.length <= 6
             ? "Password must be at least 6 characters long!"
             : "";
+        break;
+      case "company":
+        errors.company =
+        value.length <=0 ? "Input Can't be Empty!" : "";
         break;
       default:
         break;
@@ -139,7 +144,11 @@ class SignUp extends Component {
                 name="company"
                 value={company}
                 onChange={this.handleChange}
+                noValidate
               />
+              {errors.company.length > 0 && (
+                <span className="error">{errors.company}</span>
+              )}
             </div>
             <div className="jobTitle">
             <label htmlFor="jobTitle">Select Job Title: </label>
