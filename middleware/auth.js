@@ -3,6 +3,15 @@ const localStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt');
 const User = require('../db/models/user');
 
+// this is a custom function we use for to extract the jwt-token from the request
+const cookieExtrator = req => {
+    let token = null;
+    if(req && req.cookies){
+     token = req.cookies['access_token'];
+    }
+    return token;
+}
+
 // this is authorization.
 // once we  areauthenticated we setting up a cookie user's browser, this cookie will be our jwt-Token
 passport.use(new JwtStrategy({
