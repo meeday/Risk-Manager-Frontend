@@ -33,8 +33,9 @@ function getUserData(userid) {
 };
 
 // Change User Data
+// CAUTION NEED TO DISCUSS WHAT NEED TO CHANGE AND WHAT CANT
 function changeUserData(body) {
-    // Pass in parameter require userid
+    // pass in parameter should be userid
     const userid = body.userid;
     db.User.update({_id: userid}, {$set: {
         email: body.email,
@@ -52,6 +53,9 @@ function changeUserData(body) {
         })
 }
 
+
+// -------------TESTING PLATFORM-------------
+
 /*const testingPack = {
     email: "testing@yahoo.com",
     firstName: "testing",
@@ -63,10 +67,9 @@ function changeUserData(body) {
 
 const testingPack = {
     userid: "5f3790e7f9d4d567d4c08764",
-    email: "123@email.com",
+    email: "beta@email.com",
     firstName: "iam",
     lastName: "ironman",
-    password: "password",
     designDiscipline: null,
     authorisation: null,
     project: null
@@ -74,5 +77,7 @@ const testingPack = {
 
 const num = "5f3790e7f9d4d567d4c08764";
 
+//changeUserData(testingPack);
 getUserData(num);
-//addUserData(testingPack);
+
+// -------------TESTING PLATFORM END-------------
