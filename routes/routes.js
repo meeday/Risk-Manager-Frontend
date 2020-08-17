@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const db = require("../db/index");
 
+//------------- USER -------------
+
 // Add User
 function addUser(body) {
     console.log("function run");
@@ -17,7 +19,7 @@ function addUser(body) {
         });
 }
 
-// Get user info
+// Get single user info
 // CAUTION!!! Security issue (will send back password as well)
 function getUserData(userid) {
     db.User.find({ _id: userid })
@@ -52,6 +54,9 @@ function changeUserData(body) {
             console.log(err);
         })
 }
+
+// ------------- USER END -------------
+
 
 
 // -------------TESTING PLATFORM-------------
