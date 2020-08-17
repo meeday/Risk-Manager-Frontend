@@ -56,33 +56,3 @@ function changeUserData(body) {
 }
 
 // ------------- USER END -------------
-
-
-
-// -------------TESTING PLATFORM-------------
-
-/*const testingPack = {
-    email: "testing@yahoo.com",
-    firstName: "testing",
-    lastName: "123",
-    password: "testing"
-}*/
-
-//const testingPack = "5f3790e7f9d4d567d4c08764";
-
-const testingPack = {
-    userid: "5f3790e7f9d4d567d4c08764",
-    email: "beta@email.com",
-    firstName: "iam",
-    lastName: "ironman",
-    designDiscipline: null,
-    authorisation: null,
-    project: null
-}
-
-const num = "5f3790e7f9d4d567d4c08764";
-
-//changeUserData(testingPack);
-getUserData(num);
-
-// -------------TESTING PLATFORM END-------------
