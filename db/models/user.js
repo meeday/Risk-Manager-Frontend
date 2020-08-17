@@ -41,3 +41,9 @@ const UserSchema = new Schema({
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
+
+//testing platform
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3", {
+    useNewUrlParser: true,
+    useFindAndModify: false
+});
