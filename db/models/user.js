@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
+const Schema = require('mongoose').Schema
 const bcrypt = require('bcrypt');
 
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        match: [/.+@.+\..+/, "Please enter a validate email"]
+         match: [/.+@.+\..+/, "Please enter a validate email"]
     },
     firstName: {
         type: String,
@@ -26,11 +25,11 @@ const UserSchema = new Schema({
         validate: [({ length }) => length >= 6, "Password should be longer."]
     },
     designDiscipline: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Disciplines"
     },
     authorisation: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Authorisation"
     },
     project: [{
