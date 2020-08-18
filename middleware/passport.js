@@ -1,7 +1,8 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt');
+const JwtStrategy = require('passport-jwt').Strategy;
 const User = require('../db/models/user');
+require('dotenv').config();
 
 // this is a custom function we use for to extract the jwt-token from the request
 const cookieExtrator = req => {
@@ -17,7 +18,7 @@ const cookieExtrator = req => {
 passport.use(new JwtStrategy({
     jwtFromRequest: cookieExtrator,
     //this key will verify is this token is legilimen
-    secretOrKey: 'riskManager'
+    secretOrKey: process.env.SECRET_OR_KEY
 },(payload, done) => {
     User.findById({_id: payload.sub}, (err, user) => {
         // if there is any error
@@ -33,12 +34,13 @@ passport.use(new JwtStrategy({
     })
 }))
 
-//  authenticated local strategy using username and passwod
-passport.use(new localStrategy((username, password, done) =>{
-    User.findOne({username}, (err, user) => {
+//  authenticated local strategy using email and passwod
+passport.use(new localStrategy((email, password, done) =>{
+    console.log(email);
+    User.findOne({email}, (err, user) => {
         // something went wrong with database
         if(err)
-        return done(err);
+        return done(err + "user didn't found");
         // if no user exist
         if(!user)
         return done(null, false);
