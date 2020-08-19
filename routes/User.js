@@ -1,10 +1,10 @@
 const express = require("express");
 const passport = require("passport");
 const passportConfig = require("../middleware/passport");
-const userRouter = express.Router();
 const JWT = require("jsonwebtoken");
 const User = require("../db/models/user");
 require('dotenv').config();
+const userRouter = express.Router();
 
 // userID is primary key
 const signToken = (userID) => {
@@ -13,12 +13,12 @@ const signToken = (userID) => {
   return JWT.sign(
     {
       // who issue this JWT token
-      iss: process.env.JWT_ISSUE,
+      iss: "riskManager-Admin",
       // who is this token for
       sub: userID,
       // this risk manager must be same as secretOrKey
     },
-    process.env.SECRET_OR_KEY,
+    "riskManager",
     { expiresIn: "5h" }
   );
 };
@@ -71,6 +71,7 @@ userRouter.post(
   "/login",
   passport.authenticate("local", { session: false }),
   (req, res) => {
+      console.log(req);
     // if authenticated
     if (req.isAuthenticated()) {
       // get the user info from user object
@@ -100,5 +101,13 @@ userRouter.get(
     res.json({ user: { emai: "" }, success: true });
   }
 );
+
+    // this isAuthenticated function use to persist authentican
+    // once user login state in the react app will know user has been authenticated, but when user close the app, the state will be gone.
+    // using this endpoint, when user visit the website next time user will still stay login
+userRouter.get('/authenticated', passport.authenticate('jwt', {session : false}), (req, res) =>{
+    const {email} = req.user;
+    res.status(200).json({isAuthenticated : true, user: {email}});
+});
 
 module.exports = userRouter;
