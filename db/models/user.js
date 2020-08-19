@@ -41,9 +41,10 @@ const UserSchema = new mongoose.Schema({
 // this is mongoose midleware, once saved it will go to next
 // use old function wants to access to "this"
 UserSchema.pre('save',function(next){
-    // if password already modified
+    // if password already modified(already hashed)
     if(!this.isModified('password'))
     return next();
+    // saltOrRound set up for 10 as doc example this mean how strong we need this encryption 
     bcrypt.hash(this.password, 10, (err, passwordHash) => {
         if(err)
         return next(err);
@@ -52,7 +53,7 @@ UserSchema.pre('save',function(next){
     });
 });
 
-//creating a comparePassword method as parameters password which is we are getting from the user and (cb as done) 
+//creating a comparePassword method as parameters password which is we are getting from the user(not hashed) and (cb as done) 
 UserSchema.methods.comparePassword = function(password, cb){
     //  compare password, we getting from user and the one saved in database
         bcrypt.compare(password, this.password, (err, isMatch) => {
