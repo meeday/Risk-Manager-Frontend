@@ -7,7 +7,8 @@ require('dotenv').config();
 // this is a custom function we use for to extract the jwt-token from the request
 const cookieExtrator = req => {
     let token = null;
-    if(req && req.cookies){
+    // if req is there and req.cookie not empty
+    if(req && req.cookies){        
      token = req.cookies['access_token'];
     }
     return token;
@@ -16,9 +17,10 @@ const cookieExtrator = req => {
 // this is authorization.
 // once we  areauthenticated we setting up a cookie user's browser, this cookie will be our jwt-Token
 passport.use(new JwtStrategy({
+    // cookieExtractor is a custom function use for extract jwt token from request
     jwtFromRequest: cookieExtrator,
     //this key will verify is this token is legilimen
-    secretOrKey: process.env.SECRET_OR_KEY
+    secretOrKey: "riskManager"
 },(payload, done) => {
     User.findById({_id: payload.sub}, (err, user) => {
         // if there is any error
