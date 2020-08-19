@@ -30,30 +30,33 @@ export default class SignUp extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <h3>Sign Up</h3>
-        <div className="form-group">
-          <label>First name</label>
-          <input
-            required
-            name="firstName"
-            type="text"
-            className="form-control"
-            placeholder="First name"
-            value={this.state.firstName}
-            onChange={this.handleChange}
-          />
+        <div className="form-group row">
+          <div className="form-group col">
+            <label>First name</label>
+            <input
+              required
+              name="firstName"
+              type="text"
+              className="form-control"
+              placeholder="First name"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group col">
+            <label>Last name</label>
+            <input
+              required
+              type="text"
+              name="lastName"
+              className="form-control"
+              placeholder="Last name"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
+          </div>
         </div>
-        <div className="form-group">
-          <label>Last name</label>
-          <input
-            required
-            type="text"
-            name="lastName"
-            className="form-control"
-            placeholder="Last name"
-            value={this.state.lastName}
-            onChange={this.handleChange}
-          />
-        </div>
+
         <div className="form-group">
           <label>Email address</label>
           <input
@@ -79,29 +82,31 @@ export default class SignUp extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <div className="form-group">
-          <label>Company</label>
-          <input
-            required
-            type="company"
-            name="company"
-            className="form-control"
-            placeholder="Enter Company"
-            value={this.state.company}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Job Title</label>
-          <input
-            required
-            type="jobTitle"
-            name="jobTitle"
-            className="form-control"
-            placeholder="Enter Job Title"
-            value={this.state.jobTitle}
-            onChange={this.handleChange}
-          />
+        <div className="form-group row">
+          <div className="form-group col">
+            <label>Company</label>
+            <input
+              required
+              type="company"
+              name="company"
+              className="form-control"
+              placeholder="Enter Company"
+              value={this.state.company}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group col">
+            <label>Job Title</label>
+            <input
+              required
+              type="jobTitle"
+              name="jobTitle"
+              className="form-control"
+              placeholder="Enter Job Title"
+              value={this.state.jobTitle}
+              onChange={this.handleChange}
+            />
+          </div>
         </div>
 
         <button type="submit" className="btn btn-primary btn-block">
