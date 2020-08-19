@@ -1,11 +1,11 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
-const User = require('../db/models/user');
-require('dotenv').config();
+// require('dotenv').config();
+const User = require("../db/models/user");
 
 // this is a custom function we use for to extract the jwt-token from the request
-const cookieExtrator = req => {
+const cookieExtractor = req => {
     let token = null;
     // if req is there and req.cookie not empty
     if(req && req.cookies){        
@@ -18,9 +18,9 @@ const cookieExtrator = req => {
 // once we  areauthenticated we setting up a cookie user's browser, this cookie will be our jwt-Token
 passport.use(new JwtStrategy({
     // cookieExtractor is a custom function use for extract jwt token from request
-    jwtFromRequest: cookieExtrator,
+    jwtFromRequest: cookieExtractor,
     //this key will verify is this token is legilimen
-    secretOrKey: "riskManager"
+    secretOrKey: 'riskManager'
 },(payload, done) => {
     User.findById({_id: payload.sub}, (err, user) => {
         // if there is any error
