@@ -9,10 +9,11 @@ import "./userForm.css";
 function UserForm() {
   return (
     <Router>
-      <div className="container d-block p-1">
-        <div className="container d-block p-1">
-          <img className="rounded mx-auto d-block p-1" src={Logo} alt="logo" />
-          <div className="container d-block p-1">
+      <div className="d-block ">
+        <div className="text-center">
+          <img className="logo" src={Logo} alt="logo" />
+        </div>
+          <div className="d-block ">
             <div className="auth-wrapper">
               <div className="auth-inner">
                 <Switch>
@@ -23,7 +24,7 @@ function UserForm() {
               </div>
             </div>
           </div>
-        </div>
+        
       </div>
     </Router>
   );
