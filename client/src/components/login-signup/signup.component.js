@@ -87,7 +87,7 @@ export default class SignUp extends Component {
             <label>Company</label>
             <input
               required
-              type="company"
+              type="text"
               name="company"
               className="form-control"
               placeholder="Enter Company"
@@ -99,7 +99,7 @@ export default class SignUp extends Component {
             <label>Job Title</label>
             <input
               required
-              type="jobTitle"
+              type="text"
               name="jobTitle"
               className="form-control"
               placeholder="Enter Job Title"
