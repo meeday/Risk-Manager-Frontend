@@ -23,19 +23,19 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         required: "Password is Required",
         validate: [({ length }) => length >= 6, "Password should be longer."]
-    }
-    // designDiscipline: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Disciplines"
-    // },
-    // authorisation: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Authorisation"
-    // },
-    // project: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Project"
-    // }]
+    },
+    designDiscipline: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Disciplines"
+    },
+    authorisation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Authorisation"
+    },
+    project: [{
+        type: Schema.Types.ObjectId,
+        ref: "Project"
+    }]
 });
 // use this function to hash the password before saving to database
 // this is mongoose midleware, once saved it will go to next

@@ -4,7 +4,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 // require('dotenv').config();
 const User = require("../db/models/user");
 
-// this is a custom function we use for to extract the jwt-token from the request
+// this is a custom function we using for to extract the jwt-token from the request
 const cookieExtractor = req => {
     let token = null;
     // if req is there and req.cookie not empty
@@ -37,12 +37,12 @@ passport.use(new JwtStrategy({
 }))
 
 //  authenticated local strategy using email and passwod
-passport.use(new localStrategy((email, password, done) =>{
-    console.log(email);
-    User.findOne({email}, (err, user) => {
+passport.use(new localStrategy((username, password, done) =>{
+    console.log(username);
+    User.findOne({email: username}, (err, user) => {
         // something went wrong with database
         if(err)
-        return done(err + "user didn't found");
+        return done(err);
         // if no user exist
         if(!user)
         return done(null, false);

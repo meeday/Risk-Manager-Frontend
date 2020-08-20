@@ -38,7 +38,7 @@ userRouter.post("/register", (req, res) => {
       res
         .status(400)
         .json({
-          message: { msgBody: "Username is already taken", msgErr: true },
+          message: { msgBody: "Email is already taken", msgErr: true },
         });
     else {
       //If there is no User with that emai, save as a new user
@@ -68,8 +68,7 @@ userRouter.post("/register", (req, res) => {
 // use passport local middleware
 //server will not maintaining the session
 userRouter.post("/login", passport.authenticate("local", { session: false }), (req, res) => {
-      console.log(req);
-    // if authenticated
+      // if authenticated
     if (req.isAuthenticated()) {
       // get the user info from user object
       const { _id, email, firstName, lastName, password } = req.user;
@@ -99,12 +98,12 @@ userRouter.get(
   }
 );
 
-//     // this isAuthenticated function use to persist authentican
-//     // once user login state in the react app will know user has been authenticated, but when user close the app, the state will be gone.
-//     // using this endpoint, when user visit the website next time user will still stay login
-// userRouter.get('/authenticated', passport.authenticate('jwt', {session : false}), (req, res) =>{
-//     const {email} = req.user;
-//     res.status(200).json({isAuthenticated : true, user: {email}});
-// });
+    // this isAuthenticated function use to persist authentican
+    // once user login state in the react app will know user has been authenticated, but when user close the app, the state will be gone.
+    // using this endpoint, when user visit the website next time user will still stay login
+userRouter.get('/authenticated', passport.authenticate('jwt', {session : false}), (req, res) =>{
+    const {email} = req.user;
+    res.status(200).json({isAuthenticated : true, user: {email}});
+});
 
 module.exports = userRouter;
