@@ -13,12 +13,12 @@ const signToken = (userID) => {
   return JWT.sign(
     {
       // who issue this JWT token
-      iss: 'riskManager-Admin',
+      iss: process.env.JWT_ISSUE,
       // who is this token for
       sub: userID,
       // this risk manager must be same as secretOrKey
     },
-    'riskManager',
+    process.env.SECRET_OR_KEY,
     { expiresIn: '5hr' }
   );
 };
