@@ -1,58 +1,30 @@
-const router = require("express").Router();
-const db = require("../db/index");
+// File collect all routes and export in one folder
+const auth = require ("./models/authorisation")
+const disciplines = require ("./models/disciplines")
+const project = require ("./models/project")
+const risk = require ("./models/risk")
+const status = require ("./models/status")
+const user = require ("./models/user")
 
-//------------- USER -------------
 
-// Add User
-function addUser(body) {
-    console.log("function run");
-    console.log(body);
-    db.User.create(body)
-        .then(dbUser => {
-            console.log("success \n");
-            console.log(dbUser);
-            return dbUser;
-        })
-        .catch(err => {
-            console.log("failed");
-            return err;
-        });
-}
-
-// Get single user info
-// CAUTION!!! Security issue (will send back password as well)
-function getUserData(userid) {
-    db.User.find({ _id: userid })
-        .then(userData => {
-            console.log("\n Success \n -------DATA BELOW-------")
-            console.log(userData);
-            return userData;
-        })
-        .catch(err => {
-            console.log("failed");
-            return err;
-        });
+module.exports = {
+    // Create
+    createAuth: auth[0],
+    createDiscipline: disciplines[0],
+    createProject: project[0],
+    createRisk: risk[0],
+    createStatus: status[0],
+    createUser: user[0],
+    // Delete
+    deleteAuth: auth[1],
+    deleteDiscipline: disciplines[1],
+    deleteProject: project[1],
+    deleteStatus: status[1],
+    // Get
+    getRisk: risk[2],
+    getUserData: user[2],
+    // Change
+    changeRisk: risk[1],
+    changeUserData: user[1],
 };
 
-// Change User Data
-// CAUTION NEED TO DISCUSS WHAT NEED TO CHANGE AND WHAT CANT
-function changeUserData(body) {
-    // pass in parameter should be userid
-    const userid = body.userid;
-    db.User.update({_id: userid}, {$set: {
-        email: body.email,
-        firstName: body.firstName,
-        lastName: body.lastName,
-        password: body.password,
-        designDiscipline: body.designDiscipline,
-        authorisation: body.authorisation,
-        project: body.project
-    }})
-        .then(console.log("-------update success-------"))
-        .catch(err => {
-            console.log("---Update failed---");
-            console.log(err);
-        })
-}
-
-// ------------- USER END -------------
