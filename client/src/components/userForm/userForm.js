@@ -1,10 +1,10 @@
 import React from "react";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "../login-signup/login.component";
-import SignUp from "../login-signup/signup.component";
+import Login from "../login-signup/Login";
+import SignUp from "../login-signup/Signup";
 import Logo from "./image/Logo.png";
-import "./userForm.css";
+import "./styles/userForm.css";
 
 function UserForm() {
   return (

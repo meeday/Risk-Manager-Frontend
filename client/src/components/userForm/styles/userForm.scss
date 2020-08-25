@@ -1,15 +1,24 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 
+$grey-color : #bdbdbd;
+$blue-color : #2196f3;
+$font-weight: 400;
+$box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+$center: center;
+$font-family: "Fira Sans", sans-serif;
+$box-sizing: border-box;
+
 * {
-  box-sizing: border-box;
+  box-sizing: $box-sizing;
 }
 body {
   background: url("./image/construction-industry.jpg");
   min-height: 100vh;
   display: flex;
-  font-weight: 400;
-  font-family: "Fira Sans", sans-serif;
+  font-weight: $font-weight;
+  font-family: $font-family;
 }
+
 
 h1,
 h2,
@@ -20,7 +29,7 @@ h6,
 label,
 span {
   font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
+  font-family: $font-family;
 }
 
 body,
@@ -29,27 +38,25 @@ html,
 #root,
 .auth-wrapper {
   width: 100%;
-  /* height: 100%; */
 }
 
-.navbar-light {
-  background-color: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-}
+
+  
+
 
 .auth-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: $center;
   flex-direction: column;
   text-align: left;
 }
 
 .auth-inner {
-  justify-content: center;
+  justify-content: $center;
   width: 450px;
   margin: auto;
-  background: #bdbdbd;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  background: $grey-color;
+  box-shadow: $box-shadow;
   padding: 45px 55px 45px 55px;
   border-radius: 15px;
   transition: all 0.3s;
@@ -66,20 +73,20 @@ html,
   padding-bottom: 0;
 }
 .auth-wrapper .form-control:focus {
-  border-color: #2196f3;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  box-sizing: border-box;
+  border-color: $blue-color;
+  box-shadow: $box-shadow;
+  box-sizing: $box-sizing;
 }
 
 .auth-wrapper h3 {
-  text-align: center;
+  text-align: $center;
   margin: 0;
   line-height: 1;
   padding-bottom: 20px;
 }
 
 .custom-control-label {
-  font-weight: 400;
+  font-weight: $font-weight;
 }
 
 @media (max-width: 320px) {
