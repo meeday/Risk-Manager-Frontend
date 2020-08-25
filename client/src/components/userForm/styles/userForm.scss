@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+
+$grey-color : #bdbdbd;
+$blue-color : #2196f3;
+$font-weight: 400;
+$box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+$center: center;
+$font-family: "Fira Sans", sans-serif;
+$box-sizing: border-box;
+
+* {
+  box-sizing: $box-sizing;
+}
+body {
+  background: url("./image/construction-industry.jpg");
+  min-height: 100vh;
+  display: flex;
+  font-weight: $font-weight;
+  font-family: $font-family;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span {
+  font-weight: 500;
+  font-family: $font-family;
+}
+
+body,
+html,
+.App,
+#root,
+.auth-wrapper {
+  width: 100%;
+}
+
+
+  
+
+
+.auth-wrapper {
+  display: flex;
+  justify-content: $center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-inner {
+  justify-content: $center;
+  width: 450px;
+  margin: auto;
+  background: $grey-color;
+  box-shadow: $box-shadow;
+  padding: 45px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all 0.3s;
+}
+
+.form-group {
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.form-control {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.auth-wrapper .form-control:focus {
+  border-color: $blue-color;
+  box-shadow: $box-shadow;
+  box-sizing: $box-sizing;
+}
+
+.auth-wrapper h3 {
+  text-align: $center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.custom-control-label {
+  font-weight: $font-weight;
+}
+
+@media (max-width: 320px) {
+  .logo {
+    margin-left: 30px;
+  }
+}
