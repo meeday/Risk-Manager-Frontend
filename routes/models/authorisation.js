@@ -15,11 +15,13 @@ function createAuth(body) {
         });
 };
 
-function deleteAuth(classname) {
+function deleteAuth(authorisationStatus) {
     console.log("Deleting Auth Class...");
-    db.Authorisation.remove({ authorisationStatus: classname })
+    // ES6 Destructuring (if the key and value is the same just need to input once)
+    db.Authorisation.remove({ authorisationStatus })
         .then(console.log("Successfully Deleted"))
         .catch(err => {
+            console.log("failed deleting auth")
             console.log(err);
             return err;
         });
