@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const passport = require("passport");
 const passportConfig = require("../middleware/passport");
-// require('dotenv').config();
+require('dotenv').config();
 const JWT = require("jsonwebtoken");
 const User = require("../db/models/user");
 
@@ -94,7 +94,7 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.clearCookie("access_token");
-    res.json({ user: { emai: "" }, success: true });
+    res.json({ user: { email: "" }, success: true });
   }
 );
 
