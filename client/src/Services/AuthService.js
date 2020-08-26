@@ -18,8 +18,13 @@ export default {
             headers : {
                 'Content-Type' : 'application/json'
             }
-        }).then(res => res.json())
-        .then(data => data);
+        }).then(res => {
+            // passport send 401 status if user not authenticated
+                if(res.status !==401)
+                return res.json().then(data => data)
+                else
+                return{isAuthenticated : false, user: {email: ''}}
+            });
     },
 
     logout : () => {
