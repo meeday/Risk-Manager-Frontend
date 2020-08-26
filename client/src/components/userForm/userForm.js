@@ -18,8 +18,8 @@ function UserForm() {
               <div className="auth-inner">
                 <Switch>
                   <Route exact path="/" component={Login} />
-                  <Route exact path="/sign-in" component={Login} />
-                  <Route  exact path="/sign-up" component={SignUp} />
+                  <Route exact path="/login" component={Login} />
+                  <Route  exact path="/register" component={SignUp} />
                 </Switch>
               </div>
             </div>
