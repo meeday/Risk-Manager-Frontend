@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import AuthService from '../../Services/AuthService'
 import { useForm } from "react-hook-form";
+import Message from '../Message/Message';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export default function Register() {
-  const { register, handleSubmit } = useForm();
+export default function Register(props) {
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [message, setMessage] = useState(null);
+  let timerID = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerID);
+    };
+  }, []);
+
+  const onSubmit = (user,e) => {
+    AuthService.register(user).then((data) => {
+      const { message } = data;
+      setMessage(message);
+      e.target.reset();
+      console.log(data);
+      if (!message.msgError) {
+        timerID = setTimeout(() => {
+          props.history.push("/login");
+        }, 3000);
+      }
+    });
   };
 
   return (
+    <>
+    {message ? <Message message={message} /> : null}
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>Sign Up</h3>
       <div className="form-group row">
@@ -100,5 +123,6 @@ export default function Register() {
         </ul>
       </div>
     </form>
+     </>
   );
 }
