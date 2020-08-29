@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AuthService from "../../Services/AuthService";
 
 export default function Register() {
   const { register, handleSubmit } = useForm();
+  const [user, setUser] = useState();
 
   const onSubmit = (data) => {
-    console.log(data);
+    setUser(data)
   };
 
   return (
