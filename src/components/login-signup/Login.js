@@ -20,7 +20,7 @@ export default function Login(props) {
       if (isAuthenticated) {
         setUser(user);
         setIsAuthenticated(isAuthenticated);
-        //   this history object from react-router
+        // this history object from react-router
         // if authenticated navigate to Home
         props.history.push("/projects");
       } else {

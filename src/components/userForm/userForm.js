@@ -7,29 +7,20 @@ import Register from "../login-signup/Register";
 import Logo from "./image/Logo.png";
 import "./styles/userForm.css";
 
-function UserForm() {
+function UserForm(props) {
   return (
-    <Router>
-      <div className="d-block ">
-        <div className="text-center">
-          <img className="logo" src={Logo} alt="logo" />
-        </div>
-          <div className="d-block ">
-            <div className="auth-wrapper">
-              <div className="auth-inner">
-                <Switch>
-                  {/* call the right component according to the end-point */}
-                <Route exact path="/" component={Register} />
-                  <Route exact path="/logout" component={Logout} />
-                  <Route exact path="/login" component={Login} />
-                  <Route  exact path="/register" component={Register} />
-                </Switch>
-              </div>
-            </div>
-          </div>
-        
+    <div className="d-block ">
+      <div className="text-center">
+        <img className="logo" src={Logo} alt="logo" />
       </div>
-    </Router>
+      <div className="d-block ">
+        <div className="auth-wrapper">
+          <div className="auth-inner">
+            {props.children}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
