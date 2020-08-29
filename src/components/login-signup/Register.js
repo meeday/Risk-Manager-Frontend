@@ -2,10 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../../Services/AuthService";
 import { useForm } from "react-hook-form";
 import Message from "../Message/Message";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 // creating the Register component
-export default function Register(props) {
+export default function Register() {
+  // Using the useHistory hook for pushing a new route into the history
+  const history = useHistory();
+
   //  pull out the in-built methods, what we going to use from userForm hook
   const { register, handleSubmit, reset } = useForm();
 
@@ -33,8 +36,8 @@ export default function Register(props) {
       // if there is no message error, after 3sec redirect user to the login page
       if (!message.msgError) {
         timerID = setTimeout(() => {
-          // for redirecting to a new page, we can use histrory object from react router using props.
-          props.history.push("/login");
+          // Use useHistory hook from react-router-dom to redirect to /login route
+          history.push("/login");
         }, 3000);
       }
     });
