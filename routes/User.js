@@ -102,8 +102,8 @@ userRouter.get(
     // once user login state in the react app will know user has been authenticated, but when user close the app, the state will be gone.
     // using this endpoint, when user visit the website next time user will still stay login
 userRouter.get('/authenticated', passport.authenticate('jwt', {session : false}), (req, res) =>{
-    const {email} = req.user;
-    res.status(200).json({isAuthenticated : true, user: {email}});
+    const {firstName, lastName, email} = req.user;
+    res.status(200).json({isAuthenticated : true, user: {firstName, lastName, email}});
 });
 
 module.exports = userRouter;
