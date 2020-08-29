@@ -18,6 +18,7 @@ function UserForm() {
             <div className="auth-wrapper">
               <div className="auth-inner">
                 <Switch>
+                  {/* call the right component according to the end-point */}
                 <Route exact path="/" component={Register} />
                   <Route exact path="/logout" component={Logout} />
                   <Route exact path="/login" component={Login} />
