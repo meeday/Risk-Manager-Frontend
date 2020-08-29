@@ -10,7 +10,7 @@ function Home(props) {
       <li><a>Project 1</a></li>
       <li><a>Project 2</a></li>
       <li><a>Project 3</a></li>
-      <button><a href="/home/new-project">Create a new project</a></button>
+      <button><a href="/new-project">Create a new project</a></button>
     </div>
   );
 }
