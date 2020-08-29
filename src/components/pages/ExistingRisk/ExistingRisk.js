@@ -13,6 +13,14 @@ function ExistingRisk(props) {
       <p>Risk likelihood: score</p>
       <p>Risk severity: score</p>
 
+      <button>
+        <a>Edit risk</a>
+      </button>
+
+      <button>
+        <a>Delete risk</a>
+      </button>
+
       <div>
         <p>Map placeholder</p>
       </div>
