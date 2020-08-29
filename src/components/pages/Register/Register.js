@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../../Services/AuthService";
+import AuthService from "../../../Services/AuthService";
 import { useForm } from "react-hook-form";
-import Message from "../Message/Message";
+import Message from "../../Message/Message";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 // creating the Register component

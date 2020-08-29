@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import AuthService from "../../Services/AuthService";
-import Message from "../Message/Message";
-import { AuthContext } from "../../Context/AuthContext";
+import AuthService from "../../../Services/AuthService";
+import Message from "../../Message/Message";
+import { AuthContext } from "../../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
@@ -12,6 +12,7 @@ export default function Login() {
   // pull out hooks methods from useForm
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState(null);
+  
   // destructuring Authcontext, we can set new state
   const { setUser, setIsAuthenticated } = useContext(AuthContext);
 
