@@ -1,6 +1,6 @@
 import React from "react";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../image/Logo.png";
+import Logo from "../../static/images/Logo.png";
 import "./styles/userForm.css";
 
 function UserForm(props) {
