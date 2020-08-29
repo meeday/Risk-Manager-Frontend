@@ -3,7 +3,7 @@ import Logout from '../Logout/Logout';
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "../login-signup/Login";
-import Register from "../login-signup/Signup";
+import Register from "../login-signup/Register";
 import Logo from "./image/Logo.png";
 import "./styles/userForm.css";
 
