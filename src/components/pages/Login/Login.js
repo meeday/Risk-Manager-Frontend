@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
 import Message from "../../Message/Message";
-import { AuthContext } from "../../../Context/AuthContext";
+// import { AuthContext } from "../../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function Login() {
   const [message, setMessage] = useState(null);
   
   // destructuring Authcontext, we can set new state
-  const { setUser, setIsAuthenticated } = useContext(AuthContext);
+  // const { setUser, setIsAuthenticated } = useContext(AuthContext);
 
   const onSubmit = (user, e) => {
     e.preventDefault();
@@ -22,8 +22,10 @@ export default function Login() {
       const { isAuthenticated, user, message } = data;
       // if user authenticated update the state with user info
       if (isAuthenticated) {
-        setUser(user);
-        setIsAuthenticated(isAuthenticated);
+        // --- 
+        // setUser(user);
+        // setIsAuthenticated(isAuthenticated);
+
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/projects");
       } else {
