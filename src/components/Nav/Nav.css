@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-right {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 14px;
+}
+
+.nav-right a {
+  color: #2196f3;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.brand {
+  color: #2196f3;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+
+
+
