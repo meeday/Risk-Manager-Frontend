@@ -1,11 +1,7 @@
-import React from "react";
-import Logout from '../Logout/Logout';
-import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "../login-signup/Login";
-import Register from "../login-signup/Register";
-import Logo from "./image/Logo.png";
-import "./styles/userForm.css";
+import React from "../../../node_modules/react";
+import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import Logo from "../../static/images/Logo.png";
+import "./styles/UserForm.css";
 
 function UserForm(props) {
   return (

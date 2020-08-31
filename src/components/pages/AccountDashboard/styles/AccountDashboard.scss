@@ -11,11 +11,12 @@ $Fira: "Fira Sans", sans-serif;
 }
 
 body {
-  background: url("../../../static/images/construction-industry.jpg");
+  background: $light-grey;
   min-height: 100vh;
   display: flex;
   font-weight: $weight-normal;
   font-family: $Fira;
+  padding: 5%;
 }
 
 h1,
@@ -54,37 +55,4 @@ html,
   padding: 45px 55px 45px 55px;
   border-radius: 15px;
   transition: all 0.3s;
-}
-
-.form-group {
-  margin-top: 0;
-  margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.form-control {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.auth-wrapper .form-control:focus {
-  border-color: $baby-blue;
-  box-shadow: $dark-shadow;
-  box-sizing: border-box;
-}
-
-.auth-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-}
-
-.custom-control-label {
-  font-weight: $weight-normal;
-}
-
-@media (max-width: 320px) {
-  .logo {
-    margin-left: 30px;
-  }
 }
