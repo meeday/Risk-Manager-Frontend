@@ -4,6 +4,7 @@ import UserForm from "./components/userForm/userForm";
 import Logout from './components/Logout/Logout';
 import Login from "./components/login-signup/Login";
 import Register from "./components/login-signup/Register";
+import NewProjectAdd from "./components/newProjectAdd/index"
 
 function App(props) {
   return (
@@ -27,6 +28,12 @@ function App(props) {
           <Route exact path="/register" render={() => (
               <UserForm>
                 <Register />
+              </UserForm>
+            )}
+          />
+          <Route exact path="/newprojectadd" render={() => (
+              <UserForm>
+                <NewProjectAdd />
               </UserForm>
             )}
           />
