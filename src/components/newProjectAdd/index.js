@@ -5,7 +5,8 @@ export class newProjectAdd extends Component {
         super(props);
         this.state = {
             projectName: "",
-            coordinate: [latitude, longitude],
+            latitude: "", 
+            longitude: "",
             company: ""
         };
 
@@ -36,6 +37,7 @@ export class newProjectAdd extends Component {
                         <input 
                             className="form-control" 
                             id="projectName" 
+                            name="projectName"
                             placeholder="London Bridge Repair Project"
                             value={this.state.projectName}
                             onChange={this.handleInputChange}
@@ -46,7 +48,8 @@ export class newProjectAdd extends Component {
                             <label htmlFor="Latitude">Latitude</label>
                             <input 
                                 className="form-control" 
-                                id="latitude" 
+                                id="latitude"
+                                name="latitude" 
                                 placeholder="22.302711"
                                 value={this.state.latitude}
                                 onChange={this.handleInputChange}
@@ -56,7 +59,8 @@ export class newProjectAdd extends Component {
                             <label htmlFor="Longitude">Longitude</label>
                             <input 
                                 className="form-control" 
-                                id="longitude" 
+                                id="longitude"
+                                name="longitude"
                                 placeholder="114.177216"
                                 value={this.state.longitude}
                                 onChange={this.handleInputChange}
@@ -68,6 +72,7 @@ export class newProjectAdd extends Component {
                         <input 
                             className="form-control" 
                             id="company" 
+                            name="company"
                             placeholder="Company"
                             value={this.state.company}
                             onChange={this.handleInputChange}
