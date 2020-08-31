@@ -5,7 +5,7 @@ import "./styles/UserForm.css";
 
 function UserForm(props) {
   return (
-    <div className="d-block ">
+    <div className="d-block">
       <div className="text-center">
         <img className="logo" src={Logo} alt="logo" />
       </div>
