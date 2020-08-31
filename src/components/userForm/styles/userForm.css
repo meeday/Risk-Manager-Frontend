@@ -4,15 +4,7 @@
           box-sizing: border-box;
 }
 
-body {
-  background: url("../../../static/images/construction-industry.jpg");
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-weight: 400;
-  font-family: "Fira Sans", sans-serif;
-}
+
 
 h1,
 h2,
