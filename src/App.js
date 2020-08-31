@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import UserForm from "./components/UserForm/UserForm";
+import UserForm from "./components/userForm/UserForm";
 import Logout from './components/LogoutButton/LogoutButton';
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
@@ -11,6 +11,7 @@ import NewRisk from "./components/pages/NewRisk/NewRisk";
 import ExistingRisk from "./components/pages/ExistingRisk/ExistingRisk";
 import AccountDashboard from "./components/pages/AccountDashboard/AccountDashboard";
 import AuthProvider from './Context/AuthContext'
+import "./App.css";
 
 function App(props) {
   return (
