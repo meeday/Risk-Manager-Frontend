@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  padding: 5px;
-  margin: 5px;
-}
-
 @-webkit-keyframes popUp {
   from {
     -webkit-transform: scale(0);
@@ -64,10 +59,11 @@ body {
   animation: popUp ease-in-out 350ms;
   background: #bdbdbd;
   border-radius: 25px;
-  box-shadow: 0 0 0px 0px rgba(0, 0, 0, 0.17);
+  box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
   margin-top: 40px;
-  padding: 0px 0px 0px 0px;
-  position: relative;
+  margin-left: -250px;
+  left: 50%;
+  position: absolute;
   width: 500px;
 }
 .profile__account {
@@ -105,7 +101,7 @@ body {
 }
 .profile__key {
   font-family: "Fira Sans", sans-serif;
-  font-size: 13px;
+  font-size: 23px;
   font-weight: 400;
   text-align: center;
 }
@@ -183,9 +179,15 @@ body {
 
 @media only screen and (max-width: 320px) {
   .profile {
-    margin-top: 100px;
-    padding-right: 15px;
-    margin-right: 15px;
+    -webkit-animation: popUp ease-in-out 350ms;
+    animation: popUp ease-in-out 350ms;
+    background: #bdbdbd;
+    border-radius: 25px;
+    box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
+    margin-top: 40px;
+    margin-left: -150px;
+    left: 50%;
+    position: absolute;
     width: 300px;
   }
   .profile__picture {
@@ -195,12 +197,21 @@ body {
     height: 75px;
     position: absolute;
     left: 35%;
-    top: -70px;
+    top: -50px;
     width: 75px;
   }
 
+  .profile__icon {
+    -webkit-box-flex: 0;
+    flex: none;
+    font-size: 1.5em;
+    margin-left: 30px;
+    padding-top: 3px;
+  }
+
   .profile__username {
-    margin-right: 40px;
+    margin-right: 60px;
+    margin-top: 20px;
   }
 
   .profile__header,
@@ -218,8 +229,8 @@ body {
   }
 
   .profile__stat {
-    padding: 10px 2px 8px 2px;
+    /* padding: 0; */
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
   }
 }
