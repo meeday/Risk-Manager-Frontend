@@ -31,14 +31,14 @@ function App(props) {
             )}
           />
           {/* Wrap AuthProvider round restricted routes so they don't render if user isn't logged in */}
-          <AuthProvider>
+          {/* <AuthProvider> */}
             <Route exact path="/" component={Home} />
             <Route exact path="/new-project" component={NewProject} />
             <Route exact path="/project/:projectId" component={Project} />
             <Route exact path="/project/:projectId/new-risk" component={NewRisk} />
             <Route exact path="/project/:projectId/risk/:riskId" component={ExistingRisk} />
             <Route exact path="/account" component={AccountDashboard} />
-          </AuthProvider>
+          {/* </AuthProvider> */}
         </Switch>
       </Router>
     </div>
