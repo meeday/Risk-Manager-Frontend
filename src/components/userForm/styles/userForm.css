@@ -3,8 +3,16 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-
-
+/* 
+body {
+  background: url("../../../static/images/construction-industry.jpg");
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 400;
+  font-family: "Fira Sans", sans-serif;
+} */
 
 h1,
 h2,
@@ -18,8 +26,7 @@ span {
   font-family: "Fira Sans", sans-serif;
 }
 
-body,
-html,
+
 .App,
 #root,
 .auth-wrapper {
