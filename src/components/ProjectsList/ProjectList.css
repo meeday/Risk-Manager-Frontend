@@ -10,6 +10,14 @@
   position: absolute;
   width: 500px;
 }
+.add {
+  background-color: #2196f3;
+  color: white;
+  border-radius: 25px;
+  padding: 8px;
+  border: 1px solid white;
+  margin: 20px;
+}
 
 .list {
   margin-right: 40px;
