@@ -1,17 +1,28 @@
 import React from "react";
+import { Tabs, Tab } from "react-bootstrap";
+import AccountDashboard from "../AccountDashboard/AccountDashboard";
+import Comments from "../../Comments/Comment";
+import ProjectList from "../../ProjectsList/ProjectList";
+import Navbar from "../../Nav/Nav";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Home.css";
 
 function Home(props) {
   return (
-    <div>
-      <h1>Name of user</h1>
-      <h2>Summary - numbers of projects and risks</h2>
-      <li><a>Project 1</a></li>
-      <li><a>Project 2</a></li>
-      <li><a>Project 3</a></li>
-      <button><a href="/new-project">Create a new project</a></button>
-    </div>
+    <>
+      <Navbar />
+      <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+        <Tab eventKey="home" title="Dashboard">
+          <AccountDashboard />
+        </Tab>
+        <Tab eventKey="Projects" title="Projects">
+          <ProjectList />
+        </Tab>
+        <Tab eventKey="comments" title="Comments">
+          <Comments />
+        </Tab>
+      </Tabs>
+    </>
   );
 }
 
