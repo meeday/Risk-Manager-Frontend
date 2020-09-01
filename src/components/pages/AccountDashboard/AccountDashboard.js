@@ -4,7 +4,7 @@ import "./styles/AccountDashboard.css";
 
 function AccountDashboard() {
   return (
-      <div className="profile container-fluid">
+      <div className="profile">
         <div className="profile__picture">
           <img src={Avatar} alt="avatar" />
         </div>
