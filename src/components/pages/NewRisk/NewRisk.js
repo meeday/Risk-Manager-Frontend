@@ -41,13 +41,66 @@ function NewRisk(props) {
 
   // Declare hooks from useForm
   const { register, handleSubmit, newRisk } = useForm();
+
+  // Declare states
   const [message, setMessage] = useState(null);
+  const [likelihood, setLikelihood] = useState(1);
+  const [severity, setSeverity] = useState(1);
+  const [riskScore, setRiskScore] = useState(2);
+  const [riskLocation, setRiskLocation] = useState(mapCentre);
+
 
   // Event to handle user adding a new risk
   const onSubmit = (user, event) => {
     event.preventDefault();
 
     // Placeholder for submitting a new risk using an axios call to the backend application
+  };
+
+  
+  // Define events which change state
+  const handleLikelihoodChange = event => {
+    const selectedLikelihood = parseInt(event.target.value);
+    setLikelihood(selectedLikelihood);
+    setRiskScore(selectedLikelihood + severity);
+  };
+  
+  const handleSeverityChange = event => {
+    const selectedSeverity = parseInt(event.target.value);
+    setSeverity(selectedSeverity);
+    setRiskScore(selectedSeverity + likelihood);
+  };
+
+  const handleLocationChange = event => {
+    // Take the lat and long from Google Maps click event, rounded to 6.d.p
+    setRiskLocation({
+      lat: Math.floor(event.latLng.lat() * 1000000) / 1000000,
+      lng: Math.floor(event.latLng.lng() * 1000000) / 1000000,
+    });
+  }
+
+  const setColorClass = value => {
+    return `form-control ${colorClasses[value]}`;
+  };
+
+  const showResultingRisk = value => {
+    if (value <= 4) {
+      return `${riskScore} - Negligible low risk`
+    }
+    if (value <= 6) {
+      return `${riskScore} - Tolerable risk`
+    }
+    return `${riskScore} - Intolerable risk`
+  };
+
+  const riskColorClass = value => {
+    if (value <= 4) {
+      return "form-control very-low";
+    }
+    if (value <= 6) {
+      return "form-control medium";
+    }
+    return "form-control very-high";
   };
 
   return (
