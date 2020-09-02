@@ -12,7 +12,7 @@ export default function Navbar() {
         <img alt="logo" src={Image} height="60" />
       </Link>
       <div className="nav-right">
-        <Link to={"/Logout"}>Logout</Link>
+        <Link  to={"/login"}>Logout</Link>
       </div>
     </div>
   );
