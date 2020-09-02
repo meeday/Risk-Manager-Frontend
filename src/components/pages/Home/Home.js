@@ -12,6 +12,7 @@ function Home(props) {
     <>
       <Navbar />
       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+        {/* eventkey is acting as the event listener the tabs won't change unless eventkey is specified but it doesn't need to be the same as the title */}
         <Tab eventKey="home" title="Dashboard">
           <AccountDashboard />
         </Tab>
