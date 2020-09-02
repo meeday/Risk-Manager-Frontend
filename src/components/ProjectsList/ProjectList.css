@@ -95,12 +95,6 @@
 
 @media only screen and (max-width: 320px) {
   .projectList {
-    -webkit-animation: popUp ease-in-out 350ms;
-    animation: popUp ease-in-out 350ms;
-    background: #bdbdbd;
-    border-radius: 25px;
-    box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
-    margin-top: 40px;
     margin-left: -150px;
     left: 50%;
     position: absolute;
