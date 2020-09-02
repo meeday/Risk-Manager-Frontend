@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import CreateService from "../../../Services/CreateService";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewProject.css";
 import { useForm } from "react-hook-form";
@@ -9,13 +10,23 @@ function NewProject(props) {
   const history = useHistory();
 
   // Declare hooks from useForm
-  const { register, handleSubmit, newProject } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState(null);
 
   // Event to handle user adding a new project
   const onSubmit = (user, event) => {
     event.preventDefault();
-
+    console.log(user);
+    CreateService.CreateProject(user)
+      .then(res => {
+        if (res.data.status === "error") {
+            throw new Error(res.data.message);
+        }
+      })
+      .catch(err => {
+          return err;
+      })
+    event.target.reset();
     // Placeholder for submitting a new project using an axios call to the backend application
   };
 
@@ -36,7 +47,8 @@ function NewProject(props) {
               type="text"
               className="form-control"
               placeholder="Project Name"
-              ref={newProject}
+              ref={register}
+              required
             />
           </div>
 
@@ -48,7 +60,8 @@ function NewProject(props) {
               type="text"
               className="form-control"
               placeholder="Client"
-              ref={newProject}
+              ref={register}
+              required
             />
           </div>
         </div>
@@ -61,7 +74,8 @@ function NewProject(props) {
             type="text"
             className="form-control"
             placeholder="Description"
-            ref={newProject}
+            ref={register}
+            required
           />
         </div>
 
@@ -73,7 +87,7 @@ function NewProject(props) {
             type="text"
             className="form-control"
             placeholder="Location (select on map)"
-            ref={newProject}
+            ref={register}
           />
         </div>
 
@@ -86,7 +100,7 @@ function NewProject(props) {
               type="text"
               className="form-control"
               placeholder="Start date"
-              ref={newProject}
+              ref={register}
             />
           </div>
 
@@ -98,7 +112,7 @@ function NewProject(props) {
               type="text"
               className="form-control"
               placeholder="End date"
-              ref={newProject}
+              ref={register}
             />
           </div>
         </div>
@@ -111,7 +125,7 @@ function NewProject(props) {
             type="text"
             className="form-control"
             placeholder="Team members - select from a list"
-            ref={newProject}
+            ref={register}
           />
         </div>
 
