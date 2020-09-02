@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+
+.comments-title {
+  margin-top: 40px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  color: #2196f3;
+}
+
+.list-item {
+  text-align: center;
+  list-style: none;
+  margin-bottom: 150px;
+  /* this making sure that the comments are displayed as a table and specifies its content is a string */
+  display: table;
+  content: "";
+}
+
+.comment-text {
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  position: absolute;
+  border-radius: 25px;
+  background-color: #2196f3;
+  color: #ffffff;
+}
+
+.name-author {
+  margin: 15px 15px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.data-post {
+  font-weight: 400;
+  font-size: 10pt;
+  color: #ffffff;
+}
+
+.data-post::before {
+  /* adds a dot to seperate the author from the date posted */
+  content: " · ";
+  margin-left: 5px;
+  font-weight: 900;
+}
+
+.comments-div {
+  -webkit-animation: popUp ease-in-out 350ms;
+  animation: popUp ease-in-out 350ms;
+  background: #bdbdbd;
+  border-radius: 25px;
+  box-shadow: 0 0 40px 0px #0000002b;
+  margin-top: 40px;
+  margin-left: -250px;
+  left: 50%;
+  position: absolute;
+  width: 500px;
+}
+
+@media only screen and (max-width: 320px) {
+  .comments-div {
+    margin-left: -150px;
+    left: 50%;
+    position: absolute;
+    width: 300px;
+  }
+
+  .comment-text {
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+    position: absolute;
+    border-radius: 25px;
+    background-color: #2196f3;
+  }
+
+  .list-item {
+    text-align: center;
+    list-style: none;
+    margin-bottom: 200px;
+    display: table;
+    content: "";
+  }
+}

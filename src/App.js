@@ -11,6 +11,7 @@ import NewRisk from "./components/pages/NewRisk/NewRisk";
 import ExistingRisk from "./components/pages/ExistingRisk/ExistingRisk";
 import AccountDashboard from "./components/pages/AccountDashboard/AccountDashboard";
 import AuthProvider from './Context/AuthContext'
+import "./App.css";
 
 function App(props) {
   return (
