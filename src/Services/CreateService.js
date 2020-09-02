@@ -1,3 +1,5 @@
+// API calls for creating new stuff in DB
+
 export default {
     CreateProject : user =>{
         return fetch('/user/newproject', {
