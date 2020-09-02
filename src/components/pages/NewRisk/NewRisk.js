@@ -1,8 +1,12 @@
 import React, { useState, useContext } from "react";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { useForm } from "react-hook-form";
+import { GoogleMap, useLoadScript, Marker, InfoWindow, Autocomplete } from "@react-google-maps/api"
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewRisk.css";
-import { useForm } from "react-hook-form";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import dotenv from "dotenv";
+dotenv.config();
 
 function NewRisk(props) {
   // Using the useHistory hook for pushing a new route into the history
