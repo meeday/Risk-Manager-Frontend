@@ -1,65 +1,57 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
-/* ----- Coments ----- */
-.comments__title {
+
+.comments-title {
   margin-top: 40px;
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
   color: #2196f3;
-  font-family: "Fira Sans", sans-serif;
 }
 
-/* ----- Comment ----- */
-.list-comment__comment {
+.list-item {
   text-align: center;
   list-style: none;
-  margin-bottom: 150px; 
+  margin-bottom: 150px;
+  /* this making sure that the comments are displayed as a table and specifies its content is a string */
   display: table;
   content: "";
-  font-family: "Fira Sans", sans-serif;
-
 }
 
-/* ----- Comment text ----- */
-.comment__comment-text {
+.comment-text {
   width: 400px;
   left: 50%;
   margin-left: -200px;
   position: absolute;
-  border-radius: 25px; 
+  border-radius: 25px;
   background-color: #2196f3;
-  color: white;
-  font-family: "Fira Sans", sans-serif;
+  color: #ffffff;
 }
 
-.comment-text__name-author {
+.name-author {
   margin: 15px 15px;
-   font-weight: 500; 
-   color: white;
-   font-family: "Fira Sans", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
 }
 
-.name-author__data-post {
+.data-post {
   font-weight: 400;
   font-size: 10pt;
-  color: white;
-  font-family: "Fira Sans", sans-serif;
+  color: #ffffff;
 }
 
-.name-author__data-post::before {
+.data-post::before {
+  /* adds a dot to seperate the author from the date posted */
   content: " · ";
   margin-left: 5px;
   font-weight: 900;
-  font-family: "Fira Sans", sans-serif;
 }
-
 
 .comments-div {
   -webkit-animation: popUp ease-in-out 350ms;
   animation: popUp ease-in-out 350ms;
   background: #bdbdbd;
   border-radius: 25px;
-  box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
+  box-shadow: 0 0 40px 0px #0000002b;
   margin-top: 40px;
   margin-left: -250px;
   left: 50%;
@@ -68,36 +60,27 @@
 }
 
 @media only screen and (max-width: 320px) {
-
   .comments-div {
-    -webkit-animation: popUp ease-in-out 350ms;
-    animation: popUp ease-in-out 350ms;
-    background: #bdbdbd;
-    border-radius: 25px;
-    box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
-    margin-top: 40px;
     margin-left: -150px;
     left: 50%;
     position: absolute;
     width: 300px;
   }
 
-  .comment__comment-text {
+  .comment-text {
     width: 200px;
     left: 50%;
     margin-left: -100px;
     position: absolute;
-    border-radius: 25px; 
+    border-radius: 25px;
     background-color: #2196f3;
   }
 
-  .list-comment__comment {
+  .list-item {
     text-align: center;
     list-style: none;
-    margin-bottom: 200px; 
+    margin-bottom: 200px;
     display: table;
     content: "";
   }
-
-
 }
