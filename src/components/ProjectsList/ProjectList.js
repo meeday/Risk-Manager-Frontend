@@ -1,7 +1,6 @@
 import React from "react";
 import { List, LinkItem } from "../List/List";
 import "./ProjectList.css";
-import UserForm from "../userForm/UserForm";
 const projects = [
   "project 1",
   "project 2",
@@ -14,8 +13,8 @@ export default function ProjectList() {
     <div className="projectList">
       <List className="list">
         {projects.map((project) => (
-          <LinkItem className="listItem btn btn-primary" href={project} key={project}>
-            {project}
+          <LinkItem className="listItem btn btn-primary" href={`project-${project.id}`} key={project._id}>
+           {project.title}
           </LinkItem>
         ))}
       </List>
