@@ -1,6 +1,6 @@
 import React from "react";
 import { List, LinkItem } from "../List/List";
-import "./ProjectList.css";
+import "./ProjectsList.css";
 const projects = [ {_id: "234iuhowef9803rh", title: "Big Ben" }, {_id: "584pduablf9571qt", title: "London Bridge" } ]
 export default function ProjectList() {
   return (

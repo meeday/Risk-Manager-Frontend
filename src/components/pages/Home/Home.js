@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import AccountDashboard from "../AccountDashboard/AccountDashboard";
 import Comments from "../../Comments/Comment";
-import ProjectList from "../../ProjectsList/ProjectList";
+import ProjectsList from "../../ProjectsList/ProjectsList";
 import Navbar from "../../Nav/Nav";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Home.css";
@@ -17,7 +17,7 @@ function Home(props) {
           <AccountDashboard />
         </Tab>
         <Tab eventKey="Projects" title="Projects">
-          <ProjectList />
+          <ProjectsList />
         </Tab>
         <Tab eventKey="comments" title="Comments">
           <Comments />
