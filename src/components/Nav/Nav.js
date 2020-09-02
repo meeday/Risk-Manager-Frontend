@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <div className="navbar navbar-expand-lg bg-dark fixed-top">
       <Link to={"/"} className="brand">
-        <img alt="logo" src={Image} height="60" />
+        <img alt="logo" src={Image} style={{height: 60}} />
       </Link>
       <div className="nav-right">
         <Link  to={"/login"}>Logout</Link>
