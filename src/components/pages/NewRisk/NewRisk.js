@@ -102,7 +102,17 @@ function NewRisk(props) {
     }
     return "form-control very-high";
   };
+  
 
+  // Google Maps
+  const {isLoaded, loadError} = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
+  if (loadError) return "Error loading Google Maps";
+  if (!isLoaded) return "Loading Google Maps";
+
+  
   return (
     <div>
       <h1>New risk</h1>
