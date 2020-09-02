@@ -31,7 +31,7 @@ export default ({ children }) => {
     return (
         <div>
             {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}
-            {!isLoaded ? <Redirect to='/Login'/> :
+            {!isLoaded ? <Redirect to='/login'/> :
             <AuthContext.Provider value = {{user, setUser, isAuthenticated, setIsAuthenticated }}>
             {children}
             </AuthContext.Provider>
