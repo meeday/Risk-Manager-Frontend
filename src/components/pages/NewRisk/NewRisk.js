@@ -8,6 +8,33 @@ import "./styles/NewRisk.css";
 import dotenv from "dotenv";
 dotenv.config();
 
+// Lookup object for risk scoring categorisation
+const colorClasses = {
+  1: "very-low",
+  2: "low",
+  3: "medium",
+  4: "high",
+  5: "very-high"
+}
+
+// Google map API styling and options
+const mapContainerStyle = {
+  width: "90vw",
+  height: "80vh",
+  margin: "0 auto",
+}
+
+// ******* Change to the centre of the project
+const mapCentre = {
+  lat: 52.476089,
+  lng: -1.898557
+}
+
+const mapOptions = {
+  disableDefaultUI: true,  
+  zoomControl: true,
+}
+
 function NewRisk(props) {
   // Using the useHistory hook for pushing a new route into the history
   const history = useHistory();
