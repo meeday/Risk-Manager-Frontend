@@ -63,4 +63,33 @@ html,
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/*# sourceMappingURL=NewRisk.css.map */
+
+.new-risk-container {
+  padding: 5%;
+}
+
+.very-low {
+  background: #238823;
+  color: #ffffff;
+}
+
+.low {
+  background: #a1c578;
+}
+
+.medium {
+  background: #ffbf00;
+}
+
+.high{
+  background: #ff4000;
+}
+
+.very-high {
+  background: #9c0000;
+  color: #ffffff;
+}
+
+.label-popover {
+  margin: 0 10px;
+}
