@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Autocomplete } from "@react-google-maps/api"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewRisk.css";
 import dotenv from "dotenv";
@@ -115,7 +117,7 @@ function NewRisk(props) {
 
 
   return (
-    <div>
+    <div className="new-risk-container">
       <h1>New risk</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -212,7 +214,7 @@ function NewRisk(props) {
             Show map
           </button>
 
-          <div class="collapse" id="collapseMap">
+          <div className="collapse" id="collapseMap">
             <GoogleMap 
               mapContainerStyle={mapContainerStyle} 
               zoom={12} 
