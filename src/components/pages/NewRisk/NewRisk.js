@@ -21,8 +21,10 @@ const colorClasses = {
 
 // Google map API styling and options
 const mapContainerStyle = {
-  width: "90vw",
-  height: "80vh",
+  minWidth: "200px",
+  maxWidth: "90vw",
+  minHeight: "250px",
+  maxheight: "80vh",
   margin: "0 auto",
 }
 
@@ -87,7 +89,7 @@ function NewRisk(props) {
 
   const showResultingRisk = value => {
     if (value <= 4) {
-      return `${riskScore} - Negligible low risk`
+      return `${riskScore} - Negligible risk`
     }
     if (value <= 6) {
       return `${riskScore} - Tolerable risk`
@@ -97,12 +99,12 @@ function NewRisk(props) {
 
   const riskColorClass = value => {
     if (value <= 4) {
-      return "form-control very-low";
+      return "form-control disabled-colored-risk very-low";
     }
     if (value <= 6) {
-      return "form-control medium";
+      return "form-control disabled-colored-risk medium";
     }
-    return "form-control very-high";
+    return "form-control disabled-colored-risk very-high";
   };
   
 
@@ -117,232 +119,232 @@ function NewRisk(props) {
 
 
   return (
-    <div className="new-risk-container">
-      <h1>New risk</h1>
+      <div className="new-risk-wrapper">
+        <div className="new-risk-inner">
+          <h1>New risk</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        
-        <div className="form-group row">
-          <div className="form-group col-9">
-            <label>Title</label>
-            <input
-              required
-              name="riskTitle"
-              type="text"
-              className="form-control"
-              placeholder="Risk Title"
-              ref={newRisk}
-            />
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            
+            <div className="form-group row">
+              <div className="form-group col-sm-9 col-xs-12">
+                <label>Title</label>
+                <input
+                  required
+                  name="riskTitle"
+                  type="text"
+                  className="form-control"
+                  placeholder="Risk Title"
+                  ref={newRisk}
+                />
+              </div>
 
-          <div className="form-group col-3">
-            <label>
-              Status 
-              <span 
-                className="label-popover"
-                data-toggle="popover"
-                data-trigger="hover" 
-                data-placement="top"
-                data-html="true" 
-                title="Status"
-                data-content="<strong>Open:</strong> The risk is present in the design.
-                <br />
-                <strong>Closed:</strong> The risk has been mitigated, so it is no longer present in the design.
-                <br />
-                <strong>Transferred:</strong> Ownership of the risk has been transferred to another party.">
-                <FontAwesomeIcon icon={faQuestionCircle}/>
-              </span>
-            </label>
-            <select required name="riskStatus" className="form-control" ref={newRisk}>
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
-              <option value="transferred">Transferred</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <div className="form-group col">
-            <label>ID</label>
-            <input
-              required
-              name="riskId"
-              type="text"
-              className="form-control"
-              placeholder="Risk ID (must be unique)"
-              ref={newRisk}
-            />
-          </div>
-
-          <div className="form-group col">
-            <label>Discipline</label>
-            <input
-              required
-              name="discipline"
-              type="text"
-              className="form-control"
-              placeholder="Design discipline"
-              ref={newRisk}
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label>Description</label>
-          <textarea
-            required
-            name="description"
-            type="text"
-            className="form-control"
-            placeholder="Description"
-            ref={newRisk}
-            style={{minHeight: "85px", paddingTop: "5px"}}
-            />
-        </div>
-
-        <div>
-          <br></br>
-          <h6>Select risk location:</h6>
-          <button 
-            className="btn btn-primary"
-            data-toggle="collapse"
-            data-target="#collapseMap"
-            aria-expanded="false"
-            aria-controls="collapseMap"
-            style={{marginBottom: "8px"}}
-          >
-            Show map
-          </button>
-
-          <div className="collapse" id="collapseMap">
-            <GoogleMap 
-              mapContainerStyle={mapContainerStyle} 
-              zoom={12} 
-              center={mapCentre}
-              options={mapOptions}
-              onClick={handleLocationChange}
-            >
-              <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
-            </GoogleMap>
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <div className="form-group col">
-            <label>Latitude</label>
-            <div className="form-control" style={{background: "#999"}}>
-              <p style={{margin: "7.5px 0"}}>
-                {riskLocation.lat}
-              </p>
+              <div className="form-group col-sm-3 col-xs-12">
+                <label>
+                  Status 
+                  <span 
+                    className="label-popover"
+                    data-toggle="popover"
+                    data-trigger="hover" 
+                    data-placement="top"
+                    data-html="true" 
+                    title="Status"
+                    data-content="<strong>Open:</strong> The risk is present in the design.
+                    <br />
+                    <strong>Closed:</strong> The risk has been mitigated, so it is no longer present in the design.
+                    <br />
+                    <strong>Transferred:</strong> Ownership of the risk has been transferred to another party.">
+                    <FontAwesomeIcon icon={faQuestionCircle}/>
+                  </span>
+                </label>
+                <select required name="riskStatus" className="form-control" ref={newRisk}>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                  <option value="transferred">Transferred</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="form-group col">
-            <label>Longitude</label>
-            <div className="form-control" style={{background: "#999"}}>
-              <p style={{margin: "7.5px 0"}}>
-                {riskLocation.lng}
-              </p>
+
+            <div className="form-group row">
+              <div className="form-group col-sm-6 col-xs-12">
+                <label>ID</label>
+                <input
+                  required
+                  name="riskId"
+                  type="text"
+                  className="form-control"
+                  placeholder="Risk ID (must be unique)"
+                  ref={newRisk}
+                />
+              </div>
+
+              <div className="form-group col-sm-6 col-xs-12">
+                <label>Discipline</label>
+                <input
+                  required
+                  name="discipline"
+                  type="text"
+                  className="form-control"
+                  placeholder="Design discipline"
+                  ref={newRisk}
+                />
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="form-group row">
-          <div className="form-group col">
-
-            <label>
-              Risk Likelihood 
-              <span 
-                className="label-popover"
-                data-toggle="popover"
-                data-trigger="hover" 
-                data-placement="top"
-                data-html="true" 
-                title="Likelihood scoring"
-                data-content="<strong class='very-low'> 1 - Very low:</strong> The event is unlikely to occur but may by exception occur.
-                <br />
-                <strong class='low'> 2 - Low:</strong> The event can be expected to occur during the lifecycle.
-                <br />
-                <strong class='medium'> 3 - Medium:</strong> The event is likely to occur several times.
-                <br />
-                <strong class='high'> 4 - High:</strong> The event will occur several times and is likely to occur often.
-                <br />
-                <strong class='very-high'> 5 - Very high:</strong> The event is likely to occur on a daily basis.">
-                <FontAwesomeIcon icon={faQuestionCircle}/>
-              </span>
-            </label>
-            <select required name="riskLikelihood" className={setColorClass(likelihood)} ref={newRisk} onChange={handleLikelihoodChange}>
-              <option value="1">1 - Very low</option>
-              <option value="2">2 - Low</option>
-              <option value="3">3 - Medium</option>
-              <option value="4">4 - High</option>
-              <option value="5">5 - Very high</option>
-            </select>
-          </div>
-
-          <div className="form-group col">
-            <label>
-              Risk Severity
-              <span
-                className="label-popover"
-                data-toggle="popover"
-                data-trigger="hover" 
-                data-placement="top"
-                data-html="true" 
-                title="Severity scoring"
-                data-content="<strong class='very-low'> 1 - Very low:</strong> Non-reportable injury.
-                <br />
-                <strong class='low'> 2 - Low:</strong> Minor injury.
-                <br />
-                <strong class='medium'> 3 - Medium:</strong> Major injury or multiple minor injuries.
-                <br />
-                <strong class='high'> 4 - High:</strong> Single fatality or multiple major injuries.
-                <br />
-                <strong class='very-high'> 5 - Very high:</strong> Multiple fatalities.">
-                <FontAwesomeIcon icon={faQuestionCircle}/>
-              </span>
-            </label>
-            <select required name="riskSeverity" className={setColorClass(severity)} ref={newRisk} onChange={handleSeverityChange}>
-              <option value="1">1 - Very low</option>
-              <option value="2">2 - Low</option>
-              <option value="3">3 - Medium</option>
-              <option value="4">4 - High</option>
-              <option value="5">5 - Very high</option>
-            </select>
-          </div>
-          <div className="form-group col">
-            <label>
-              Resulting risk score
-              <span
-                className="label-popover"
-                data-toggle="popover"
-                data-trigger="hover" 
-                data-placement="top"
-                data-html="true" 
-                title="Risk score"
-                data-content="Overall risk score is calculated as the sum of the likelihood and severity scores.
-                <br />
-                <strong class='very-low'> 2-4 = Negligible low risk:</strong> Ensure control measures are maintained and reviewed as necessary to control residual risk as far as is reasonably practicable.
-                <br />
-                <strong class='medium'> 5-6 = Tolerable risk:</strong> Control measures to reduce risk rating to a level which is as low as reasonably practicable (ALARP). Add details of residual risk to drawings/docs.
-                <br />
-                <strong class='very-high'> 7-10 = Intolerale risk:</strong> Activity not permitted. Hazard to be avoided or reduced.">
-                <FontAwesomeIcon icon={faQuestionCircle}/>
-              </span>
-            </label>
-            <div className={riskColorClass(riskScore)} style={{opacity: "0.7"}}>
-              <p style={{margin: "7.5px 0"}}>
-                {showResultingRisk(riskScore)}
-              </p>
+            <div className="form-group">
+              <label>Description</label>
+              <textarea
+                required
+                name="description"
+                type="text"
+                className="form-control form-description"
+                placeholder="Description"
+                ref={newRisk}
+                />
             </div>
-          </div>
-        </div>
 
-        <button type="submit" className="btn btn-primary btn-block">
-          Submit
-        </button>
-        
-      </form>
-    </div>
+            <div>
+              <br></br>
+              <h6>Select risk location:</h6>
+              <button 
+                className="btn btn-primary btn-show-map"
+                data-toggle="collapse"
+                data-target="#collapseMap"
+                aria-expanded="false"
+                aria-controls="collapseMap"
+              >
+                Show map
+              </button>
+
+              <div className="collapse" id="collapseMap">
+                <GoogleMap 
+                  mapContainerStyle={mapContainerStyle} 
+                  zoom={12} 
+                  center={mapCentre}
+                  options={mapOptions}
+                  onClick={handleLocationChange}
+                >
+                  <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
+                </GoogleMap>
+              </div>
+            </div>
+
+            <div className="form-group row">
+              <div className="form-group col-6">
+                <label>Latitude</label>
+                <div className="form-control disabled-form">
+                  <p>
+                    {riskLocation.lat}
+                  </p>
+                </div>
+              </div>
+              <div className="form-group col-6">
+                <label>Longitude</label>
+                <div className="form-control disabled-form">
+                  <p>
+                    {riskLocation.lng}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group row">
+              <div className="form-group col-sm-6 col-xs-12">
+
+                <label>
+                  Likelihood 
+                  <span 
+                    className="label-popover"
+                    data-toggle="popover"
+                    data-trigger="hover" 
+                    data-placement="top"
+                    data-html="true" 
+                    title="Likelihood scoring"
+                    data-content="<span class='very-low'> 1 - Very low:</span> The event is unlikely to occur but may by exception occur.
+                    <br />
+                    <span class='low'> 2 - Low:</span> The event can be expected to occur during the lifecycle.
+                    <br />
+                    <span class='medium'> 3 - Medium:</span> The event is likely to occur several times.
+                    <br />
+                    <span class='high'> 4 - High:</span> The event will occur several times and is likely to occur often.
+                    <br />
+                    <span class='very-high'> 5 - Very high:</span> The event is likely to occur on a daily basis.">
+                    <FontAwesomeIcon icon={faQuestionCircle}/>
+                  </span>
+                </label>
+                <select required name="riskLikelihood" className={setColorClass(likelihood)} ref={newRisk} onChange={handleLikelihoodChange}>
+                  <option value="1">1 - Very low</option>
+                  <option value="2">2 - Low</option>
+                  <option value="3">3 - Medium</option>
+                  <option value="4">4 - High</option>
+                  <option value="5">5 - Very high</option>
+                </select>
+              </div>
+
+              <div className="form-group col-sm-6 col-xs-12">
+                <label>
+                  Severity
+                  <span
+                    className="label-popover"
+                    data-toggle="popover"
+                    data-trigger="hover" 
+                    data-placement="top"
+                    data-html="true" 
+                    title="Severity scoring"
+                    data-content="<span class='very-low'> 1 - Very low:</span> Non-reportable injury.
+                    <br />
+                    <span class='low'> 2 - Low:</span> Minor injury.
+                    <br />
+                    <span class='medium'> 3 - Medium:</span> Major injury or multiple minor injuries.
+                    <br />
+                    <span class='high'> 4 - High:</span> Single fatality or multiple major injuries.
+                    <br />
+                    <span class='very-high'> 5 - Very high:</span> Multiple fatalities.">
+                    <FontAwesomeIcon icon={faQuestionCircle}/>
+                  </span>
+                </label>
+                <select required name="riskSeverity" className={setColorClass(severity)} ref={newRisk} onChange={handleSeverityChange}>
+                  <option value="1">1 - Very low</option>
+                  <option value="2">2 - Low</option>
+                  <option value="3">3 - Medium</option>
+                  <option value="4">4 - High</option>
+                  <option value="5">5 - Very high</option>
+                </select>
+              </div>
+              <div className="form-group form-center col-sm-6 col-xs-12">
+                <label>
+                  Risk score
+                  <span
+                    className="label-popover"
+                    data-toggle="popover"
+                    data-trigger="hover" 
+                    data-placement="top"
+                    data-html="true" 
+                    title="Risk score"
+                    data-content="Overall risk score is calculated as the sum of the likelihood and severity scores.
+                    <br />
+                    <span class='very-low'> 2-4 = Negligible risk:</span> Ensure control measures are maintained and reviewed as necessary to control residual risk as far as is reasonably practicable.
+                    <br />
+                    <span class='medium'> 5-6 = Tolerable risk:</span> Control measures to reduce risk rating to a level which is as low as reasonably practicable (ALARP). Add details of residual risk to drawings/docs.
+                    <br />
+                    <span class='very-high'> 7-10 = Intolerable risk:</span> Activity not permitted. Hazard to be avoided or reduced.">
+                    <FontAwesomeIcon icon={faQuestionCircle}/>
+                  </span>
+                </label>
+                <div className={riskColorClass(riskScore)}>
+                  <p>
+                    {showResultingRisk(riskScore)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block submit-btn">
+              Submit
+            </button>
+            
+          </form>
+        </div>
+      </div>
   );
 }
 
