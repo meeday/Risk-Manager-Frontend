@@ -27,7 +27,7 @@ export default function Login() {
         // setIsAuthenticated(isAuthenticated);
 
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
-        history.push("/projects");
+        history.push("/");
       } else {
         // this will be an error message telling whats wrong
         setMessage(message);
