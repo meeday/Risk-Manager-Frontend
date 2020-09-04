@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,9 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewRisk.css";
 import dotenv from "dotenv";
+import ProjectService from "../../../Services/ProjectService"
+
+// Configure dotenv to get access to environment variables
 dotenv.config();
 
 // Lookup object for risk scoring categorisation
@@ -19,6 +22,12 @@ const colorClasses = {
   5: "very-high"
 }
 
+const statusIndex = {
+  "open": 1,
+  "transferred": 2,
+  "closed": 3,
+}
+
 // Google map API styling and options
 const mapContainerStyle = {
   minWidth: "200px",
@@ -28,23 +37,27 @@ const mapContainerStyle = {
   margin: "0 auto",
 }
 
-// ******* Change to the centre of the project
-const mapCentre = {
-  lat: 52.476089,
-  lng: -1.898557
-}
+// ******* projectID will need to be retrieved
+const projectId = "234iuhowef9803rh";
 
+// ******* mapCentre will need to be retrieved
+let mapCentre = {
+  lat: 52.475,
+  lng: -1.900,
+};
+
+// Disable all Google Maps UI features. Activate zoom control
 const mapOptions = {
   disableDefaultUI: true,  
   zoomControl: true,
 }
 
 function NewRisk(props) {
-  // Using the useHistory hook for pushing a new route into the history
+  // Use the useHistory hook for pushing a new route into the history
   const history = useHistory();
 
   // Declare hooks from useForm
-  const { register, handleSubmit, newRisk } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // Declare states
   const [message, setMessage] = useState(null);
@@ -53,12 +66,38 @@ function NewRisk(props) {
   const [riskScore, setRiskScore] = useState(2);
   const [riskLocation, setRiskLocation] = useState(mapCentre);
 
-
   // Event to handle user adding a new risk
-  const onSubmit = (user, event) => {
+  const onSubmit = async (data, event) => {
     event.preventDefault();
+    // Store properties of the data object which was created from the useForm
+    const { title, description, status, id, designDiscipline, locationLat, locationLng, riskLikelihood, severity } = data;
+    
+    // Create a newRisk object using the submitted form data
+    const newRisk = {
+      title, 
+      id, 
+      description,
+      designDiscipline,
+      status: statusIndex[status], 
+      location: {
+        lat: parseFloat(locationLat),
+        lng: parseFloat(locationLng)
+      }, 
+      likelihood: parseInt(likelihood),
+      severity: parseInt(severity),
+      risk: riskScore,
+      projectId
+    }
 
-    // Placeholder for submitting a new risk using an axios call to the backend application
+    try {
+      // Submitting a post request to add the new risk to the backend application
+      // const addedRisk = await ProjectService.createRisk(newRisk);
+      
+      // history.push(`/project/${projectId}`);
+    }
+    catch (error) {
+      console.error(`Error: NewRisk.js - onSubmit() - ${error}`);
+    }
   };
 
   
@@ -130,11 +169,11 @@ function NewRisk(props) {
                 <label>Title</label>
                 <input
                   required
-                  name="riskTitle"
+                  name="title"
                   type="text"
                   className="form-control"
                   placeholder="Risk Title"
-                  ref={newRisk}
+                  ref={register}
                 />
               </div>
 
@@ -156,7 +195,7 @@ function NewRisk(props) {
                     <FontAwesomeIcon icon={faQuestionCircle}/>
                   </span>
                 </label>
-                <select required name="riskStatus" className="form-control" ref={newRisk}>
+                <select required name="status" className="form-control" ref={register}>
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
                   <option value="transferred">Transferred</option>
@@ -169,11 +208,11 @@ function NewRisk(props) {
                 <label>ID</label>
                 <input
                   required
-                  name="riskId"
+                  name="id"
                   type="text"
                   className="form-control"
                   placeholder="Risk ID (must be unique)"
-                  ref={newRisk}
+                  ref={register}
                 />
               </div>
 
@@ -181,11 +220,11 @@ function NewRisk(props) {
                 <label>Discipline</label>
                 <input
                   required
-                  name="discipline"
+                  name="designDiscipline"
                   type="text"
                   className="form-control"
                   placeholder="Design discipline"
-                  ref={newRisk}
+                  ref={register}
                 />
               </div>
             </div>
@@ -198,22 +237,22 @@ function NewRisk(props) {
                 type="text"
                 className="form-control form-description"
                 placeholder="Description"
-                ref={newRisk}
+                ref={register}
                 />
             </div>
 
             <div>
               <br></br>
               <h6>Select risk location:</h6>
-              <button 
-                className="btn btn-primary btn-show-map"
+              <a 
+                className="btn btn-primary show-map text-white"
                 data-toggle="collapse"
                 data-target="#collapseMap"
                 aria-expanded="false"
                 aria-controls="collapseMap"
-              >
+                >
                 Show map
-              </button>
+              </a>
 
               <div className="collapse" id="collapseMap">
                 <GoogleMap 
@@ -222,7 +261,7 @@ function NewRisk(props) {
                   center={mapCentre}
                   options={mapOptions}
                   onClick={handleLocationChange}
-                >
+                  >
                   <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
                 </GoogleMap>
               </div>
@@ -231,19 +270,25 @@ function NewRisk(props) {
             <div className="form-group row">
               <div className="form-group col-6">
                 <label>Latitude</label>
-                <div className="form-control disabled-form">
-                  <p>
-                    {riskLocation.lat}
-                  </p>
-                </div>
+                <input 
+                  name="locationLat"
+                  className="form-control disabled-form"
+                  ref={register}
+                  value={riskLocation.lat}
+                  readOnly
+                  >
+                </input>
               </div>
               <div className="form-group col-6">
                 <label>Longitude</label>
-                <div className="form-control disabled-form">
-                  <p>
-                    {riskLocation.lng}
-                  </p>
-                </div>
+                <input 
+                  name="locationLng"
+                  className="form-control disabled-form"
+                  ref={register}
+                  value={riskLocation.lng}
+                  readOnly
+                >
+                </input>
               </div>
             </div>
 
@@ -271,7 +316,7 @@ function NewRisk(props) {
                     <FontAwesomeIcon icon={faQuestionCircle}/>
                   </span>
                 </label>
-                <select required name="riskLikelihood" className={setColorClass(likelihood)} ref={newRisk} onChange={handleLikelihoodChange}>
+                <select required name="likelihood" className={setColorClass(likelihood)} ref={register} onChange={handleLikelihoodChange}>
                   <option value="1">1 - Very low</option>
                   <option value="2">2 - Low</option>
                   <option value="3">3 - Medium</option>
@@ -302,7 +347,7 @@ function NewRisk(props) {
                     <FontAwesomeIcon icon={faQuestionCircle}/>
                   </span>
                 </label>
-                <select required name="riskSeverity" className={setColorClass(severity)} ref={newRisk} onChange={handleSeverityChange}>
+                <select required name="severity" className={setColorClass(severity)} ref={register} onChange={handleSeverityChange}>
                   <option value="1">1 - Very low</option>
                   <option value="2">2 - Low</option>
                   <option value="3">3 - Medium</option>
@@ -310,6 +355,7 @@ function NewRisk(props) {
                   <option value="5">5 - Very high</option>
                 </select>
               </div>
+              
               <div className="form-group form-center col-sm-6 col-xs-12">
                 <label>
                   Risk score
