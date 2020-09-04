@@ -1,66 +1,81 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-body {
+.map {
+  width: 900px;
+  height: 650px;
+  margin: calc(50vh - 190px) auto;
+  box-shadow: 0 0 40px -10px #000000;
   background: #bdbdbd;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-weight: 400;
-  font-family: "Fira Sans", sans-serif;
-  padding: 5%;
+  max-width: calc(100vw - 60px);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-span {
-  font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
+#map {
+  width: 50%;
+  height: 650px;
+  display: inline-block;
 }
 
-body,
-html,
-.App,
-#root,
-.auth-wrapper {
-  width: 100%;
+.map-c {
+  float: left;
+  width: 50%;
+  margin-top: 30px;
+  padding: 25px;
+  box-sizing: border-box;
 }
 
-.auth-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  text-align: left;
+h1 {
+  margin: 5px;
+  color: #2196f3;
+  font-size: 28px;
 }
 
-.auth-inner {
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 450px;
-  margin: auto;
-  background: #bdbdbd;
-  -webkit-box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-          box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 45px 55px 45px 55px;
-  border-radius: 15px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+h2 {
+  margin: 5px;
+  font-size: 18px;
+  align-self: center;
+  color: #2196f3;
 }
-/*# sourceMappingURL=Project.css.map */
+
+p {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 45px;
+  color: #ffffff;
+}
+
+.users {
+  display: inline-flex;
+  flex-direction: row;
+  margin: 5px;
+}
+
+.users::after{
+  content: ",";
+  color: #ffffff;
+}
+.det {
+  text-align: justify;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+i {
+  float: left;
+  color: #2196f3;
+  font-size: 18px !important;
+  margin-right: 15px;
+}
+
+@media only screen and (max-width: 720px) {
+  .map {
+    height: 100%;
+    margin: calc(50vh - 225px) auto;
+  }
+
+  #map {
+    width: 100%;
+  }
+
+  .map-c {
+    float: none;
+    width: 100%;
+  }
+}
