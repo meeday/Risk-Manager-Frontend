@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
-import Message from "../../Message/Message";
+import Toast from "../../Toasts/LoginToast";
 // import { AuthContext } from "../../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
@@ -37,7 +37,7 @@ export default function Login() {
 
   return (
     <div>
-      {message ? <Message message={message} /> : null}
+      {message ? <Toast message={message} /> : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <h3>Sign In</h3>
 
