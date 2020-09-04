@@ -1,8 +1,10 @@
 {
   "name": "engineer-app",
   "version": "0.1.0",
+  "proxy": "http://localhost:8080/",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^1.9.12",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
