@@ -4,7 +4,6 @@ import { config } from "../config";
 export default {
     // api/project/... routes
     getProject : async id => {
-        console.log(id);
         try {
             const res = await fetch(`/api/project/${id}`);
             console.log(res);
