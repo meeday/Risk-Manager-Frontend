@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserForm from "./components/UserForm/UserForm";
-import Logout from './components/LogoutButton/LogoutButton';
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
 import Home from "./components/pages/Home/Home";

@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import AuthService from '../Services/AuthService';
 
 // creatng a context
