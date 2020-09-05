@@ -6,7 +6,7 @@ function AccountDashboard() {
   const [user, setUser] = useState({});
   const [project, setProject] = useState(null);
   const getData = async () => {
-    const {data} = await AuthService.getInfo("5f525f4e47672628b097e679");
+    const {data} = await AuthService.getInfo("5f5413bc90d4c22f502d97ec");
     setUser(data)
     setProject(data.project.length);
     
