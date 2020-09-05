@@ -37,10 +37,6 @@ const mapContainerStyle = {
 const projectId = "5f52a6cc0c5677512c956ded";
 
 // ******* mapCentre will need to be retrieved
-let mapCentre = {
-  lat: 52.475,
-  lng: -1.9,
-};
 
 // Disable all Google Maps UI features. Activate zoom control
 const mapOptions = {
@@ -60,13 +56,15 @@ function NewRisk(props) {
   const [likelihood, setLikelihood] = useState(1);
   const [severity, setSeverity] = useState(1);
   const [riskScore, setRiskScore] = useState(2);
-  const [riskLocation, setRiskLocation] = useState(mapCentre);
+  const [riskLocation, setRiskLocation] = useState({
+    lat: 52.475,
+    lng: -1.9,
+  });
 
   const getLocation = async () => {
     const { data } = await ProjectService.getProject(
       "5f53f1adeb1bd77a1004ba12"
     );
-    console.log(data.project.location);
     setRiskLocation(data.project.location);
   };
 
