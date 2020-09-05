@@ -1,17 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { GoogleMap, useLoadScript, Marker, InfoWindow, Autocomplete } from "@react-google-maps/api"
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewRisk.css";
-import dotenv from "dotenv";
 import ProjectService from "../../../Services/ProjectService"
-
-// Configure dotenv to get access to environment variables
-dotenv.config();
+import { config } from "../../../config";
 
 // Lookup object for risk scoring categorisation
 const colorClasses = {
@@ -54,13 +50,13 @@ const mapOptions = {
 
 function NewRisk(props) {
   // Use the useHistory hook for pushing a new route into the history
-  const history = useHistory();
+  // const history = useHistory();
 
   // Declare hooks from useForm
   const { register, handleSubmit } = useForm();
 
   // Declare states
-  const [message, setMessage] = useState(null);
+  // const [message, setMessage] = useState(null);
   const [likelihood, setLikelihood] = useState(1);
   const [severity, setSeverity] = useState(1);
   const [riskScore, setRiskScore] = useState(2);
@@ -70,7 +66,7 @@ function NewRisk(props) {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     // Store properties of the data object which was created from the useForm
-    const { title, description, status, id, designDiscipline, locationLat, locationLng, riskLikelihood, severity } = data;
+    const { title, description, status, id, designDiscipline, locationLat, locationLng } = data;
     
     // Create a newRisk object using the submitted form data
     const newRisk = {
@@ -149,7 +145,7 @@ function NewRisk(props) {
 
   // Google Maps
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: config.GOOGLE_MAPS_API_KEY,
   });
 
   // Return errors or loading message if Google Maps does not load or is loading
