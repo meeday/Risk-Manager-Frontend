@@ -95,10 +95,6 @@ html,
   opacity: 0.7;
 }
 
-.disabled-colored-risk p {
-  margin: 7.5px 0;
-}
-
 .very-low {
   background: #238823;
   color: #ffffff;
