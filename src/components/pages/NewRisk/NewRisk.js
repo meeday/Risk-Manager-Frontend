@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,7 +34,7 @@ const mapContainerStyle = {
 }
 
 // ******* projectID will need to be retrieved
-const projectId = "234iuhowef9803rh";
+const projectId = "5f52a6cc0c5677512c956ded";
 
 // ******* mapCentre will need to be retrieved
 let mapCentre = {
@@ -50,7 +50,7 @@ const mapOptions = {
 
 function NewRisk(props) {
   // Use the useHistory hook for pushing a new route into the history
-  // const history = useHistory();
+  const history = useHistory();
 
   // Declare hooks from useForm
   const { register, handleSubmit } = useForm();
@@ -66,12 +66,12 @@ function NewRisk(props) {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     // Store properties of the data object which was created from the useForm
-    const { title, description, status, id, designDiscipline, locationLat, locationLng } = data;
+    const { title, description, status, riskId, designDiscipline, locationLat, locationLng } = data;
     
     // Create a newRisk object using the submitted form data
     const newRisk = {
       title, 
-      id, 
+      riskId,
       description,
       designDiscipline,
       status: statusIndex[status], 
@@ -87,9 +87,13 @@ function NewRisk(props) {
 
     try {
       // Submitting a post request to add the new risk to the backend application
-      // const addedRisk = await ProjectService.createRisk(newRisk);
+      const res = await ProjectService.createRisk(newRisk);
+
+      // ******* Add toast message to confirm risk has been added
+      console.log(res);
       
-      // history.push(`/project/${projectId}`);
+      // Redirect user back to the project page
+      history.push(`/project/${projectId}`);
     }
     catch (error) {
       console.error(`Error: NewRisk.js - onSubmit() - ${error}`);
@@ -204,7 +208,7 @@ function NewRisk(props) {
                 <label>ID</label>
                 <input
                   required
-                  name="id"
+                  name="riskId"
                   type="text"
                   className="form-control"
                   placeholder="Risk ID (must be unique)"
