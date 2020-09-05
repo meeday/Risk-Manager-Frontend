@@ -1,10 +1,12 @@
+import { config } from "../config";
+
 // Fetch requests for backend end-points
 export default {
     // api/project/... routes
     getProject : async id => {
         console.log(id);
         try {
-            const res = await fetch(`/api/project/${id}`);
+            const res = await fetch(`${config.API_URL}/api/project/${id}`);
             console.log(res);
             return res.json();
         }
@@ -14,7 +16,7 @@ export default {
     },
     getAllProjects : async () => {
         try {
-            const res = await fetch('/api/project')
+            const res = await fetch(`${config.API_URL}/api/project`)
             return res;
         }
         catch (error) {
@@ -23,7 +25,7 @@ export default {
     },
     createProject : async project => {
         try {
-            const res = await fetch('/api/project', {
+            const res = await fetch(`${config.API_URL}/api/project`, {
                 method: "post",
                 body: JSON.stringify(project),
                 headers : {
@@ -38,7 +40,7 @@ export default {
     },
     deleteProject : async id => {
         try {
-            const res = await fetch(`/api/project/${id}`, {
+            const res = await fetch(`${config.API_URL}/api/project/${id}`, {
                 method: "delete",
                 headers : {
                     'Content-Type' : 'application/json'
@@ -54,7 +56,7 @@ export default {
     // api/project/risk/... routes
     getRisk : async id => {
         try {
-            const res = await fetch(`/api/project/risk/${id}`)
+            const res = await fetch(`${config.API_URL}/api/project/risk/${id}`)
             return res.json(res);
         }
         catch (error) {
@@ -63,7 +65,7 @@ export default {
     },
     createRisk : async newRisk => {
         try {
-            const res = await fetch('/api/project/risk/', {
+            const res = await fetch(`${config.API_URL}/api/project/risk/`, {
                 method: "post",
                 body: JSON.stringify(newRisk),
                 headers : {
@@ -78,7 +80,7 @@ export default {
     },
     deleteRisk : async id => {
         try {
-            const res = await fetch(`/api/project/risk/${id}`, {
+            const res = await fetch(`${config.API_URL}/api/project/risk/${id}`, {
                 method: "delete",
                 headers : {
                     'Content-Type' : 'application/json'

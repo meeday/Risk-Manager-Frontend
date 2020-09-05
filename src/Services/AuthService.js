@@ -1,7 +1,9 @@
+import { config } from "../config";
+
 //creating all the fetch request for end-points
 export default {
     register : user =>{
-        return fetch('/api/user/register', {
+        return fetch(`${config.API_URL}/api/user/register`, {
             method: "post",
             body: JSON.stringify(user),
             headers : {
@@ -12,13 +14,16 @@ export default {
     },
 
     login : user =>{
-        return fetch('/api/user/login', {
+        console.log(user);
+        return fetch(`${config.API_URL}/api/user/login`, {
             method: "post",
+            credentials: "include",
             body: JSON.stringify(user),
             headers : {
                 'Content-Type' : 'application/json'
             }
         }).then(res => {
+            console.log(res);
             // passport send 401 status if user not authenticated
                 if(res.status !==401)
                 return res.json().then(data => data)
@@ -28,7 +33,7 @@ export default {
     },
 
     logout : () => {
-        return fetch('/api/user/logout')
+        return fetch(`${config.API_URL}/api/user/logout`)
             .then(res => res.json())
             .then(data => data);
     },
@@ -38,7 +43,7 @@ export default {
     // so, when user visit the website next time user will still stay login
     //we use context-API to call this function, it is a global state for our react app   
     isAuthenticated : () => {
-        return fetch ('/api/user/authenticated')
+        return fetch (`${config.API_URL}/api/user/authenticated`)
             .then(res => {
             // passport send 401 status if user not authenticated
                 if(res.status !==401)
