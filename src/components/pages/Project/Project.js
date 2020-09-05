@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "./styles/Project.css";
+dotenv.config();
 
 const mapOptions = {
   disableDefaultUI: true,
@@ -13,8 +15,8 @@ const markers = [
   { lat: 52.474876, lng: -1.904408 },
   { lat: 52.474744, lng: -1.888884 },
 ];
-const engineers = ["Joe", "Niro", "Ian", "Meedaxa"];
-const center = {
+const teamMembers = ["Joe", "Niro", "Ian", "Meedaxa"];
+const mapCenter = {
   lat: 52.479161,
   lng: -1.895446,
 };
@@ -37,7 +39,7 @@ const Projects = () => {
               Westminster, London SW1A 0AA
             </p>
             <p>
-              <i class="fas fa-user-tie"></i>
+              <i className="fas fa-user-tie"></i>
               <h2>Client</h2>
               Arup
             </p>
@@ -45,28 +47,28 @@ const Projects = () => {
               <div className="col-sm-6">
                 <p>
                   <i className="far fa-clock"></i>
-                  <h2>Start Date</h2><span style={{ marginLeft: 35 }}>6/12/19</span>
+                  <h2>Start Date</h2><span className="date">6/12/19</span>
                 </p>
               </div>
               <div className="col-sm-6">
                 <p>
                   <i className="far fa-clock"></i>
                   <h2>End Date</h2>
-                  <span style={{ marginLeft: 35 }}>12/11/20</span>
+                  <span className="date">12/11/20</span>
                 </p>
               </div>
             </div>
             <p>
               <i className="fas fa-users"></i>
               <h2>Team Members</h2>
-              {engineers.map((users) => (
+              {teamMembers.map((users) => (
                 <li className="users">{users}</li>
               ))}
             </p>
           </div>
         </div>
-        <LoadScript googleMapsApiKey="AIzaSyDJyhMJUVajW8unTiFseBQPMlxmW1NltHM">
-          <GoogleMap options={mapOptions} center={center} zoom={12} id="map">
+        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+          <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
             {markers.map((position) => (
               <Marker position={position}></Marker>
             ))}
