@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewProject.css";
 import { useForm } from "react-hook-form";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function NewProject(props) {
   // Using the useHistory hook for pushing a new route into the history
