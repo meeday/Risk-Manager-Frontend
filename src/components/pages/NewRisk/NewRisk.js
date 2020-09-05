@@ -64,7 +64,7 @@ function NewRisk(props) {
 
   const getLocation = async () => {
     const { data } = await ProjectService.getProject(
-      "5f52a6cc0c5677512c956dee"
+      "5f53f1adeb1bd77a1004ba12"
     );
     console.log(data.project.location);
     setRiskLocation(data.project.location);
