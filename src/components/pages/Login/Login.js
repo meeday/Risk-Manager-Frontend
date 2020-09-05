@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import AuthService from "../../../Services/AuthService";
 import Message from "../../Message/Message";
 // import { AuthContext } from "../../../Context/AuthContext";
 import { useForm } from "react-hook-form";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Login() {
   // Using the useHistory hook for pushing a new route into the history
@@ -27,7 +27,7 @@ export default function Login() {
         // setIsAuthenticated(isAuthenticated);
 
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
-        history.push("/projects");
+        history.push("/");
       } else {
         // this will be an error message telling whats wrong
         setMessage(message);

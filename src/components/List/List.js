@@ -2,10 +2,8 @@ import React from "react";
 
 export const List = ({ children }) => <ul className="list">{children}</ul>;
 
-export function LinkItem({ children }) {
+export function LinkItem(props) {
   return (
-    <a href={children}>
-      <li className="listItem">{children}</li>
-    </a>
+    <li className="listItem">{props.children}</li>
   );
 }
