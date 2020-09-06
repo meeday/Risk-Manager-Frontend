@@ -2,11 +2,10 @@ import React from "react";
 import { Dropdown, Form } from "react-bootstrap";
 
 // API get route
-import get from "../../../../Services/ProjectService";
+import projectService from "../../../../Services/ProjectService";
 
 function MemberList(props) {
-  // Get Member from DB
-  const teamMember = get.getMember();
+  const teamMember = projectService.getAllUser;
 
   return (
     <Dropdown>
@@ -14,8 +13,7 @@ function MemberList(props) {
         ---Choose---
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {props.teamMember.map(function (member, index) {
-          console.log(index);
+        {teamMember.map(function (member, index) {
           return (
             <div className="row" key={index} style={{ marginLeft: 5 }}>
               <Form.Check
