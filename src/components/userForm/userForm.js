@@ -1,7 +1,7 @@
 import React from "../../../node_modules/react";
 // import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Logo from "../../static/images/Logo.png";
-import "./styles/UserForm.css";
+import "./styles/userForm.css";
 
 function UserForm(props) {
   return (

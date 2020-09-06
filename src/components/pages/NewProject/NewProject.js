@@ -68,8 +68,10 @@ function NewProject(props) {
     } = user;
     const start = `${startDate}-${startMonth}-${startYear}`;
     const end = `${endDate}-${endMonth}-${endYear}`;
-    console.log(start);
-    console.log(end);
+    
+    const dataSend = {
+      
+    }
 
     CreateService.CreateProject(user)
       .then((res) => {

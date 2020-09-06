@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown, Form } from "react-bootstrap";
 
 // API get route
-import get from "../../../../Services/getService"
+import get from "../../../../Services/ProjectService";
 
 function MemberList(props) {
   // Get Member from DB
