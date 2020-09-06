@@ -4,6 +4,8 @@
 
 body {
   background: url("./static/images/construction-industry.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
