@@ -1,33 +1,105 @@
-import React, { useState, useContext } from "react";
-import CreateService from "../../../Services/CreateService";
+// NPM import
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewProject.css";
-import { useForm } from "react-hook-form";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+
+// Component
+import Years from "./components/Years";
+import Months from "./components/Months";
+import ProjectName from "./components/ProjectName";
+import Client from "./components/Client";
+import Description from "./components/Description";
+import Location from "./components/Location";
+import Dates from "./components/Dates";
+import MemberList from "./components/MemberList";
+
+// API route
+import CreateService from "../../../Services/CreateService";
 
 function NewProject(props) {
-  // Using the useHistory hook for pushing a new route into the history
-  const history = useHistory();
+  // ---Initialization---
 
   // Declare hooks from useForm
-  const { register, handleSubmit, reset } = useForm();
-  const [message, setMessage] = useState(null);
+  const { register, handleSubmit, errors } = useForm();
+  const [members, setMembers] = useState([]);
 
-  // Event to handle user adding a new project
-  const onSubmit = (user, event) => {
-    event.preventDefault();
+  // Variables for year, month and date
+  let years = [];
+  let yearsMin = 1990;
+  let yearsMax = 2020;
+  let i;
+  for (i = yearsMin; i < yearsMax + 1; i++) {
+    years.push(i);
+  }
+
+  let months = [];
+  const monthsMin = 1;
+  const monthsMax = 12;
+  let j;
+  for (j = monthsMin; j < monthsMax + 1; j++) {
+    months.push(j);
+  }
+
+  let dates = [];
+  const datesMin = 1;
+  const datesMax = 31;
+  let k;
+  for (k = datesMin; k < datesMax + 1; k++) {
+    dates.push(k);
+  }
+
+  // Get select of team members
+  const teamMember = ["ian", "alex", "amy"];
+
+  // ---Event Handler---
+
+  // When Submit Button is Clicked
+  const onSubmit = (user, e) => {
     console.log(user);
+    console.log({ members });
+    const {
+      startDate,
+      startMonth,
+      startYear,
+      endDate,
+      endMonth,
+      endYear,
+    } = user;
+    const start = `${startDate}-${startMonth}-${startYear}`;
+    const end = `${endDate}-${endMonth}-${endYear}`;
+    console.log(start);
+    console.log(end);
+
     CreateService.CreateProject(user)
-      .then(res => {
+      .then((res) => {
         if (res.data.status === "error") {
-            throw new Error(res.data.message);
+          throw new Error(res.data.message);
         }
       })
-      .catch(err => {
-          return err;
-      })
-    event.target.reset();
-    // Placeholder for submitting a new project using an axios call to the backend application
+      .catch((err) => {
+        return err;
+      });
+    //e.target.reset();
+  };
+
+  // Handler for Members
+  const membersInclude = (m) => {
+    setMembers(members.concat(m));
+  };
+
+  const membersRemove = (m) => {
+    const index = members.findIndex((mSaved) => mSaved === m);
+    members.splice(index, 1);
+    setMembers(members);
+  };
+
+  const onchange = (e) => {
+    if (e.target.type === "checkbox" && !e.target.checked) {
+      membersRemove(e.target.name);
+    } else {
+      membersInclude(e.target.name);
+    }
   };
 
   return (
@@ -35,106 +107,100 @@ function NewProject(props) {
       <h1>New project</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        
         <h3>Project Details</h3>
+        <div className="form-group row">
+          <ProjectName register={register} />
+          <Client register={register} />
+        </div>
 
         <div className="form-group row">
-          <div className="form-group col">
-            <label>Project Name</label>
-            <input
-              required
-              name="projectName"
-              type="text"
-              className="form-control"
-              placeholder="Project Name"
-              ref={register}
-              required
-            />
-          </div>
-
-          <div className="form-group col">
-            <label>Client</label>
-            <input
-              required
-              name="client"
-              type="text"
-              className="form-control"
-              placeholder="Client"
-              ref={register}
-              required
-            />
-          </div>
+          <Description register={register} />
         </div>
 
-        <div className="form-group">
-          <label>Description</label>
-          <input
-            required
-            name="description"
-            type="text"
-            className="form-control"
-            placeholder="Description"
-            ref={register}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Location</label>
-          <input
-            required
-            name="location"
-            type="text"
-            className="form-control"
-            placeholder="Location (select on map)"
-            ref={register}
-          />
+        <div className="form-group row">
+          <Location register={register} />
         </div>
 
         <div className="form-group row">
           <div className="form-group col">
             <label>Start date</label>
-            <input
-              required
-              name="startDate"
-              type="text"
-              className="form-control"
-              placeholder="Start date"
-              ref={register}
-            />
+            <div className="row">
+              <div className="col-sm-4">
+                <Years
+                  years={years}
+                  name="startYear"
+                  register={register({
+                    validate: (value) => value !== "---Year---",
+                  })}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Months
+                  months={months}
+                  name="startMonth"
+                  register={register({
+                    validate: (value) => value !== "---Month---",
+                  })}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Dates
+                  dates={dates}
+                  name="startDate"
+                  register={register({
+                    validate: (value) => value !== "---Date---",
+                  })}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="form-group col">
             <label>End date</label>
-            <input
-              required
-              name="endDate"
-              type="text"
-              className="form-control"
-              placeholder="End date"
-              ref={register}
-            />
+            <div className="row">
+              <div className="col-sm-4">
+                <Years
+                  years={years}
+                  name="endYear"
+                  register={register({
+                    validate: (value) => value !== "---Year---",
+                  })}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Months
+                  months={months}
+                  name="endMonth"
+                  register={register({
+                    validate: (value) => value !== "---Month---",
+                  })}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Dates
+                  dates={dates}
+                  name="endDate"
+                  register={register({
+                    validate: (value) => value !== "---Date---",
+                  })}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="form-group">
-          <label>Team members</label>
-          <input
-            required
-            name="Team members"
-            type="text"
-            className="form-control"
-            placeholder="Team members - select from a list"
-            ref={register}
-          />
+        <div className="form-group row">
+          <div className="form-group col">
+            <label>Team Member</label>
+            {/* Need to pass id in it later when get request form */}
+            <MemberList teamMember={teamMember} onchange={onchange} />
+          </div>
         </div>
-
         <button type="submit" className="btn btn-primary btn-block">
           Submit
         </button>
-        
       </form>
-      
+
       <div>
         <p>Map placeholder</p>
       </div>
