@@ -15,7 +15,7 @@ import Dates from "./components/Dates";
 import MemberList from "./components/MemberList";
 
 // API route
-import CreateService from "../../../Services/CreateService";
+import projectService from "../../../Services/ProjectService";
 
 function NewProject(props) {
   // ---Initialization---
@@ -56,24 +56,27 @@ function NewProject(props) {
 
   // When Submit Button is Clicked
   const onSubmit = (user, e) => {
-    console.log(user);
-    console.log({ members });
     const {
-      startDate,
+      startD,
       startMonth,
       startYear,
-      endDate,
+      endD,
       endMonth,
       endYear,
     } = user;
-    const start = `${startDate}-${startMonth}-${startYear}`;
-    const end = `${endDate}-${endMonth}-${endYear}`;
-    
-    const dataSend = {
-      
-    }
+    const startDate = `${startD}-${startMonth}-${startYear}`;
+    const endDate = `${endD}-${endMonth}-${endYear}`;
+    const teamMembers = members;
 
-    CreateService.CreateProject(user)
+    const dataSend = {
+      user,
+      startDate,
+      endDate,
+      teamMembers
+    };
+    console.log(dataSend);
+
+    projectService.createProject(dataSend)
       .then((res) => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
@@ -148,7 +151,7 @@ function NewProject(props) {
               <div className="col-sm-4">
                 <Dates
                   dates={dates}
-                  name="startDate"
+                  name="startD"
                   register={register({
                     validate: (value) => value !== "---Date---",
                   })}
@@ -181,7 +184,7 @@ function NewProject(props) {
               <div className="col-sm-4">
                 <Dates
                   dates={dates}
-                  name="endDate"
+                  name="endD"
                   register={register({
                     validate: (value) => value !== "---Date---",
                   })}
