@@ -1,8 +1,25 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Avatar from "./worker.png";
+import AuthService from "../../../Services/AuthService";
 import "./styles/AccountDashboard.css";
-
 function AccountDashboard() {
+  const [user, setUser] = useState({});
+  const [project, setProject] = useState(null);
+  const getData = async () => {
+    const {data} = await AuthService.getInfo("5f5413bc90d4c22f502d97ec");
+    setUser(data)
+    setProject(data.project.length);
+    
+  }
+  
+  
+  useEffect(() => {
+    getData({});
+  }, []);
+  
+  
+  
+ 
   return (
       <div className="profile">
         <div className="profile__picture">
@@ -10,7 +27,7 @@ function AccountDashboard() {
         </div>
         <div className="profile__header">
           <div className="profile__account">
-            <h4 className="profile__username">Meedaxa Ahmed</h4>
+  <h4 className="profile__username">{user.firstName}{" "}{user.lastName}</h4>
           </div>
         </div>
         <div className="profile__stats">
@@ -19,7 +36,7 @@ function AccountDashboard() {
               <i className="material-icons">engineering</i>
             </div>
             <div className="profile__value">
-              11
+              {project}
               <div className="profile__key">Projects</div>
             </div>
           </div>
