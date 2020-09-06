@@ -41,6 +41,10 @@ p {
   color: #ffffff;
 }
 
+.date {
+  margin-left: 35px;
+}
+
 .users {
   display: inline-flex;
   flex-direction: row;
