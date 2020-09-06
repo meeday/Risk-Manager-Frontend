@@ -4,12 +4,13 @@ import Toast from "react-bootstrap/Toast";
 
 const getStyle = (props) => {
   let baseClass = "bg-";
+  let messageClass;
   // the message we get from the server, if it's an error
   if (props.message.msgErr)
-    baseClass = baseClass + "danger";
+    messageClass = `${baseClass}danger`;
   //    if there is no error message
-  else baseClass = baseClass + "success";
-  return baseClass;
+  else messageClass = `${baseClass}success`;
+  return messageClass;
 };
 
 const getTitle = (props) => {
