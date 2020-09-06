@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../../Services/AuthService";
-import Toast from "../../Toasts/LoginToast";
+import Toast from "../../Toasts/Toast";
 // import { AuthContext } from "../../../Context/AuthContext";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
