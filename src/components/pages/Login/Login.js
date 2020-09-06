@@ -12,7 +12,7 @@ export default function Login() {
   // pull out hooks methods from useForm
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState(null);
-  
+
   // destructuring Authcontext, we can set new state
   // const { setUser, setIsAuthenticated } = useContext(AuthContext);
 
@@ -22,7 +22,7 @@ export default function Login() {
       const { isAuthenticated, user, message } = data;
       // if user authenticated update the state with user info
       if (isAuthenticated) {
-        // --- 
+        // ---
         // setUser(user);
         // setIsAuthenticated(isAuthenticated);
 
@@ -30,7 +30,10 @@ export default function Login() {
         history.push("/");
       } else {
         // this will be an error message telling whats wrong
-        setMessage(message);
+        setMessage({
+          msgBody: "Invalid login credentials",
+          msgErr: true,
+        });
       }
     });
   };
