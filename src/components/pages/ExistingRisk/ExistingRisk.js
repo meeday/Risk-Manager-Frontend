@@ -14,11 +14,11 @@ function ExistingRisk(props) {
       <p>Risk severity: score</p>
 
       <button>
-        <a>Edit risk</a>
+        <a href="/">Edit risk</a>
       </button>
 
       <button>
-        <a>Delete risk</a>
+        <a href="/">Delete risk</a>
       </button>
 
       <div>
