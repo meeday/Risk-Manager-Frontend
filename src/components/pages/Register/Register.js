@@ -10,7 +10,7 @@ export default function Register() {
   const history = useHistory();
 
   //  pull out the in-built methods, what we going to use from userForm hook
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // the message new state going to setup what we get from the server(error message or confirm message)
   const [message, setMessage] = useState(null);

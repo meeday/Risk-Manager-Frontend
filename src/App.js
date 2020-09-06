@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserForm from "./components/UserForm/UserForm";
-import Logout from './components/LogoutButton/LogoutButton';
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
 import Home from "./components/pages/Home/Home";
@@ -31,14 +30,14 @@ function App(props) {
             )}
           />
           {/* Wrap AuthProvider round restricted routes so they don't render if user isn't logged in */}
-          <AuthProvider>
+          {/* <AuthProvider> */}
             <Route exact path="/" component={Home} />
             <Route exact path="/new-project" component={NewProject} />
             <Route exact path="/project/:projectId" component={Project} />
             <Route exact path="/project/:projectId/new-risk" component={NewRisk} />
             <Route exact path="/project/:projectId/risk/:riskId" component={ExistingRisk} />
             <Route exact path="/account" component={AccountDashboard} />
-          </AuthProvider>
+          {/* </AuthProvider> */}
         </Switch>
       </Router>
     </div>
