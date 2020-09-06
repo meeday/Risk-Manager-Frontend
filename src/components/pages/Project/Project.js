@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
@@ -15,6 +16,7 @@ const markers = [
   { lat: 52.474876, lng: -1.904408 },
   { lat: 52.474744, lng: -1.888884 },
 ];
+
 const teamMembers = ["Joe", "Niro", "Ian", "Meedaxa"];
 const mapCenter = {
   lat: 52.479161,
@@ -39,6 +41,7 @@ const Projects = () => {
               Westminster, London SW1A 0AA
             </p>
             <p>
+
               <i className="fas fa-user-tie"></i>
               <h2>Client</h2>
               Arup
@@ -47,6 +50,7 @@ const Projects = () => {
               <div className="col-sm-6">
                 <p>
                   <i className="far fa-clock"></i>
+
                   <h2>Start Date</h2><span className="date">6/12/19</span>
                 </p>
               </div>
@@ -54,6 +58,7 @@ const Projects = () => {
                 <p>
                   <i className="far fa-clock"></i>
                   <h2>End Date</h2>
+
                   <span className="date">12/11/20</span>
                 </p>
               </div>
@@ -76,7 +81,6 @@ const Projects = () => {
         </LoadScript>
       </div>
     </>
-
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../../../Services/AuthService";
 import { useForm } from "react-hook-form";
-import Message from "../../Message/Message";
-import { Link, useHistory } from "react-router-dom";
+import Toast from "../../Toasts/Toast";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 // creating the Register component
 export default function Register() {
@@ -29,12 +29,13 @@ export default function Register() {
     AuthService.register(user).then((data) => {
       // pull out the message from the data what we get from the server
       const { message } = data;
+      console.log(message);
       // pass server message to the message new state
       setMessage(message);
       // after we recivered server data we can clear the user infromation from Sign Up page
       e.target.reset();
       // if there is no message error, after 3sec redirect user to the login page
-      if (!message.msgError) {
+      if (!message.msgErr) {
         timerID = setTimeout(() => {
           // Use useHistory hook from react-router-dom to redirect to /login route
           history.push("/login");
@@ -46,7 +47,7 @@ export default function Register() {
   return (
     <>
       {/* if there is a message go to the message component */}
-      {message ? <Message message={message} /> : null}
+      {message ? <Toast message={message} /> : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <h3>Sign Up</h3>
         <div className="form-group row">
