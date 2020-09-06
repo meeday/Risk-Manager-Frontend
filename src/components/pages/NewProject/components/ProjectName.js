@@ -6,7 +6,7 @@ function ProjectName(props) {
             <label>Project Name</label>
             <input
             required
-            name="projectName"
+            name="title"
             type="text"
             className="form-control"
             placeholder="Project Name"
