@@ -91,6 +91,8 @@ h3>span {
   left: calc(50% - 250px);
 }
 
-/* .add {
-  margin-bottom: 5px;
-} */
+@media (max-width: 320px) {
+  .risk-btn {
+    margin: 0px 5px 5px 0px;
+  }
+}
