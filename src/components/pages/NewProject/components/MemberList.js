@@ -5,37 +5,41 @@ import { Dropdown, Form } from "react-bootstrap";
 import userService from "../../../../Services/UserService";
 
 function MemberList(props) {
+  // Set state
   const [teamMember, setTeamMember] = useState([]);
+
+  // API call to get all users and set to state
   const getTeamMember = async () => {
     try {
       const dataReturn = await userService.getAllUser();
       const arrayData = dataReturn.data.UserData;
-  
-      arrayData.map(user => {
-        const test =
-          {
-            userName: `${user.firstName} ${user.lastName}`,
-            userId: user._id
-          }
-        setTeamMember(oldList => [...oldList, test]);
+
+      const arrayUsers = arrayData.map(user => {
+        return {
+          userName: `${user.firstName} ${user.lastName}`,
+          userId: user._id
+        }
       });
+      setTeamMember(arrayUsers);
     }
     catch (err) {
-      console.log(err)
+      console.log(`Error - MemberList.js - getTeamMember() - ${err}`);
     }
   }
 
+  // Call the function which gets all users and sets to state
   useEffect(() => {
     getTeamMember();
   }, []);
-
+  
   return (
     <Dropdown>
       <Dropdown.Toggle variant="light" id="dropdown-basic">
         Select
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {teamMember.map(function (member, index) {
+        {teamMember.map((member, index) => {
+          console.log(member.userName);
           return (
             <div className="row" key={index} style={{ marginLeft: 5 }}>
               <Form.Check
@@ -44,7 +48,7 @@ function MemberList(props) {
                 id={member.userId}
                 onChange={props.onchange}
               />
-              <p>{member.userName}</p>
+              {member.userName}
             </div>
           );
         })}
