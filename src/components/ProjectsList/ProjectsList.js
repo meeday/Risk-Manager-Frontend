@@ -15,8 +15,8 @@ export default function ProjectList(props) {
         ))}
       </List>
       <div className="text-center">
-        <button type="submit" className="btn btn-primary add">
-          Add Project
+        <button className="btn btn-primary add">
+          <a href="/new-project">Add Project</a>
         </button>
       </div>
     </div>
