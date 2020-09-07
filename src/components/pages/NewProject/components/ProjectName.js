@@ -11,7 +11,6 @@ function ProjectName(props) {
             className="form-control"
             placeholder="Project Name"
             ref={props.register}
-            required
             />
         </div>
     )

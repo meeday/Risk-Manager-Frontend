@@ -11,7 +11,6 @@ import Months from "./components/Months";
 import ProjectName from "./components/ProjectName";
 import Client from "./components/Client";
 import Description from "./components/Description";
-import Location from "./components/Location";
 import Dates from "./components/Dates";
 import MemberList from "./components/MemberList";
 

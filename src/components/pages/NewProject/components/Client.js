@@ -11,7 +11,6 @@ function Client(props) {
               className="form-control"
               placeholder="Client"
               ref={props.register}
-              required
             />
         </div>
     )

@@ -11,7 +11,6 @@ function Description(props) {
                 className="form-control"
                 placeholder="Description"
                 ref={props.register}
-                required
             />
         </div>
     )
