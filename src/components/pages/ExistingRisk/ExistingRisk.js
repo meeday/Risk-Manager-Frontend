@@ -62,11 +62,11 @@ const ExistingRisk = () => {
           </p>
           <div className="det">
             <p className="riskDetails">
-              <i className="fa fa-map-marker icon"></i> <h2>Location</h2>
+              <i className="fa fa-map-marker icon marker-icon"></i> <h2>Location</h2>
               Westminster, London SW1A 0AA
             </p>
             <p className="riskDetails">
-              <i className="fas fa-pencil-ruler icon"></i>
+              <i className="fas fa-pencil-ruler icon design-icon"></i>
               <h2>Design Discipline</h2>
               Bridge
             </p>
@@ -77,7 +77,7 @@ const ExistingRisk = () => {
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="comments">
-            <i className="fas fa-comments icon"></i>
+            <i className="fas fa-comments icon comments-icon"></i>
             <h2>Comments & Suggested Mitigations</h2>
             <textarea
               name="comment"
