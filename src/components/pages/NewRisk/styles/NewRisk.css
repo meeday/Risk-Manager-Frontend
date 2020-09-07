@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background: #bdbdbd;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 400;
+  font-family: "Fira Sans", sans-serif;
+  padding: 5%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span {
+  font-weight: 500;
+  font-family: "Fira Sans", sans-serif;
+}
+
+body,
+html,
+.App,
+#root,
+.new-risk-wrapper {
+  width: 100%;
+}
+
+.new-risk-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: left;
+}
+
+.new-risk-inner {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: auto;
+  background: #bdbdbd;
+  max-width: 600px;
+  -webkit-box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 45px 55px 45px 55px;
+  border-radius: 15px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.submit-btn {
+  max-width: 140px;
+  margin: 0 auto;
+}
+
+.form-description {
+  min-height: 85px;
+  padding-top: 5px;
+}
+
+.show-map {
+  margin-bottom: 8px;
+}
+
+.disabled-form {
+  background: #999999;
+}
+
+.disabled-form p {
+  margin: 7.5px 0;
+}
+
+.form-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.disabled-colored-risk {
+  opacity: 0.7;
+}
+
+.very-low {
+  background: #238823;
+  color: #ffffff;
+}
+
+.low {
+  background: #a1c578;
+}
+
+.medium {
+  background: #ffbf00;
+}
+
+.high{
+  background: #ff4000;
+}
+
+.very-high {
+  background: #9c0000;
+  color: #ffffff;
+}
+
+.label-popover {
+  margin: 0 10px;
+}

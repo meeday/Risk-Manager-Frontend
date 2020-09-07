@@ -1,4 +1,5 @@
-import React, { useState, createContext, useEffect } from 'react'
+import React, { useState, createContext, useEffect } from 'react';
+import { Redirect } from "react-router-dom";
 import AuthService from '../Services/AuthService';
 
 // creatng a context
@@ -30,7 +31,7 @@ export default ({ children }) => {
     return (
         <div>
             {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}
-            {!isLoaded ? <h3>Loading...</h3> :
+            {!isLoaded ? <Redirect to='/login'/> :
             <AuthContext.Provider value = {{user, setUser, isAuthenticated, setIsAuthenticated }}>
             {children}
             </AuthContext.Provider>

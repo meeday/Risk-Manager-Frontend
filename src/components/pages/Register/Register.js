@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../../Services/AuthService";
+import AuthService from "../../../Services/AuthService";
 import { useForm } from "react-hook-form";
-import Message from "../Message/Message";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Toast from "../../Toasts/Toast";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 // creating the Register component
-export default function Register(props) {
+export default function Register() {
+  // Using the useHistory hook for pushing a new route into the history
+  const history = useHistory();
+
   //  pull out the in-built methods, what we going to use from userForm hook
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // the message new state going to setup what we get from the server(error message or confirm message)
   const [message, setMessage] = useState(null);
@@ -26,15 +29,16 @@ export default function Register(props) {
     AuthService.register(user).then((data) => {
       // pull out the message from the data what we get from the server
       const { message } = data;
+      console.log(message);
       // pass server message to the message new state
       setMessage(message);
       // after we recivered server data we can clear the user infromation from Sign Up page
       e.target.reset();
       // if there is no message error, after 3sec redirect user to the login page
-      if (!message.msgError) {
+      if (!message.msgErr) {
         timerID = setTimeout(() => {
-          // for redirecting to a new page, we can use histrory object from react router using props.
-          props.history.push("/login");
+          // Use useHistory hook from react-router-dom to redirect to /login route
+          history.push("/login");
         }, 3000);
       }
     });
@@ -43,7 +47,7 @@ export default function Register(props) {
   return (
     <>
       {/* if there is a message go to the message component */}
-      {message ? <Message message={message} /> : null}
+      {message ? <Toast message={message} /> : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <h3>Sign Up</h3>
         <div className="form-group row">

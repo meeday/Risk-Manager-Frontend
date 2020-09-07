@@ -1,0 +1,103 @@
+.projectList {
+  -webkit-animation: popUp ease-in-out 350ms;
+  animation: popUp ease-in-out 350ms;
+  background: #bdbdbd;
+  border-radius: 25px;
+  box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.17);
+  margin-top: 40px;
+  margin-left: -250px;
+  left: 50%;
+  position: absolute;
+  width: 500px;
+}
+.add {
+  background-color: #2196f3;
+  color: white;
+  border-radius: 25px;
+  padding: 8px;
+  border: 1px solid white;
+  margin: 20px;
+}
+
+.list {
+  margin-right: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.list .listItem {
+  list-style: none;
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 3px;
+  opacity: 0;
+  border-radius: 25px;
+  border: white 1px solid;
+}
+.list .listItem:nth-child(n) {
+  animation: pop 1.5s 0.2s forwards;
+  background: #2196f3;
+  color: white;
+}
+
+@-moz-keyframes pop {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes pop {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-o-keyframes pop {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pop {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .projectList {
+    margin-left: -150px;
+    left: 50%;
+    position: absolute;
+    width: 300px;
+  }
+}

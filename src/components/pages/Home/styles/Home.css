@@ -1,0 +1,15 @@
+.nav-tabs {
+  justify-content: center;
+  border: none;
+  font-size: 30px;
+  text-align: center;
+  padding: 50px 28px;
+  margin-top: 50px;
+  line-height: 50px;
+}
+
+.nav-tabs > a {
+  color: #ffffff;
+  font-weight: bold;
+}
+
