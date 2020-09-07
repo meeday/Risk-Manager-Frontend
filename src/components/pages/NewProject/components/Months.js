@@ -4,7 +4,7 @@ function Months(props) {
   return (
     <div className="form-group">
       <select className="form-control" name={props.name} ref={props.register}>
-        <option>---Month---</option>
+        <option>MM</option>
         {props.months.map(function (month, id) {
           return (
             <option value={month} key={id}>

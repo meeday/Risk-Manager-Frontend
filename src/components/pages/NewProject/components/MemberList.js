@@ -5,8 +5,8 @@ import { Dropdown, Form } from "react-bootstrap";
 import userService from "../../../../Services/UserService";
 
 function MemberList(props) {
-  const teamMember = userService.getAllUser;
-
+  //const teamMember = userService.getAllUser;
+  const teamMember = ["ian", "alex", "mary"];
   return (
     <Dropdown>
       <Dropdown.Toggle variant="light" id="dropdown-basic">
