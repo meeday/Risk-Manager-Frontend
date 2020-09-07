@@ -223,17 +223,7 @@ function EditRisk(props) {
           </div>
 
           <div className="form-group row">
-            <div className="form-group col-sm-6 col-xs-12">
-              <label>ID</label>
-              <input
-                required
-                name="riskId"
-                type="text"
-                className="form-control"
-                placeholder="Risk ID (must be unique)"
-                ref={register}
-              />
-            </div>
+            
 
             <div className="form-group col-sm-6 col-xs-12">
               <label>Discipline</label>
@@ -420,7 +410,7 @@ function EditRisk(props) {
             type="submit"
             className="btn btn-primary btn-block submit-btn"
           >
-            Submit
+            Save Edit
           </button>
         </form>
       </div>
