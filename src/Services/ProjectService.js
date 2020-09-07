@@ -51,15 +51,6 @@ export default {
             console.log(`Error - ProjectService.js - deleteProject() - ${error}`)
         }
     },
-    getAllUser : async () => {
-        try {
-            const res = await fetch(`/api/user`)
-            return res;
-        }
-        catch (err) {
-            console.log(`Error - ProjectService.js - getAllUser() - ${err}`)
-        }
-    },
 
     // api/project/risk/... routes
     getRisk : async id => {

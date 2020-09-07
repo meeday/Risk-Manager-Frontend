@@ -7,7 +7,7 @@ function Description(props) {
             <input
                 required
                 name="description"
-                type="text"
+                type="textarea"
                 className="form-control"
                 placeholder="Description"
                 ref={props.register}

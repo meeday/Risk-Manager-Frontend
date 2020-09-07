@@ -26,8 +26,8 @@ function NewProject(props) {
 
   // Variables for year, month and date
   let years = [];
-  let yearsMin = 1990;
-  let yearsMax = 2020;
+  let yearsMax = Date().getFullYear();
+  let yearsMin = yearsMax - 5;
   let i;
   for (i = yearsMin; i < yearsMax + 1; i++) {
     years.push(i);

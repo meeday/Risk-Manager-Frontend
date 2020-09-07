@@ -2,10 +2,10 @@ import React from "react";
 import { Dropdown, Form } from "react-bootstrap";
 
 // API get route
-import projectService from "../../../../Services/ProjectService";
+import userService from "../../../../Services/UserService";
 
 function MemberList(props) {
-  const teamMember = projectService.getAllUser;
+  const teamMember = await userService.getAllUser();
 
   return (
     <Dropdown>
