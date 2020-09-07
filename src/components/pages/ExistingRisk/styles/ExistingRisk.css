@@ -12,6 +12,12 @@ h3>span {
 .risk-icon {
   color: #ff0000;
 }
+.design-icon {
+  color: #ffd900
+}
+.comments-icon {
+  color: #f5deb3
+}
 .riskDetails {
   color: #ffffff;
 }
