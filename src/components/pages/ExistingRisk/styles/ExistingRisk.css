@@ -1,66 +1,96 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+h3 {
+  margin: 5px;
+  font-size: 14px;
+  align-self: center;
+  color: #2196f2;
 }
 
-body {
-  background: #bdbdbd;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-weight: 400;
-  font-family: "Fira Sans", sans-serif;
-  padding: 5%;
+h3>span {
+  margin-left: 5px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-span {
-  font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
+.risk-icon {
+  color: #ff0000;
 }
-
-body,
-html,
-.App,
-#root,
-.auth-wrapper {
-  width: 100%;
+.riskDetails {
+  color: #ffffff;
 }
-
-.auth-wrapper {
+.risk-btn {
+  margin: 0px 5px 0px 0px;
+}
+.det {
+  text-align: justify;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.modal-body{
+  background-color: #bdbdbd;
+}
+.modal-header {
+  background-color: #2196f2;
+  z-index: 4;
+}
+.edit-risk-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   text-align: left;
 }
 
-.auth-inner {
+.edit-risk-inner {
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 450px;
+  -ms-flex-pack: center;
+  justify-content: center;
   margin: auto;
   background: #bdbdbd;
+  max-width: 600px;
   -webkit-box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-          box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 45px 55px 45px 55px;
-  border-radius: 15px;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 35px 15px 35px 15px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/*# sourceMappingURL=ExistingRisk.css.map */
+
+.comments {
+  margin-bottom: 20px;
+}
+
+.commentText {
+  color: #ffffff;
+}
+
+
+.data-post {
+  font-weight: 400;
+  font-size: 8pt;
+  color: #ffffff;
+}
+
+.data-post::before {
+  /* adds a dot to seperate the author from the date posted */
+  content: " · ";
+  margin-left: 5px;
+  font-weight: 900;
+}
+
+#newPost {
+  border: 1px dashed #bdbdbd;
+  resize: none;
+  padding: 20px;
+  background: #ffffff;
+  font-size: 1.4em;
+  font-weight: lighter;
+  width: 100%;
+  left: calc(50% - 250px);
+}
+
+/* .add {
+  margin-bottom: 5px;
+} */
