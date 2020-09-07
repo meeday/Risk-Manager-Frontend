@@ -273,7 +273,7 @@ function EditRisk(props) {
                 onClick={handleLocationChange}
               >
                 <Marker
-                  position={{ lat: riskLocation.lat, lng: riskLocation.lng }}
+                  position={riskLocation}
                 />
               </GoogleMap>
             </div>
