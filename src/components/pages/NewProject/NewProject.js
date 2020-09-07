@@ -21,25 +21,36 @@ import projectService from "../../../Services/ProjectService";
 import { config } from "../../../config";
 
 function NewProject(props) {
-  // ---Initialization---
-
-
-  
-  // ******* mapCentre will need to be retrieved
-  let mapCentre = {
+  // Center point of the Google map
+  let mapCenter = {
     lat: 52.475,
     lng: -1.900,
   };
-
+  
   // Declare hooks from useForm
   const { register, handleSubmit, errors } = useForm();
   const [members, setMembers] = useState([]);
-  const [riskLocation, setRiskLocation] = useState(mapCentre);
-  
+  const [riskLocation, setRiskLocation] = useState(mapCenter);
+
   // Google Maps
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: config.GOOGLE_MAPS_API_KEY,
   });
+
+  // Google map API styling and options
+  const mapContainerStyle = {
+    minWidth: "200px",
+    maxWidth: "90vw",
+    minHeight: "250px",
+    maxheight: "80vh",
+    margin: "0 auto",
+  };
+
+  // Disable all Google Maps UI features. Activate zoom control
+  const mapOptions = {
+    disableDefaultUI: true,  
+    zoomControl: true,
+  }
 
   // Return errors or loading message if Google Maps does not load or is loading
   if (loadError) return "Error loading Google Maps";
@@ -59,25 +70,10 @@ function NewProject(props) {
   let dates = [];
   const datesMin = 1;
   const datesMax = 31;
-  let k;
-  for (k = datesMin; k < datesMax + 1; k++) {
+  for (let k = datesMin; k <= datesMax; k++) {
     dates.push(k);
   }
 
-  // Google map API styling and options
-  const mapContainerStyle = {
-    minWidth: "200px",
-    maxWidth: "90vw",
-    minHeight: "250px",
-    maxheight: "80vh",
-    margin: "0 auto",
-  };
-
-  // Disable all Google Maps UI features. Activate zoom control
-  const mapOptions = {
-    disableDefaultUI: true,  
-    zoomControl: true,
-  }
 
   // ---Event Handler---
 
@@ -178,7 +174,7 @@ function NewProject(props) {
 
           <div>
             <br></br>
-            <h6>Select risk location:</h6>
+            <h6>Select approximate project location:</h6>
             <a 
               className="btn btn-primary show-map text-white"
               data-toggle="collapse"
@@ -192,7 +188,7 @@ function NewProject(props) {
               <GoogleMap 
                 mapContainerStyle={mapContainerStyle} 
                 zoom={12} 
-                center={mapCentre}
+                center={mapCenter}
                 options={mapOptions}
                 onClick={handleLocationChange}
                 >
