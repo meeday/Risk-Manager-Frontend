@@ -31,40 +31,40 @@ const Projects = () => {
       <div className="map">
         <div className="map-c">
           <h1>Big Ben</h1>
-          <p>
+          <p className="projectDetails">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Accusantium id cumque est dolores voluptatibus.
           </p>
           <div className="det">
-            <p>
-              <i className="fa fa-map-marker"></i> <h2>Location</h2>
+            <p className="projectDetails">
+              <i className="fa fa-map-marker icon"></i> <h2>Location</h2>
               Westminster, London SW1A 0AA
             </p>
             <p>
 
-              <i className="fas fa-user-tie"></i>
+              <i className="fas fa-user-tie icon"></i>
               <h2>Client</h2>
               Arup
             </p>
             <div className="row">
               <div className="col-sm-6">
-                <p>
-                  <i className="far fa-clock"></i>
+                <p className="projectDetails">
+                  <i className="far fa-clock icon"></i>
 
                   <h2>Start Date</h2><span className="date">6/12/19</span>
                 </p>
               </div>
               <div className="col-sm-6">
-                <p>
-                  <i className="far fa-clock"></i>
+                <p className="projectDetails">
+                  <i className="far fa-clock icon"></i>
                   <h2>End Date</h2>
 
                   <span className="date">12/11/20</span>
                 </p>
               </div>
             </div>
-            <p>
-              <i className="fas fa-users"></i>
+            <p className="projectDetails">
+              <i className="fas fa-users icon"></i>
               <h2>Team Members</h2>
               {teamMembers.map((users) => (
                 <li className="users">{users}</li>
