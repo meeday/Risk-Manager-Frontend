@@ -5,7 +5,7 @@ import { Dropdown, Form } from "react-bootstrap";
 import userService from "../../../../Services/UserService";
 
 function MemberList(props) {
-  const teamMember = await userService.getAllUser();
+  const teamMember = userService.getAllUser;
 
   return (
     <Dropdown>
