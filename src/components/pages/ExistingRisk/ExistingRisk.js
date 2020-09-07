@@ -17,6 +17,7 @@ const mapOptions = {
 const marker = { lat: 52.479738, lng: -1.903979 };
 
 const ExistingRisk = () => {
+
   const [modalState, setModalState] = useState(
     "modal-one" | "modal-two" | "close"
   );
@@ -32,6 +33,8 @@ const ExistingRisk = () => {
   const handleClose = () => {
     setModalState("close");
   };
+
+  
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
