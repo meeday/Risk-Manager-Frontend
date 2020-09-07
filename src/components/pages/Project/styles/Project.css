@@ -34,7 +34,7 @@ h2 {
   color: #2196f3;
 }
 
-p {
+.projectDetails {
   font-size: 18px;
   margin-top: 20px;
   margin-bottom: 45px;
@@ -61,7 +61,7 @@ p {
   margin-bottom: 15px;
 }
 
-i {
+.icon {
   float: left;
   color: #2196f3;
   font-size: 18px !important;
