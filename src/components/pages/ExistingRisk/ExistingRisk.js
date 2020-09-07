@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
+import Toast from "../../Toasts/Toast";
 import Comments from "./subComponents/riskComments";
 import EditRisk from "./subComponents/editRisk";
+import ProjectService from "../../../Services/ProjectService";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import "./styles/ExistingRisk.css";
+import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
+import "./styles/ExistingRisk.css";
 dotenv.config();
 
 const mapOptions = {
@@ -17,7 +20,17 @@ const mapOptions = {
 const marker = { lat: 52.479738, lng: -1.903979 };
 
 const ExistingRisk = () => {
+  const history = useHistory();
 
+  let timerID = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerID);
+    };
+  }, []);
+
+  const [message, setMessage] = useState(null);
   const [modalState, setModalState] = useState(
     "modal-one" | "modal-two" | "close"
   );
@@ -34,7 +47,15 @@ const ExistingRisk = () => {
     setModalState("close");
   };
 
-  
+  const handleDelete = async () => {
+    setMessage({ msgBody: "Risk Deleted!", msgErr: false });
+    timerID = setTimeout(() => {
+      history.push("/project");
+    }, 1500);
+    const res = await ProjectService.deleteRisk("003");
+    console.log(res);
+  };
+
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
@@ -65,7 +86,8 @@ const ExistingRisk = () => {
           </p>
           <div className="det">
             <p className="riskDetails">
-              <i className="fa fa-map-marker icon marker-icon"></i> <h2>Location</h2>
+              <i className="fa fa-map-marker icon marker-icon"></i>{" "}
+              <h2>Location</h2>
               Westminster, London SW1A 0AA
             </p>
             <p className="riskDetails">
@@ -87,7 +109,7 @@ const ExistingRisk = () => {
               ref={register}
               id="newPost"
               placeholder="Add Comment"
-            ></textarea>
+              ></textarea>
             <button type="submit" className="btn btn-primary risk-btn">
               Add Comment
             </button>
@@ -109,16 +131,21 @@ const ExistingRisk = () => {
               onClick={handleShowModalTwo}
               type="submit"
               className="btn btn-primary risk-btn"
-            >
+              >
               Edit Risk
             </button>
             <Modal show={modalState === "modal-two"}>
               <Modal.Header onClick={handleClose} closeButton></Modal.Header>
               <EditRisk className="edit-form" />
             </Modal>
-            <button type="submit" className="btn btn-danger risk-btn">
+            <button
+              onClick={handleDelete}
+              type="submit"
+              className="btn btn-danger risk-btn"
+              >
               Delete Risk
             </button>
+              {message ? <Toast message={message} /> : null}
           </div>
         </div>
 
