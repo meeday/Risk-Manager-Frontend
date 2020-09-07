@@ -6,10 +6,10 @@ export default {
     getAllUser : async () => {
         try {
             const res = await fetch(`/api/user`)
-            return res;
+            return res.json();
         }
         catch (err) {
-            console.log(`Error - ProjectService.js - getAllUser() - ${err}`)
+            console.log(`Error - UserService.js - getAllUser() - ${err}`)
         }
     }
 }
