@@ -47,20 +47,14 @@ function NewProject(props) {
 
   // Variables for year, month and date
   let years = [];
-  let yearsMax = new Date().getFullYear() + 5;
-  let yearsMin = yearsMax - 10;
+  let yearsMax = new Date().getFullYear() + 20;
+  let yearsMin = new Date().getFullYear() - 5;
   let i;
   for (i = yearsMin; i < yearsMax + 1; i++) {
     years.push(i);
   }
 
-  let months = [];
-  const monthsMin = 1;
-  const monthsMax = 12;
-  let j;
-  for (j = monthsMin; j < monthsMax + 1; j++) {
-    months.push(j);
-  }
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   let dates = [];
   const datesMin = 1;
@@ -111,11 +105,14 @@ function NewProject(props) {
       locationLng,
       title
     } = user;
-    const startDate = `${startD}-${startMonth}-${startYear}`;
-    const endDate = `${endD}-${endMonth}-${endYear}`;
+    const newStartMonth = months.indexOf(startMonth) + 1;
+    const newEndMonth = months.indexOf(endMonth) + 1;
+
+    const startDate = `${startYear}/${newStartMonth}/${startD}`;
+    const endDate = `${endYear}/${newEndMonth}/${endD}`;
     const teamMembers = members;
 
-    const dataSend = {
+    const newProject = {
       title,
       description,
       location: {
@@ -127,23 +124,22 @@ function NewProject(props) {
       client,
       teamMembers
     };
-    console.log(dataSend);
+    console.log(newProject);
 
-    projectService.createProject(dataSend)
+    projectService.createProject(newProject)
       .then((res) => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
       })
       .catch((err) => {
-        return err;
+        console.log(`Error - NewProject.js - onSubmit() - ${err}`);
       });
-    //e.target.reset();
   };
 
-  // Handler for Members
-  const membersInclude = (m) => {
-    setMembers(members.concat(m));
+  // Functions to handle user selecting and unselecting members of the project
+  const membersAdd = (m) => {
+    setMembers(oldMembers => [...oldMembers, m]);
   };
 
   const membersRemove = (m) => {
@@ -153,10 +149,14 @@ function NewProject(props) {
   };
 
   const onchange = (e) => {
+    const data = {
+      name: e.target.name,
+      _id: e.target.id
+    };
     if (e.target.type === "checkbox" && !e.target.checked) {
-      membersRemove(e.target.name);
+      membersRemove(data);
     } else {
-      membersInclude(e.target.name);
+      membersAdd(data);
     }
   };
 
@@ -174,6 +174,31 @@ function NewProject(props) {
 
           <div className="form-group row">
             <Description register={register} />
+          </div>
+
+          <div>
+            <br></br>
+            <h6>Select risk location:</h6>
+            <a 
+              className="btn btn-primary show-map text-white"
+              data-toggle="collapse"
+              data-target="#collapseMap"
+              aria-expanded="false"
+              aria-controls="collapseMap"
+              >
+              Show map
+            </a>
+            <div className="collapse" id="collapseMap">
+              <GoogleMap 
+                mapContainerStyle={mapContainerStyle} 
+                zoom={12} 
+                center={mapCentre}
+                options={mapOptions}
+                onClick={handleLocationChange}
+                >
+                <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
+              </GoogleMap>
+            </div>
           </div>
 
           <div className="form-group row">
@@ -205,16 +230,16 @@ function NewProject(props) {
             <div className="form-group col">
               <label>Start date</label>
               <div className="row">
-                <div className="col-sm-12">
-                  <Years
-                    years={years}
-                    name="startYear"
+                <div className="col-12">
+                  <Dates
+                    dates={dates}
+                    name="startD"
                     register={register({
-                      validate: (value) => value !== "YYYY",
+                      validate: (value) => value !== "DD",
                     })}
                   />
                 </div>
-                <div className="col-sm-12">
+                <div className="col-12">
                   <Months
                     months={months}
                     name="startMonth"
@@ -223,12 +248,12 @@ function NewProject(props) {
                     })}
                   />
                 </div>
-                <div className="col-sm-12">
-                  <Dates
-                    dates={dates}
-                    name="startD"
+                <div className="col-12">
+                  <Years
+                    years={years}
+                    name="startYear"
                     register={register({
-                      validate: (value) => value !== "DD",
+                      validate: (value) => value !== "YYYY",
                     })}
                   />
                 </div>
@@ -238,16 +263,16 @@ function NewProject(props) {
             <div className="form-group col">
               <label>End date</label>
               <div className="row">
-                <div className="col-sm-12">
-                  <Years
-                    years={years}
-                    name="endYear"
+                <div className="col-12">
+                  <Dates
+                    dates={dates}
+                    name="endD"
                     register={register({
-                      validate: (value) => value !== "YYYY",
+                      validate: (value) => value !== "DD",
                     })}
                   />
                 </div>
-                <div className="col-sm-12">
+                <div className="col-12">
                   <Months
                     months={months}
                     name="endMonth"
@@ -256,12 +281,12 @@ function NewProject(props) {
                     })}
                   />
                 </div>
-                <div className="col-sm-12">
-                  <Dates
-                    dates={dates}
-                    name="endD"
+                <div className="col-12">
+                  <Years
+                    years={years}
+                    name="endYear"
                     register={register({
-                      validate: (value) => value !== "DD",
+                      validate: (value) => value !== "YYYY",
                     })}
                   />
                 </div>
@@ -275,18 +300,6 @@ function NewProject(props) {
               {/* Need to pass id in it later when get request form */}
               <MemberList onchange={onchange} />
             </div>
-          </div>
-
-          <div>
-            <GoogleMap 
-              mapContainerStyle={mapContainerStyle} 
-              zoom={12} 
-              center={mapCentre}
-              options={mapOptions}
-              onClick={handleLocationChange}
-              >
-              <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
-            </GoogleMap>
           </div>
 
           <button type="submit" className="btn btn-primary btn-block">
