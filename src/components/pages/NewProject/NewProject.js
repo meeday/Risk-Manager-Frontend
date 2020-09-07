@@ -70,9 +70,6 @@ function NewProject(props) {
     dates.push(k);
   }
 
-  // Get select of team members
-  const teamMember = ["ian", "alex", "amy"];
-
   // Google map API styling and options
   const mapContainerStyle = {
     minWidth: "200px",
@@ -276,7 +273,7 @@ function NewProject(props) {
             <div className="col">
               <label>Team Member</label>
               {/* Need to pass id in it later when get request form */}
-              <MemberList teamMember={teamMember} onchange={onchange} />
+              <MemberList onchange={onchange} />
             </div>
           </div>
 
