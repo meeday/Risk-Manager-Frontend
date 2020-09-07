@@ -6,20 +6,20 @@ function AccountDashboard() {
   const [user, setUser] = useState({});
   const [project, setProject] = useState(null);
   const getData = async () => {
-    const {data} = await AuthService.getInfo("5f5413bc90d4c22f502d97ec");
-    setUser(data)
-    setProject(data.project.length);
-    
+    try {
+      const {data} = await AuthService.getInfo("5f5413bc90d4c22f502d97ec");
+      setUser(data)
+      setProject(data.project.length);
+    }
+    catch (err) {
+      console.log(`Error - AccountDashboard.js - ${err}`);
+    }
   }
-  
   
   useEffect(() => {
     getData({});
   }, []);
   
-  
-  
- 
   return (
       <div className="profile">
         <div className="profile__picture">
@@ -27,7 +27,7 @@ function AccountDashboard() {
         </div>
         <div className="profile__header">
           <div className="profile__account">
-  <h4 className="profile__username">{user.firstName}{" "}{user.lastName}</h4>
+            <h4 className="profile__username">{user.firstName}{" "}{user.lastName}</h4>
           </div>
         </div>
         <div className="profile__stats">
