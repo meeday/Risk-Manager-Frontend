@@ -4,11 +4,11 @@ function Description(props) {
     return (
         <div className="col">
             <label>Description</label>
-            <input
+            <textarea
                 required
                 name="description"
-                type="textarea"
-                className="form-control"
+                type="text"
+                className="form-control form-description"
                 placeholder="Description"
                 ref={props.register}
             />
