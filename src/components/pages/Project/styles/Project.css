@@ -27,7 +27,6 @@ h1 {
 }
 
 h2 {
-  margin: 5px;
   font-size: 18px;
   align-self: center;
   color: #2196f3;
@@ -39,8 +38,13 @@ h2 {
   color: #ffffff;
 }
 
+.data-block h2 {
+  display: inline-block;
+}
+
 .project-content {
   margin-left: 25px;
+  display: block;
 }
 
 .users {

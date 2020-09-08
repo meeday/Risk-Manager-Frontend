@@ -98,7 +98,7 @@ const Projects = () => {
               <div className="row">
                 <div className="col-6">
                   <div className="data-block">
-                    <i className="fa fa-map-marker"></i> 
+                    <i className="icon fa fa-map-marker"></i> 
                     <h2>Latitude</h2>
                     <span className="project-content">52.475</span>
                   </div>
@@ -111,14 +111,14 @@ const Projects = () => {
                 </div>
               </div>
               <div className="data-block">
-                <i className="fas fa-user-tie"></i>
+                <i className="icon fas fa-user-tie"></i>
                 <h2>Client</h2>
                 <span className="project-content">Arup</span>
               </div>
               <div className="row">
                 <div className="col-6">
                   <div className="data-block">
-                    <i className="far fa-clock"></i>
+                    <i className="icon far fa-clock"></i>
                     <h2>Start Date</h2>
                     <span className="project-content">6/12/19</span>
                   </div>
@@ -131,7 +131,7 @@ const Projects = () => {
                 </div>
               </div>
               <div className="data-block">
-                <i className="fas fa-users"></i>
+                <i className="icon fas fa-users"></i>
                 <h2>Team Members</h2>
                 <div className="project-content">
                   {teamMembers.map((user) => (
@@ -192,18 +192,6 @@ const Projects = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="riskList">
-        <h1 className="text-center">Project Risks</h1>
-        <List className="listItems">
-          {risks.map((risk) => (
-            <a href={"13124/risk/" + risk._id}>
-              <LinkItem className="btn btn-primary riskItem" key={risk._id}>
-                {risk.title}
-              </LinkItem>
-            </a>
-          ))}
-        </List>
       </div>
     </>
   );
