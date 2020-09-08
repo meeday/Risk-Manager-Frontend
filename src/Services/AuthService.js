@@ -54,7 +54,9 @@ export default {
       else return { isAuthenticated: false, user: { email: "" } };
     } catch (error) {
       console.log(`Error - AuthService.js - isAuthenticated() - ${error}`);
+
     }
+
   },
 
   logout: async () => {
