@@ -1,13 +1,12 @@
 // Import npm modules, components and methods
+import dotenv from "dotenv";
 import React, { Component, useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import dotenv from "dotenv";
-
-// Import local files
 import Navbar from "../../Nav/Nav";
-import "./styles/Project.css";
 import projectService from "../../../Services/ProjectService";
-import { List, LinkItem } from "../../List/List";
+
+// Import CSS
+import "./styles/Project.css";
 
 // Configure dotenv for environment variables
 dotenv.config();
@@ -143,7 +142,8 @@ const Projects = () => {
           </div>
           <div className = "col-xs-12 col-sm-6">
             <div className="map-container">
-              <h1>Risks</h1>
+              <h1>Risks map</h1>
+              <p className="info-text">Click on a risk to view</p>
               <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
                 <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
                   {projectRisks.map(risk => (
@@ -162,7 +162,7 @@ const Projects = () => {
                     <InfoWindow position={{lat: selected.location.lat, lng: selected.location.lng}} onCloseClick={() => {
                       setSelected(null);
                     }}>
-                      <div className="info-text">
+                      <div className="map-popup">
                         <h2>{selected.title}</h2>
                         <p>Likelihood: {selected.likelihood}</p>
                         <p>Severity: {selected.severity}</p>
@@ -186,10 +186,19 @@ const Projects = () => {
                   <img className="key-icon" src={markerColor(10)}></img><span className="key-definition">intolerable</span>
                 </div>
               </div>
-              <button className="btn btn-primary add btn-center">
-                <a href={`/project/${projectId}/new-risk`}>Add Risk</a>
-              </button>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <button className="btn btn-danger add btn-center">
+              <a href="/#">Delete project</a>
+            </button>
+          </div>
+          <div className="col-6">
+            <button className="btn btn-primary add btn-center">
+              <a href={`/project/${projectId}/new-risk`}>Add Risk</a>
+            </button>
           </div>
         </div>
       </div>
