@@ -187,7 +187,7 @@ const Projects = () => {
                 </div>
               </div>
               <button className="btn btn-primary add btn-center">
-                <a href="new-risk">Add Risk</a>
+                <a href={`/project/${projectId}/new-risk`}>Add Risk</a>
               </button>
             </div>
           </div>
