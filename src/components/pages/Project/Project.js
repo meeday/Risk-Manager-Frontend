@@ -1,10 +1,17 @@
-import React, { Component } from "react";
-
+import React from "react";
+import { List, LinkItem } from "../../List/List";
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "./styles/Project.css";
 dotenv.config();
+
+const risks = [
+  { _id: "234iuhowef9803rh", title: "Bridge Issue" },
+  { _id: "584pduablf9571qt", title: "Water Mains" },
+  { _id: "584pduablfhjdskj", title: "test issue" },
+
+];
 
 const mapOptions = {
   disableDefaultUI: true,
@@ -41,7 +48,6 @@ const Projects = () => {
               Westminster, London SW1A 0AA
             </p>
             <p>
-
               <i className="fas fa-user-tie icon"></i>
               <h2>Client</h2>
               Arup
@@ -51,7 +57,8 @@ const Projects = () => {
                 <p className="projectDetails">
                   <i className="far fa-clock icon"></i>
 
-                  <h2>Start Date</h2><span className="date">6/12/19</span>
+                  <h2>Start Date</h2>
+                  <span className="date">6/12/19</span>
                 </p>
               </div>
               <div className="col-sm-6">
@@ -72,13 +79,27 @@ const Projects = () => {
             </p>
           </div>
         </div>
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-          <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
+        <LoadScript
+          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        >
+          <GoogleMap id="map" options={mapOptions} center={mapCenter} zoom={12}>
             {markers.map((position) => (
               <Marker position={position}></Marker>
             ))}
           </GoogleMap>
         </LoadScript>
+      </div>
+      <div className="riskList">
+        <h1 className="text-center">Project Risks</h1>
+        <List className="listItems">
+          {risks.map((risk) => (
+            <a href={"13124/risk/" + risk._id}>
+              <LinkItem className="btn btn-primary riskItem" key={risk._id}>
+                {risk.title}
+              </LinkItem>
+            </a>
+          ))}
+        </List>
       </div>
     </>
   );
