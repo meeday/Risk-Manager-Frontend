@@ -63,4 +63,8 @@ html,
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/*# sourceMappingURL=NewProject.css.map */
+
+.form-description {
+  min-height: 85px;
+  padding-top: 5px;
+}

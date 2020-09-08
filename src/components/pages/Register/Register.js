@@ -9,7 +9,7 @@ export default function Register() {
   // Using the useHistory hook for pushing a new route into the history
   const history = useHistory();
 
-  //  pull out the in-built methods, what we going to use from userForm hook
+  //  pull out the in-built methods, what we going to use from UserForm hook
   const { register, handleSubmit } = useForm();
 
   // the message new state going to setup what we get from the server(error message or confirm message)
