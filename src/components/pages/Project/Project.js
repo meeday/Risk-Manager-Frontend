@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import "./styles/Project.css";
 import projectService from "../../../Services/ProjectService";
+import { List, LinkItem } from "../../List/List";
 
 // Configure dotenv for environment variables
 dotenv.config();
@@ -191,6 +192,18 @@ const Projects = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="riskList">
+        <h1 className="text-center">Project Risks</h1>
+        <List className="listItems">
+          {risks.map((risk) => (
+            <a href={"13124/risk/" + risk._id}>
+              <LinkItem className="btn btn-primary riskItem" key={risk._id}>
+                {risk.title}
+              </LinkItem>
+            </a>
+          ))}
+        </List>
       </div>
     </>
   );
