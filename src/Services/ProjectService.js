@@ -62,6 +62,18 @@ export default {
             console.log(`Error - ProjectService.js - getRisk() - ${error}`)
         }
     },
+
+    // api/project/risk/... routes
+    getRisksByProjectId : async id => {
+        try {
+            const res = await fetch(`/api/project/risk/project/${id}`)
+            return res.json(res);
+        }
+        catch (error) {
+            console.log(`Error - ProjectService.js - getRiskByProjectId() - ${error}`)
+        }
+    },
+
     createRisk : async newRisk => {
         try {
             const res = await fetch(`/api/project/risk/`, {

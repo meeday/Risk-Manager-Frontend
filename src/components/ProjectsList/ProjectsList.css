@@ -10,13 +10,17 @@
   position: absolute;
   width: 500px;
 }
+
 .add {
   background-color: #2196f3;
-  color: white;
   border-radius: 25px;
   padding: 8px;
-  border: 1px solid white;
+  border: 1px solid #ffffff;
   margin: 20px;
+}
+
+.add a {
+  color: #ffffff;
 }
 
 .list {
@@ -32,12 +36,13 @@
   margin-bottom: 3px;
   opacity: 0;
   border-radius: 25px;
-  border: white 1px solid;
+  border: #ffffff 1px solid;
 }
+
 .list .listItem:nth-child(n) {
   animation: pop 1.5s 0.2s forwards;
   background: #2196f3;
-  color: white;
+  color: #ffffff;
 }
 
 @-moz-keyframes pop {

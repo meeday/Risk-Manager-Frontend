@@ -1,40 +1,23 @@
 .map {
   width: 900px;
-  min-height: 625px;
-  height: 100%;
-  margin: 30px auto;
+  margin: calc(50vh - 190px) auto;
   box-shadow: 0 0 40px -10px #000000;
   background: #bdbdbd;
   max-width: calc(100vw - 60px);
 }
 
 #map {
-  width: 50%;
-  height: 650px;
+  width: 100%;
+  height: 350px;
   display: inline-block;
 }
 
-.riskList {
-  background-color: #bdbdbd;
-  width: 900px;
-  height: 100%;
-  margin: 30px auto;
-  padding: 15px;
-  box-shadow: 0 0 40px -10px #000000;
-  background: #bdbdbd;
-  max-width: calc(100vw - 60px);
+.project-details {
+  padding: 20px 0 20px 25px;
 }
 
-.listItems {
-  margin: 30px;
-  padding: 30px;
-}
-.map-c {
-  float: left;
-  width: 50%;
-  margin-top: 30px;
-  padding: 25px;
-  box-sizing: border-box;
+.map-container {
+  padding: 20px 25px 20px 0;
 }
 
 h1 {
@@ -44,21 +27,24 @@ h1 {
 }
 
 h2 {
-  margin: 5px;
   font-size: 18px;
   align-self: center;
   color: #2196f3;
 }
 
-.projectDetails {
+.data-block {
   font-size: 18px;
-  margin-top: 20px;
-  margin-bottom: 45px;
+  margin: 15px 0;
   color: #ffffff;
 }
 
-.date {
-  margin-left: 35px;
+.data-block h2 {
+  display: inline-block;
+}
+
+.project-content {
+  margin-left: 25px;
+  display: block;
 }
 
 .users {
@@ -71,17 +57,37 @@ h2 {
   content: ",";
   color: #ffffff;
 }
-.det {
-  text-align: justify;
-  font-size: 12px;
-  margin-bottom: 15px;
-}
 
 .icon {
   float: left;
   color: #2196f3;
   font-size: 18px !important;
-  margin-right: 15px;
+  margin-right: 10px;
+}
+
+.btn-center {
+  display: block;
+  margin: 20px auto;
+}
+
+.info-text h2, .info-text p, .info-text a {
+  margin: 10px 0;
+}
+
+.key {
+  padding: 0;
+  text-align: center;
+}
+
+@media only screen and (max-width: 992px) {
+  .key-icon {
+    width: 24px;
+    height: auto;
+  }
+
+  .key-definition {
+    font-size: 14px;
+  }
 }
 
 @media only screen and (max-width: 720px) {
@@ -89,13 +95,49 @@ h2 {
     height: 100%;
     margin: calc(50vh - 225px) auto;
   }
+}
 
-  #map {
-    width: 100%;
+@media only screen and (min-width: 576px) and (max-width: 675px) {
+  .key-icon {
+    width: 18px;
+    height: auto;
   }
 
-  .map-c {
-    float: none;
-    width: 100%;
+  .key-definition {
+    font-size: 12px;
+  }
+  
+  .data-block h2, .data-block p, .project-content {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  
+  .project-details {
+    padding: 15px;
+  }
+  
+  .map-container {
+    padding: 0 15px 15px 15px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .key-icon {
+    width: 18px;
+    height: auto;
+  }
+  
+  .key-definition {
+    font-size: 12px;
+  }
+
+  .data-block h2, .data-block p, .project-content {
+    font-size: 14px;
+  }
+  
+  .map p, .map h2 {
+    font-size: 14px;
   }
 }
