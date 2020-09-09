@@ -39,7 +39,6 @@ function MemberList(props) {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         {teamMember.map((member, index) => {
-          console.log(member.userName);
           return (
             <div className="row" key={index} style={{ marginLeft: 5 }}>
               <Form.Check

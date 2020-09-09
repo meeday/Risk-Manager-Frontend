@@ -58,9 +58,35 @@ const ExistingRisk = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async data => {
+    const { content } = data;
+    
+    // ****** user data should be retrieved from project context
+    const user = {
+      name: "Joe Dodgson",
+      userId: "5f52457cc802405d08f096c7",
+    };
+
+    const newComment = {
+      content,
+      user,
+      date: Date.now(),
+    }
+    
+    // ****** riskId should be retrieved from risk context
+    const riskId = "5f58e059beafd371b8e337c0";
+
+    try {
+      const savedComment = await ProjectService.createComment(riskId, newComment);
+      console.log(savedComment);
+
+      // ****** Display a message alerting the user that their comment has been saved
+    }
+    catch (err) {
+      console.log(`Error - ExistingRisk.js - onSubmit() - ${err}`);
+    }
   };
+
   return (
     <>
       <Navbar />
@@ -105,12 +131,15 @@ const ExistingRisk = () => {
             <i className="fas fa-comments icon comments-icon"></i>
             <h2>Comments & Suggested Mitigations</h2>
             <textarea
-              name="comment"
+              name="content"
               ref={register}
               id="newPost"
               placeholder="Add Comment"
-              ></textarea>
-            <button type="submit" className="btn btn-primary risk-btn">
+            ></textarea>
+            <button
+              type="submit"
+              className="btn btn-primary risk-btn"
+            >
               Add Comment
             </button>
             <button
@@ -131,7 +160,7 @@ const ExistingRisk = () => {
               onClick={handleShowModalTwo}
               type="submit"
               className="btn btn-primary risk-btn"
-              >
+            >
               Edit Risk
             </button>
             <Modal show={modalState === "modal-two"}>
@@ -142,10 +171,10 @@ const ExistingRisk = () => {
               onClick={handleDelete}
               type="submit"
               className="btn btn-danger risk-btn"
-              >
+            >
               Delete Risk
             </button>
-              {message ? <Toast message={message} /> : null}
+            {message ? <Toast message={message} /> : null}
           </div>
         </div>
 
