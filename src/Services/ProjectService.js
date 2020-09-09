@@ -6,7 +6,6 @@ export default {
     getProject : async id => {
         try {
             const res = await fetch(`/api/project/${id}`);
-            console.log(res);
             return res.json();
         }
         catch (error) {
@@ -16,7 +15,7 @@ export default {
     getAllProjects : async () => {
         try {
             const res = await fetch(`/api/project`)
-            return res;
+            return res.json();
         }
         catch (error) {
             console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)

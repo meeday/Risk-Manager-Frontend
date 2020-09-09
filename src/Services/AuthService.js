@@ -50,11 +50,11 @@ export default {
   isAuthenticated: async () => {
     try {
       const res = await fetch(`/api/user/authenticated`);
-      if (res.status !== 401) return res.json().then((data) => data);
-      else return { isAuthenticated: false, user: { email: "" } };    
+      if (res.status !== 401) return res.json(res);
+      else return { isAuthenticated: false, message: "User Logged Out" };
     } catch (error) {
-      console.log(`Error - AuthService.js - login() - ${error}`);
-    }
+      console.log(`Error - AuthService.js - isAuthenticated() - ${error}`);      
+    } 
   },
 
   logout: async () => {
