@@ -6,7 +6,6 @@ export default {
     getProject : async id => {
         try {
             const res = await fetch(`/api/project/${id}`);
-            console.log(res);
             return res.json();
         }
         catch (error) {
