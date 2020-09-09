@@ -1,6 +1,6 @@
 .map {
   width: 900px;
-  margin: calc(50vh - 190px) auto;
+  margin: 150px auto;
   box-shadow: 0 0 40px -10px #000000;
   background: #bdbdbd;
   max-width: calc(100vw - 60px);
@@ -8,7 +8,7 @@
 
 #map {
   width: 100%;
-  height: 350px;
+  height: 400px;
   display: inline-block;
 }
 
@@ -90,12 +90,6 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 720px) {
-  .map {
-    height: 100%;
-    margin: calc(50vh - 225px) auto;
-  }
-}
 
 @media only screen and (min-width: 576px) and (max-width: 675px) {
   .key-icon {
@@ -113,7 +107,6 @@ h2 {
 }
 
 @media only screen and (max-width: 575px) {
-  
   .project-details {
     padding: 15px;
   }

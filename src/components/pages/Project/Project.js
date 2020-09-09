@@ -3,7 +3,10 @@ import dotenv from "dotenv";
 import React, { Component, useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import Navbar from "../../Nav/Nav";
+import LoadScriptOnlyIfNeeded from "../../LoadScriptOnlyIfNeeded/LoadScriptOnlyIfNeeded";
+import Warning from "../Warning/Warning";
 import projectService from "../../../Services/ProjectService";
+import { Modal } from "react-bootstrap"
 
 // Import CSS
 import "./styles/Project.css";
@@ -12,13 +15,18 @@ import "./styles/Project.css";
 dotenv.config();
 
 // ***** get projectId from context
-const projectId = "5f53f1adeb1bd77a1004ba11";
+const projectId = "5f53f1adeb1bd77a1004ba12";
 
 const Projects = () => {
   // Set state
   const [projectRisks, setProjectRisks] = useState([]);
   const [selected, setSelected] = useState();
+  const [modalState, setModalState] = useState("show" | "hide");
 
+  // Function to toggle the modalState between "show" and "hide"
+  const toggleModal = () => modalState === "show" ? setModalState("hide") : setModalState("show");
+
+  // Set options for Google Map
   const mapOptions = {
     disableDefaultUI: true,
     zoomControl: true,
@@ -47,7 +55,16 @@ const Projects = () => {
       setProjectRisks(arrayData);
     }
     catch (err) {
-      console.log(`Error - getProjectRisks.js - getProjectRisks() - ${err}`);
+      console.log(`Error - Project.js - getProjectRisks() - ${err}`);
+    }
+  }
+
+  const deleteProject = async id => {
+    try {
+      const deletedProject = await projectService.deleteProject(id);
+    }
+    catch (err) {
+      console.log(`Error - Project.js - deleteProject() - ${err}`);
     }
   }
   
@@ -144,7 +161,7 @@ const Projects = () => {
             <div className="map-container">
               <h1>Risks map</h1>
               <p className="info-text">Click on a risk to view</p>
-              <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+              <LoadScriptOnlyIfNeeded googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
                 <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
                   {projectRisks.map(risk => (
                     <Marker 
@@ -174,7 +191,7 @@ const Projects = () => {
                   ) : null}
 
                 </GoogleMap>
-              </LoadScript>
+              </LoadScriptOnlyIfNeeded>
               <div className="row">
                 <div className="col-4 key">
                   <img className="key-icon" src={markerColor(1)}></img><span className="key-definition">negligible</span>
@@ -191,9 +208,13 @@ const Projects = () => {
         </div>
         <div className="row">
           <div className="col-6">
-            <button className="btn btn-danger add btn-center">
-              <a href="/#">Delete project</a>
+            <button className="btn btn-danger add btn-center" onClick={toggleModal}>
+              <a>Delete Project</a>
             </button>
+            <Modal show={modalState === "show"}>
+              <Modal.Header onClick={toggleModal} closeButton style={{background: "#dc3545", color: "#FFFFFF"}}>Warning</Modal.Header>
+              <Warning deletingComponent="project" confirmDelete={deleteProject} deleteArg={projectId}/>
+            </Modal>
           </div>
           <div className="col-6">
             <button className="btn btn-primary add btn-center">
