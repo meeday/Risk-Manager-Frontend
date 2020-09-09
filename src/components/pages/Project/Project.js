@@ -2,92 +2,207 @@ import React, { Component, useState, useContext, useEffect } from "react";
 import { ProjectContext } from "../../../Context/ProjectContext";
 import ProjectService from "../../../Services/ProjectService";
 import dotenv from "dotenv";
+import React, { Component, useState, useEffect } from "react";
+import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import Navbar from "../../Nav/Nav";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import LoadScriptOnlyIfNeeded from "../../LoadScriptOnlyIfNeeded/LoadScriptOnlyIfNeeded";
+import Warning from "../Warning/Warning";
+import projectService from "../../../Services/ProjectService";
+import { Modal } from "react-bootstrap"
+
+// Import CSS
 import "./styles/Project.css";
-import { ModalTitle } from "react-bootstrap";
+
+// Configure dotenv for environment variables
 dotenv.config();
 
-const mapOptions = {
-  disableDefaultUI: true,
-  zoomControl: true,
-};
-
-const markers = [
-  { lat: 52.479738, lng: -1.903979 },
-  { lat: 52.474876, lng: -1.904408 },
-  { lat: 52.474744, lng: -1.888884 },
-];
-
-const teamMembers = ["Joe", "Niro", "Ian", "Meedaxa"];
-const mapCenter = {
-  lat: 52.479161,
-  lng: -1.895446,
-};
+// ***** get projectId from context
+const projectId = "5f53f1adeb1bd77a1004ba12";
 
 const Projects = () => {
-  const projectContext = useContext(ProjectContext);
-  // const [project, setProject] = useState([]);
-  const strPath = window.location.pathname;
-  const id = strPath.replace("/project/", "");
+  // Set state
+  const [projectRisks, setProjectRisks] = useState([]);
+  const [selected, setSelected] = useState();
+  const [modalState, setModalState] = useState("show" | "hide");
 
-  const getProject = async (id) => {
-    try {
-      const data = await ProjectService.getProject(id);
-      const projectData = data.data.project;
-      projectContext.setProjectInfo(projectData);
-      // setProject(projectData);
-    } catch (error) {
-      console.log(error);
-    }
+  // Function to toggle the modalState between "show" and "hide"
+  const toggleModal = () => modalState === "show" ? setModalState("hide") : setModalState("show");
+
+  // Set options for Google Map
+  const mapOptions = {
+    disableDefaultUI: true,
+    zoomControl: true,
   };
-  useEffect(() => {
-    getProject(id);
-  }, []);
   
-  // const {title, description, _id, client, endDate, startDate, teamMembers, location } = project;
-  // projectContext.setProjectInfo(project);
-  if(projectContext.projectInfo){
-    const {title, description, _id, client, endDate, startDate, teamMembers, location } = projectContext.projectInfo;
-    
+  // Function which returns URL for a Google map marker of the color appropriate to the risk score 
+  const markerColor = riskScore => {
+    // Green marker (negligible risk)
+    if (riskScore <= 4) {
+      return 'http://maps.google.com/mapfiles/ms/micons/green.png';
+    }
+    // Orange marker (tolerable risk)
+    if (riskScore <= 6) {
+      return 'http://maps.google.com/mapfiles/ms/micons/orange.png';
+    }
+    // Red marker (intolerable risk)
+    return 'http://maps.google.com/mapfiles/ms/micons/red.png';
   }
+
+  // API call to get all all risks of the current project
+  const getProjectRisks = async () => {
+    try {
+      const dataReturn = await projectService.getRisksByProjectId(projectId);
+      const arrayData = dataReturn.data.projectRisks;
+      
+      setProjectRisks(arrayData);
+    }
+    catch (err) {
+      console.log(`Error - Project.js - getProjectRisks() - ${err}`);
+    }
+  }
+
+  const deleteProject = async id => {
+    try {
+      const deletedProject = await projectService.deleteProject(id);
+    }
+    catch (err) {
+      console.log(`Error - Project.js - deleteProject() - ${err}`);
+    }
+  }
+  
+  // Call the function which gets all users and sets to state
+  useEffect(() => {
+    getProjectRisks();
+  }, []);
+
+  // API call for risks
+  const risks = [
+    {
+      title: 1,
+      location: { lat: 52.479738, lng: -1.903979 },
+    },
+    {
+      title: 2,
+      location: { lat: 52.5, lng: -1.904408 },
+    },
+    {
+      title: 3,
+      location: { lat: 52.474744, lng: -1.888884 },
+    },
+  ];
+
+  // ****** API request for members
+  const teamMembers = ["Joe", "Niro", "Ian", "Meedaxa"];
+
+  const mapCenter = {
+    lat: 52.479161,
+    lng: -1.895446,
+  };
+
   return (
     <>
-      {projectContext.projectInfo ? 
-      <>
-        <Navbar />
-        <br />
-        <div className="map">
-          <div className="map-c">
-            <h1>{projectContext.projectInfo.title}</h1>
-            <p>{projectContext.projectInfo.description}</p>
-            <div className="det">
-              <p>
-                <i className="fa fa-map-marker"></i> <h2>Location</h2>
-               Latitude: {`${((projectContext.projectInfo || {}).location || {}).lat || null}`}, 
-               Longitude: {`${((projectContext.projectInfo || {}).location || {}).lng || null}`}
-              </p>
-              <p>
-                <i className="fas fa-user-tie"></i>
-                <h2>Client</h2>
-               { projectContext.projectInfo.client}
-              </p>
+      <Navbar />
+      <div className="map">
+        <div className="row">
+          <div className = "col-xs-12 col-sm-6">
+            <div className="project-details">
+              <h1>Big Ben</h1>
+              <div className="data-block">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Accusantium id cumque est dolores voluptatibus.
+                </p>
+              </div>
               <div className="row">
-                <div className="col-sm-6">
-                  <p>
-                    <i className="far fa-clock"></i>
-
-                    <h2>Start Date</h2>
-                    <span className="date">{ projectContext.projectInfo.startDate.slice(0,10)}</span>
-                  </p>
+                <div className="col-6">
+                  <div className="data-block">
+                    <i className="icon fa fa-map-marker"></i> 
+                    <h2>Latitude</h2>
+                    <span className="project-content">52.475</span>
+                  </div>
                 </div>
-                <div className="col-sm-6">
-                  <p>
-                    <i className="far fa-clock"></i>
+                <div className="col-6">
+                  <div className="data-block">
+                    <h2>Longitude</h2>
+                    <span className="project-content">-1.900</span>
+                  </div>
+                </div>
+              </div>
+              <div className="data-block">
+                <i className="icon fas fa-user-tie"></i>
+                <h2>Client</h2>
+                <span className="project-content">Arup</span>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <div className="data-block">
+                    <i className="icon far fa-clock"></i>
+                    <h2>Start Date</h2>
+                    <span className="project-content">6/12/19</span>
+                  </div>
+                </div>
+                <div className="col-6">
+                  <div className="data-block">
                     <h2>End Date</h2>
+                    <span className="project-content">12/11/20</span>
+                  </div>
+                </div>
+              </div>
+              <div className="data-block">
+                <i className="icon fas fa-users"></i>
+                <h2>Team Members</h2>
+                <div className="project-content">
+                  {teamMembers.map((user) => (
+                    <li className="users">{user}</li>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className = "col-xs-12 col-sm-6">
+            <div className="map-container">
+              <h1>Risks map</h1>
+              <p className="info-text">Click on a risk to view</p>
+              <LoadScriptOnlyIfNeeded googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+                <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
+                  {projectRisks.map(risk => (
+                    <Marker 
+                      key={risk._id}
+                      position={risk.location}
+                      icon={markerColor(risk.risk)}
+                      title={risk.title}
+                      onClick={() => {
+                        setSelected(risk)
+                      }}
+                    />
+                  ))}
 
-                    <span className="date">{ projectContext.projectInfo.endDate.slice(0,10)}</span>
-                  </p>
+                  {selected ? (
+                    <InfoWindow position={{lat: selected.location.lat, lng: selected.location.lng}} onCloseClick={() => {
+                      setSelected(null);
+                    }}>
+                      <div className="map-popup">
+                        <h2>{selected.title}</h2>
+                        <p>Likelihood: {selected.likelihood}</p>
+                        <p>Severity: {selected.severity}</p>
+                        <p>Risk score: {selected.risk}</p>
+                        <a href={`/project/${selected.projectId}/risk/${selected._id}`}>Go to risk</a>
+                      </div>
+
+                    </InfoWindow>
+                  ) : null}
+
+                </GoogleMap>
+              </LoadScriptOnlyIfNeeded>
+              <div className="row">
+                <div className="col-4 key">
+                  <img className="key-icon" src={markerColor(1)}></img><span className="key-definition">negligible</span>
+                </div>
+                <div className="col-4 key">
+                  <img className="key-icon" src={markerColor(6)}></img><span className="key-definition">tolerable</span>
+                </div>
+                <div className="col-4 key">
+                  <img className="key-icon" src={markerColor(10)}></img><span className="key-definition">intolerable</span>
                 </div>
               </div>
               <p>
@@ -114,8 +229,23 @@ const Projects = () => {
             </GoogleMap>
           </LoadScript>
         </div>
-      </>
-       : ("data not exist")} 
+        <div className="row">
+          <div className="col-6">
+            <button className="btn btn-danger add btn-center" onClick={toggleModal}>
+              <a>Delete Project</a>
+            </button>
+            <Modal show={modalState === "show"}>
+              <Modal.Header onClick={toggleModal} closeButton style={{background: "#dc3545", color: "#FFFFFF"}}>Warning</Modal.Header>
+              <Warning deletingComponent="project" confirmDelete={deleteProject} deleteArg={projectId}/>
+            </Modal>
+          </div>
+          <div className="col-6">
+            <button className="btn btn-primary add btn-center">
+              <a href={`/project/${projectId}/new-risk`}>Add Risk</a>
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

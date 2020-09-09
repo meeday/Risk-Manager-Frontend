@@ -53,8 +53,10 @@ export default {
       if (res.status !== 401) return res.json(res);
       else return { isAuthenticated: false, message: "User Logged Out" };
     } catch (error) {
-      console.log(`Error - AuthService.js - isAuthenticated() - ${error}`);      
-    } 
+      console.log(`Error - AuthService.js - isAuthenticated() - ${error}`);
+
+    }
+
   },
 
   logout: async () => {
