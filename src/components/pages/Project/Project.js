@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-
+import React, { Component, useState, useContext, useEffect } from "react";
+import { ProjectContext } from "../../../Context/ProjectContext";
+import ProjectService from "../../../Services/ProjectService";
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "./styles/Project.css";
+import { ModalTitle } from "react-bootstrap";
 dotenv.config();
 
 const mapOptions = {
@@ -24,62 +26,96 @@ const mapCenter = {
 };
 
 const Projects = () => {
+  const projectContext = useContext(ProjectContext);
+  // const [project, setProject] = useState([]);
+  const strPath = window.location.pathname;
+  const id = strPath.replace("/project/", "");
+
+  const getProject = async (id) => {
+    try {
+      const data = await ProjectService.getProject(id);
+      const projectData = data.data.project;
+      projectContext.setProjectInfo(projectData);
+      // setProject(projectData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getProject(id);
+  }, []);
+  
+  // const {title, description, _id, client, endDate, startDate, teamMembers, location } = project;
+  // projectContext.setProjectInfo(project);
+  if(projectContext.projectInfo){
+    const {title, description, _id, client, endDate, startDate, teamMembers, location } = projectContext.projectInfo;
+    
+  }
   return (
     <>
-      <Navbar />
-      <br />
-      <div className="map">
-        <div className="map-c">
-          <h1>Big Ben</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Accusantium id cumque est dolores voluptatibus.
-          </p>
-          <div className="det">
-            <p>
-              <i className="fa fa-map-marker"></i> <h2>Location</h2>
-              Westminster, London SW1A 0AA
-            </p>
-            <p>
+      {projectContext.projectInfo ? 
+      <>
+        <Navbar />
+        <br />
+        <div className="map">
+          <div className="map-c">
+            <h1>{projectContext.projectInfo.title}</h1>
+            <p>{projectContext.projectInfo.description}</p>
+            <div className="det">
+              <p>
+                <i className="fa fa-map-marker"></i> <h2>Location</h2>
+               Latitude: {`${((projectContext.projectInfo || {}).location || {}).lat || null}`}, 
+               Longitude: {`${((projectContext.projectInfo || {}).location || {}).lng || null}`}
+              </p>
+              <p>
+                <i className="fas fa-user-tie"></i>
+                <h2>Client</h2>
+               { projectContext.projectInfo.client}
+              </p>
+              <div className="row">
+                <div className="col-sm-6">
+                  <p>
+                    <i className="far fa-clock"></i>
 
-              <i className="fas fa-user-tie"></i>
-              <h2>Client</h2>
-              Arup
-            </p>
-            <div className="row">
-              <div className="col-sm-6">
-                <p>
-                  <i className="far fa-clock"></i>
+                    <h2>Start Date</h2>
+                    <span className="date">{ projectContext.projectInfo.startDate.slice(0,10)}</span>
+                  </p>
+                </div>
+                <div className="col-sm-6">
+                  <p>
+                    <i className="far fa-clock"></i>
+                    <h2>End Date</h2>
 
-                  <h2>Start Date</h2><span className="date">6/12/19</span>
-                </p>
+                    <span className="date">{ projectContext.projectInfo.endDate.slice(0,10)}</span>
+                  </p>
+                </div>
               </div>
-              <div className="col-sm-6">
-                <p>
-                  <i className="far fa-clock"></i>
-                  <h2>End Date</h2>
-
-                  <span className="date">12/11/20</span>
-                </p>
-              </div>
+              <p>
+                <i className="fas fa-users"></i>
+                <h2>Team Members</h2>
+                {projectContext.projectInfo.teamMembers.map((users) => (
+                  <li className="users">{users[0].name}</li>
+                ))}
+              </p>
             </div>
-            <p>
-              <i className="fas fa-users"></i>
-              <h2>Team Members</h2>
-              {teamMembers.map((users) => (
-                <li className="users">{users}</li>
-              ))}
-            </p>
           </div>
+          <LoadScript
+            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          >
+            <GoogleMap
+              options={mapOptions}
+              center={mapCenter}
+              zoom={12}
+              id="map"
+            >
+              {markers.map((position) => (
+                <Marker position={position}></Marker>
+              ))}
+            </GoogleMap>
+          </LoadScript>
         </div>
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-          <GoogleMap options={mapOptions} center={mapCenter} zoom={12} id="map">
-            {markers.map((position) => (
-              <Marker position={position}></Marker>
-            ))}
-          </GoogleMap>
-        </LoadScript>
-      </div>
+      </>
+       : ("data not exist")} 
     </>
   );
 };
