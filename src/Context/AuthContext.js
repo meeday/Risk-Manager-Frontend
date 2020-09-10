@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect } from "react";
-// import { Redirect } from "react-router-dom";
 import AuthService from "../Services/AuthService";
 
 // creatng a context
