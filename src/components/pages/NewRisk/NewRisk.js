@@ -61,10 +61,13 @@ function NewRisk(props) {
     lng: -1.9,
   });
 
+  // get the project id from URL
+  const strPath = window.location.pathname;
+  const path = strPath.replace("/project/", "");
+  const id = path.replace("/new-risk", "");
+
   const getLocation = async () => {
-    const { data } = await ProjectService.getProject(
-      "5f59f053a94acd5aa0e4ebed"
-    );
+    const { data } = await ProjectService.getProject(id);
     setRiskLocation(data.project.location);
   };
 
