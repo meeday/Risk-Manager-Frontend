@@ -21,6 +21,15 @@ export default {
             console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
         }
     },
+    getProjectByUserId:async id => {
+        try {
+            const res = await fetch(`/api/project/user/${id}`)
+            return res.json();
+        }
+        catch (error) {
+            console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
+        }
+    },
     createProject : async project => {
         try {
             const res = await fetch(`/api/project`, {
