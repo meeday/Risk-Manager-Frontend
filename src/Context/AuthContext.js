@@ -29,16 +29,12 @@ export default ({ children }) => {
 
   return (
     <div>
-      {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}
-      {!isLoaded ? (
-        <h3>Loading...</h3>
-      ) : (
+      {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}     
         <AuthContext.Provider
-          value={{ userInfo, setUserInfo, isAuthenticated, setIsAuthenticated }}
+          value={{ userInfo, setUserInfo, isAuthenticated, setIsAuthenticated, isLoaded, setIsLoaded }}
         >
           {children}
         </AuthContext.Provider>
-      )}
     </div>
   );
 };
