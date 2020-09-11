@@ -19,7 +19,7 @@ function Home(props) {
       setProject(data.project.length);
     }
     catch (err) {
-      console.log(`Error - AccountDashboard.js - ${err}`);
+      console.log(`Error - Home.js = getData() - ${err}`);
     }
   }
   
