@@ -118,90 +118,90 @@ const ExistingRisk = () => {
       <Navbar />
       <br />
       <div className="map">
-        <div className="map-c">
-          <h1>{(risk || {}).title || null}</h1>
-          <div className="row">
-            <div className="col-sm-6">
-              <h3>
-                ID:<span className="text-white">{(risk || {}).riskId || null}</span>
-              </h3>
-            </div>
-            <div className="col-sm-6">
-              <h3>
-                Status:<span className="text-white">{statusIndex[(risk || {}).status || null]}</span>
-              </h3>
-            </div>
-          </div>
-          <p className="riskDetails">
+        <h1>{(risk || {}).title || null}</h1>
+        <div className="riskDetails">
+          <p>
             {(risk || {}).description || null}
           </p>
-          <div className="det">
-            <p className="riskDetails">
-              <i className="fa fa-map-marker icon marker-icon"></i>{" "}
-              <h2>Location</h2>
-              Latitude: {((risk || {}).location || {}).lat || null}, Longitude: {((risk || {}).location || {}).lng || null}
-            </p>
-            <p className="riskDetails">
-              <i className="fas fa-pencil-ruler icon design-icon"></i>
-              <h2>Design Discipline</h2>
-              {(risk || {}).designDiscipline || null}
-            </p>
-            <p className="riskDetails">
-              <i className="fas fa-exclamation-triangle icon risk-icon"></i>
-              <h2>Risk Score</h2>
-              <div className="risk">{showResultingRisk((risk || {}).risk || null)}</div>
-            </p>
+        </div>
+        <div className="row riskDetails">
+          <div className="col-sm-6">
+            <h2>
+              Risk ID:<span className="text-white"> {(risk || {}).riskId || null}</span>
+            </h2>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="comments">
-            <i className="fas fa-comments icon comments-icon"></i>
-            <h2>Comments</h2>
-            <textarea
-              name="content"
-              ref={register}
-              id="newPost"
-              placeholder="Add Comment"
-            ></textarea>
-            <button
-              type="submit"
-              className="btn btn-primary risk-btn"
-            >
-              Add Comment
-            </button>
-            <button
-              onClick={handleShowModalOne}
-              type="submit"
-              className="btn btn-primary risk-btn"
-            >
-              View Comments
-            </button>
-            <Modal show={modalState === "modal-one"}>
-              <Modal.Header onClick={handleClose} closeButton></Modal.Header>
-
-              <Comments />
-            </Modal>
-          </form>
-          <div>
-            <button
-              onClick={handleShowModalTwo}
-              type="submit"
-              className="btn btn-primary risk-btn"
-            >
-              Edit Risk
-            </button>
-            <Modal show={modalState === "modal-two"}>
-              <Modal.Header onClick={handleClose} closeButton></Modal.Header>
-              <EditRisk className="edit-form" />
-            </Modal>
-            <button
-              onClick={handleDelete}
-              type="submit"
-              className="btn btn-danger risk-btn"
-            >
-              Delete Risk
-            </button>
-            {message ? <Toast message={message} /> : null}
+          <div className="col-sm-6">
+            <h2>
+              Risk status:<span className="text-white"> {statusIndex[(risk || {}).status || null]}</span>
+            </h2>
           </div>
         </div>
+        <div className="det">
+          <div className="riskDetails">
+            <i className="fa fa-map-marker icon marker-icon"></i>{" "}
+            <h2>Location</h2>
+            <div className="row">
+              <div className="col-sm-6">
+                <h3>
+                  Latitude:<span className="text-white"> {((risk || {}).location || {}).lat || null}</span>
+                </h3>
+              </div>
+              <div className="col-sm-6">
+                <h3>
+                  Longitude:<span className="text-white"> {((risk || {}).location || {}).lng || null}</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div className="riskDetails">
+            <i className="fas fa-pencil-ruler icon design-icon"></i>
+            <h2>Design Discipline</h2>
+            <p>
+              {(risk || {}).designDiscipline || null}
+            </p>
+          </div>
+          <div className="riskDetails">
+            <i className="fas fa-exclamation-triangle icon risk-icon"></i>
+            <h2>Risk Score</h2>
+            <p>
+              {showResultingRisk((risk || {}).risk || null)}
+            </p>
+          </div>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="comments">
+          <i className="fas fa-comments icon comments-icon"></i>
+          <h2>Comments</h2>
+          <textarea
+            name="content"
+            ref={register}
+            id="newPost"
+            placeholder="Add Comment"
+          ></textarea>
+          <div className="row">
+            <div className="col-6">
+              <button
+                type="submit"
+                className="btn btn-primary risk-btn btn-center"
+              >
+                Add Comment
+              </button>
+            </div>
+            <div className="col-6">
+              <button
+                onClick={handleShowModalOne}
+                type="submit"
+                className="btn btn-primary risk-btn btn-center"
+                >
+                View Comments
+              </button>
+              <Modal show={modalState === "modal-one"}>
+                <Modal.Header onClick={handleClose} closeButton></Modal.Header>
+
+                <Comments />
+              </Modal>
+            </div>
+          </div>
+        </form>
 
         <LoadScriptOnlyIfNeeded
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
@@ -210,6 +210,31 @@ const ExistingRisk = () => {
             <Marker position={(risk || {}).location || null}></Marker>
           </GoogleMap>
         </LoadScriptOnlyIfNeeded>
+        <div className="row">
+          <div className="col-6">
+            <button
+              onClick={handleShowModalTwo}
+              type="submit"
+              className="btn btn-primary risk-btn btn-center"
+              >
+              Edit Risk
+            </button>
+            <Modal show={modalState === "modal-two"}>
+              <Modal.Header onClick={handleClose} closeButton></Modal.Header>
+              <EditRisk className="edit-form" />
+            </Modal>
+          </div>
+          <div className="col-6">
+            <button
+              onClick={handleDelete}
+              type="submit"
+              className="btn btn-danger risk-btn btn-center"
+              >
+              Delete Risk
+            </button>
+            {message ? <Toast message={message} /> : null}
+          </div>
+        </div>
       </div>
     </>
   );
