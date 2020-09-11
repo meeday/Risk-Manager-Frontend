@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
-import Toast from "../../Toasts/Toast";
 import Comments from "../../Comments/Comments";
 import EditRisk from "./subComponents/editRisk";
 import ProjectService from "../../../Services/ProjectService";
@@ -16,6 +15,7 @@ import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
 import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
 import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
 import Message from "../../Toasts/Toast";
+import Warning from "../Warning/Warning";
 
 // Import CSS
 import "./styles/ExistingRisk.css";
@@ -108,8 +108,9 @@ const ExistingRisk = () => {
   }, []);
 
   const [message, setMessage] = useState(null);
+  const [warningMessage, setWarningMessage] = useState(null);
   const [modalState, setModalState] = useState(
-    "modal-one" | "modal-two" | "close"
+    "modal-one" | "modal-two" | "modal-three" | "close"
   );
 
   const handleShowModalOne = () => {
@@ -120,16 +121,29 @@ const ExistingRisk = () => {
     setModalState("modal-two");
   };
 
+  const handleShowModalThree = () => {
+    setModalState("modal-three");
+  };
+
   const handleClose = () => {
     setModalState("close");
   };
 
-  const handleDelete = async () => {
-    setMessage({ msgBody: "Risk Deleted!", msgErr: false });
-    timerID = setTimeout(() => {
-      history.push("/project");
-    }, 1500);
-    const res = await ProjectService.deleteRisk("003");
+  const handleDelete = async riskId => {
+    try {
+      // Make the API call to delete the risk
+      const res = await ProjectService.deleteRisk(riskId);
+  
+      if (res.data) {
+        setWarningMessage({ msgBody: "Risk deleted", msgErr: false });
+        timerID = setTimeout(() => {
+          history.push("/project");
+        }, 3000);
+      }
+    }
+    catch (err) {
+      console.log(`Error - ExistingRisk.js - handleDelete() - ${err}`);
+    }
   };
 
   const { register, handleSubmit } = useForm();
@@ -303,13 +317,26 @@ const ExistingRisk = () => {
           </div>
           <div className="col-6">
             <button
-              onClick={handleDelete}
-              type="submit"
+              onClick={handleShowModalThree}
               className="btn btn-danger risk-btn btn-center"
               >
-              Delete Risk
+              <a>Delete Risk</a>
             </button>
-            {message ? <Toast message={message} /> : null}
+            <Modal show={modalState === "modal-three"}>
+              <Modal.Header
+                onClick={handleClose}
+                closeButton
+                style={{ background: "#dc3545", color: "#FFFFFF" }}
+              >
+                Warning
+              </Modal.Header>
+              <Warning
+                deletingComponent="risk"
+                confirmDelete={handleDelete}
+                deleteArg={(risk || {})._id || null}
+                warningMessage={warningMessage}
+              />
+            </Modal>
           </div>
         </div>
       </div>
