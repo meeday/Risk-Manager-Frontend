@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import AccountDashboard from "../AccountDashboard/AccountDashboard";
-import Comments from "../../Comments/Comment";
+import Comments from "../../Comments/Comments";
 import ProjectsList from "../../ProjectsList/ProjectsList";
 import Navbar from "../../Nav/Nav";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
