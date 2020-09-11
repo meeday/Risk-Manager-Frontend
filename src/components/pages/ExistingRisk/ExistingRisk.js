@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import dotenv from "dotenv";
 import Navbar from "../../Nav/Nav";
 import Toast from "../../Toasts/Toast";
-import Comments from "./subComponents/riskComments";
+import Comments from "../../Comments/Comments";
 import EditRisk from "./subComponents/editRisk";
 import ProjectService from "../../../Services/ProjectService";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
@@ -222,9 +222,7 @@ const ExistingRisk = () => {
               </div>
               <div className="col-sm-6">
                 <h3>
-                  <span>
-                    Severity: 
-                  </span>
+                  Severity: 
                   <span className={`text-white ${riskLikeSevIndex[(risk || {}).severity || null]}`}>{(risk || {}).severity || null} - {riskIndex[(risk || {}).severity || null]}</span>  
                   <span className="text-white">
                     <SeverityHelpIcon/>
@@ -267,9 +265,9 @@ const ExistingRisk = () => {
                 View Comments
               </button>
               <Modal show={modalState === "modal-one"}>
-                <Modal.Header onClick={handleClose} closeButton></Modal.Header>
+                <Modal.Header onClick={handleClose} closeButton style={{color: "#FFFFFF"}}>Comments</Modal.Header>
 
-                <Comments />
+                <Comments risks={[risk]}/>
               </Modal>
             </div>
           </div>
