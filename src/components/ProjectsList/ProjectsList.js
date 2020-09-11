@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { List, LinkItem } from "../List/List";
 import "./ProjectsList.css";
-const projects = [ {_id: "234iuhowef9803rh", title: "Big Ben" }, {_id: "584pduablf9571qt", title: "London Bridge" } ]
-export default function ProjectList(props) {
+import projectService from "../../Services/ProjectService";
+
+export default function ProjectList() {
+
+  const [projects, setProjects] = useState([]);
+
+  
+  const getProject = async() => {
+    try {
+      const dataReturn = await projectService.getAllProjects();
+      const arrayData = dataReturn.data.projectsData;
+      console.log(arrayData);
+
+      setProjects(arrayData);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  } 
+
+  useEffect(() => {
+    getProject();
+  }, []);
+
   return (
     <div className="projectList">
       <List className="list">
-        {projects.map((project) => (
-          <a href={"project/" + project._id}>
-            <LinkItem className="listItem btn btn-primary" key={project._id}>
+        {projects.map((project, index) => (
+          <a href={"project/" + project._id} key={index}>
+            <LinkItem className="listItem btn btn-primary">
             {project.title}
             </LinkItem>
           </a>
