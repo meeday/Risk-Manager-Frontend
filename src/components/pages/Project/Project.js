@@ -68,11 +68,10 @@ const Projects = () => {
   };
 
   // API call to get all all risks of the current project
-  const getProjectRisks = async () => {
+  const getProjectRisks = async (projectId) => {
     try {
       const dataReturn = await ProjectService.getRisksByProjectId(projectId);
       const arrayData = dataReturn.data.projectRisks;
-
       setProjectRisks(arrayData);
     } catch (err) {
       console.log(`Error - Project.js - getProjectRisks() - ${err}`);
@@ -88,7 +87,7 @@ const Projects = () => {
   };
   // Call the function which gets all users and sets to state
   useEffect(() => {
-    getProjectRisks();
+    getProjectRisks(projectId);
     getProject(id);
   }, []);
 
@@ -162,7 +161,7 @@ const Projects = () => {
                     <h2>Team Members</h2>
                     <div className="project-content">
                       {projectContext.projectInfo.teamMembers.map((user) => (
-                        <li className="users">{user}</li>
+                        <li className="users">{user[0].name}</li>
                       ))}
                     </div>
                   </div>

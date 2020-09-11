@@ -18,11 +18,10 @@ export default function Login() {
   const onSubmit = (user, e) => {
     e.preventDefault();
     AuthService.login(user).then((data) => {
-      const { isAuthenticated, user } = data;
-      // if user authenticated update the state with user info
+      const { isAuthenticated, user, _id } = data;
       if (isAuthenticated) {
         // ---
-        authContext.setUserInfo(user);
+        authContext.setUserInfo(data);
         authContext.setIsAuthenticated(isAuthenticated);
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/");
@@ -35,7 +34,7 @@ export default function Login() {
       }
     });
   };
-
+  
   return (
     <div>
       {message ? <Toast message={message} /> : null}

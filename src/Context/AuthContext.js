@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect } from "react";
-// import { Redirect } from "react-router-dom";
 import AuthService from "../Services/AuthService";
 
 // creatng a context
@@ -16,22 +15,29 @@ export default ({ children }) => {
   // To check App is loaded(coz we are going to make a req to the server)
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const auth =  async() => {
+    try {
+        const data = await AuthService.isAuthenticated()
+        console.log(data);
+            // update state using the data what we got from the server
+            setUserInfo(data);
+            setIsAuthenticated(data.user.isAuthenticated);
+            // if user authenticated that mean browser is loaded, we can set it to true.
+            setIsLoaded(true);          
+    } catch (error) {
+        console.log(`Error - AuthContext.js - isAuthenticated() - ${error}`);
+    }
+  // check, if user authenticated using authenticated end-point
+}
   useEffect(() => {
-    // check, if user authenticated using authenticated end-point
-    AuthService.isAuthenticated().then((data) => {
-      // update state using the data what we got from the server
-      setUserInfo(data);
-      setIsAuthenticated(data.user.isAuthenticated);
-      // if user authenticated that mean browser is loaded, we can set it to true.
-      setIsLoaded(true);
-    });
-  }, []);
+    auth()
+  },[]);
 
   return (
     <div>
       {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}     
         <AuthContext.Provider
-          value={{ userInfo, setUserInfo, isAuthenticated, setIsAuthenticated, isLoaded, setIsLoaded }}
+          value={{ userInfo, setUserInfo, isAuthenticated, setIsAuthenticated}}
         >
           {children}
         </AuthContext.Provider>
