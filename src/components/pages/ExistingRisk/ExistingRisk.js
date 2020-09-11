@@ -15,6 +15,7 @@ import SeverityHelpIcon from "../../helpIcons/SeverityHelpIcon";
 import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
 import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
 import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
+import Message from "../../Toasts/Toast";
 
 // Import CSS
 import "./styles/ExistingRisk.css";
@@ -151,7 +152,12 @@ const ExistingRisk = () => {
     try {
       const savedComment = await ProjectService.createComment(risk._id, newComment);
 
-      // ****** Display a message alerting the user that their comment has been saved
+      // Display a message alerting the user that their comment has been saved
+      setMessage({ msgBody: "Comment added", msgErr: false });
+
+      const strPath = window.location.pathname;
+      const id = strPath.slice(strPath.length - 24, strPath.length);
+      getRisk(id);
     }
     catch (err) {
       console.log(`Error - ExistingRisk.js - onSubmit() - ${err}`);
@@ -238,6 +244,7 @@ const ExistingRisk = () => {
             </h3>
           </div>
         </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="comments">
           <i className="fas fa-comments icon comments-icon"></i>
           <h2>Comments</h2>
@@ -247,6 +254,7 @@ const ExistingRisk = () => {
             id="newPost"
             placeholder="Add Comment"
           ></textarea>
+          {message ? <Message message={message} /> : null}
           <div className="row">
             <div className="col-6">
               <button
@@ -257,21 +265,20 @@ const ExistingRisk = () => {
               </button>
             </div>
             <div className="col-6">
-              <button
+              <div
                 onClick={handleShowModalOne}
-                type="submit"
                 className="btn btn-primary risk-btn btn-center"
+                style={{width: "fit-content"}}
                 >
                 View Comments
-              </button>
+              </div>
               <Modal show={modalState === "modal-one"}>
                 <Modal.Header onClick={handleClose} closeButton style={{color: "#FFFFFF"}}>Comments</Modal.Header>
-
                 <Comments risks={[risk]}/>
               </Modal>
             </div>
           </div>
-        </form>
+        </form>      
 
         <LoadScriptOnlyIfNeeded
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
