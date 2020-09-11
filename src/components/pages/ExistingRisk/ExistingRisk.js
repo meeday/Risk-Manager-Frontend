@@ -26,14 +26,50 @@ const statusIndex = {
   3: "closed",
 };
 
-const showResultingRisk = (value) => {
+const riskIndex = {
+  1: "Very low",
+  2: "Low",
+  3: "Medium",
+  4: "High",
+  5: "Very high",
+};
+
+const riskLikeSevIndex = {
+  1: "very-low",
+  2: "low",
+  3: "medium",
+  4: "high",
+  5: "very-high",
+};
+
+const riskClassIndex = riskScore => {
+  if (riskScore <= 6) {
+    return "very-low";
+  }
+  if (riskScore <= 8) {
+    return "medium";
+  }
+  return "very-high";
+};
+
+const riskColorClass = (value) => {
   if (value <= 4) {
-    return `${value} - Negligible risk`;
+    return "form-control disabled-colored-risk very-low";
   }
   if (value <= 6) {
-    return `${value} - Tolerable risk`;
+    return "form-control disabled-colored-risk medium";
   }
-  return `${value} - Intolerable risk`;
+  return "form-control disabled-colored-risk very-high";
+};
+
+const showResultingRisk = (value) => {
+  if (value <= 6) {
+    return `${value} - Negligible`;
+  }
+  if (value <= 8) {
+    return `${value} - Tolerable`;
+  }
+  return `${value} - Intolerable`;
 };
 
 const ExistingRisk = () => {
@@ -162,10 +198,22 @@ const ExistingRisk = () => {
           </div>
           <div className="riskDetails">
             <i className="fas fa-exclamation-triangle icon risk-icon"></i>
-            <h2>Risk Score</h2>
-            <p>
-              {showResultingRisk((risk || {}).risk || null)}
-            </p>
+            <h2>Risk Ranking</h2>
+            <div className="row">
+              <div className="col-sm-6">
+                <h3>Likelihood: 
+                  <span className={`text-white ${riskLikeSevIndex[(risk || {}).likelihood || null]}`}>{(risk || {}).likelihood || null} - {riskIndex[(risk || {}).likelihood || null]}</span>  
+                </h3>
+              </div>
+              <div className="col-sm-6">
+                <h3>Severity: 
+                  <span className={`text-white ${riskLikeSevIndex[(risk || {}).severity || null]}`}>{(risk || {}).severity || null} - {riskIndex[(risk || {}).severity || null]}</span>  
+                </h3>
+              </div>
+            </div>
+            <h3>Risk score: 
+              <span className={`text-white ${riskClassIndex((risk || {}).risk || null)}`}>{showResultingRisk((risk || {}).risk || null)}</span>  
+            </h3>
           </div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="comments">
