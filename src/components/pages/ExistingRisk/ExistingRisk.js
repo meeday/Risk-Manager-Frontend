@@ -1,3 +1,4 @@
+// Import npm modules, components and files
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import dotenv from "dotenv";
@@ -9,8 +10,16 @@ import ProjectService from "../../../Services/ProjectService";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import "./styles/ExistingRisk.css";
 import LoadScriptOnlyIfNeeded from "../../LoadScriptOnlyIfNeeded/LoadScriptOnlyIfNeeded";
+import SeverityHelpIcon from "../../helpIcons/SeverityHelpIcon";
+import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
+import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
+import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
+
+// Import CSS
+import "./styles/ExistingRisk.css";
+
+// Configure dotenv
 dotenv.config();
 
 const mapOptions = {
@@ -169,6 +178,9 @@ const ExistingRisk = () => {
           <div className="col-sm-6">
             <h2>
               Risk status:<span className="text-white"> {statusIndex[(risk || {}).status || null]}</span>
+              <span>
+                <StatusHelpIcon/>
+              </span>
             </h2>
           </div>
         </div>
@@ -203,16 +215,28 @@ const ExistingRisk = () => {
               <div className="col-sm-6">
                 <h3>Likelihood: 
                   <span className={`text-white ${riskLikeSevIndex[(risk || {}).likelihood || null]}`}>{(risk || {}).likelihood || null} - {riskIndex[(risk || {}).likelihood || null]}</span>  
+                  <span className="text-white">
+                    <LikelihoodHelpIcon/>
+                  </span>
                 </h3>
               </div>
               <div className="col-sm-6">
-                <h3>Severity: 
+                <h3>
+                  <span>
+                    Severity: 
+                  </span>
                   <span className={`text-white ${riskLikeSevIndex[(risk || {}).severity || null]}`}>{(risk || {}).severity || null} - {riskIndex[(risk || {}).severity || null]}</span>  
+                  <span className="text-white">
+                    <SeverityHelpIcon/>
+                  </span>
                 </h3>
               </div>
             </div>
             <h3>Risk score: 
               <span className={`text-white ${riskClassIndex((risk || {}).risk || null)}`}>{showResultingRisk((risk || {}).risk || null)}</span>  
+              <span className="text-white">
+                <RiskScoreHelpIcon/>
+              </span>
             </h3>
           </div>
         </div>
