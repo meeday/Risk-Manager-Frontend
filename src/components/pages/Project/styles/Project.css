@@ -1,6 +1,6 @@
 .map {
   width: 900px;
-  margin: 150px auto;
+  margin: 75px auto 25px auto;
   box-shadow: 0 0 40px -10px #000000;
   background: #bdbdbd;
   max-width: calc(100vw - 60px);
