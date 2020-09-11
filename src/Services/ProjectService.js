@@ -123,6 +123,20 @@ export default {
         }
     },
 
+    editRisk : async (id, updatedRisk) => {
+        try {
+            console.log(id);
+            const res = await fetch(`/api/project/risk/${id}`, {
+                method: "put",
+                body: JSON.stringify(updatedRisk)
+            })
+            return res.json(res);
+        }
+        catch (error) {
+            console.log(`Error - ProjectService.js - editRisk() - ${error}`)
+        }
+    },
+
     deleteRisk : async id => {
         try {
             const res = await fetch(`/api/project/risk/${id}`, {

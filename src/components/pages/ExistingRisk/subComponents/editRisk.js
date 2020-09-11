@@ -34,7 +34,7 @@ const mapContainerStyle = {
 };
 
 // ******* projectID will need to be retrieved
-const projectId = "5f52a6cc0c5677512c956ded";
+const projectId = "5f5ba33493d9387958ea16b5";
 
 // ******* mapCentre will need to be retrieved
 
@@ -63,8 +63,9 @@ function EditRisk(props) {
 
   const getLocation = async () => {
     const { data } = await ProjectService.getProject(
-      "5f53f1adeb1bd77a1004ba12"
+      "5f5ba33493d9387958ea16b5"
     );
+    console.log(data)
     setRiskLocation(data.project.location);
   };
 
@@ -103,9 +104,11 @@ function EditRisk(props) {
       projectId,
     };
 
+    console.log(newRisk);
+
     try {
       // Submitting a post request to add the new risk to the backend application
-      const res = await ProjectService.createRisk(newRisk);
+      const res = await ProjectService.editRisk("5f5ba33493d9387958ea16b0", newRisk);
 
       // ******* Add toast message to confirm risk has been added
       console.log(res);
@@ -185,7 +188,7 @@ function EditRisk(props) {
                 name="title"
                 type="text"
                 className="form-control"
-                placeholder="Risk Title"
+                defaultValue={props.data.title}
                 ref={register}
               />
             </div>
@@ -212,6 +215,7 @@ function EditRisk(props) {
               <select
                 required
                 name="status"
+                defaultValue={props.data.status}
                 className="form-control"
                 ref={register}
               >
@@ -231,6 +235,7 @@ function EditRisk(props) {
                 required
                 name="designDiscipline"
                 type="text"
+                defaultValue={props.data.designDiscipline}
                 className="form-control"
                 placeholder="Design discipline"
                 ref={register}
@@ -244,6 +249,7 @@ function EditRisk(props) {
               required
               name="description"
               type="text"
+              defaultValue={props.data.description}
               className="form-control form-description"
               placeholder="Description"
               ref={register}
@@ -286,6 +292,7 @@ function EditRisk(props) {
                 name="locationLat"
                 className="form-control disabled-form"
                 ref={register}
+                defaultValue={props.data.location.lat}
                 value={riskLocation.lat}
                 readOnly
               ></input>
@@ -296,6 +303,7 @@ function EditRisk(props) {
                 name="locationLng"
                 className="form-control disabled-form"
                 ref={register}
+                defaultValue={props.data.location.lng}
                 value={riskLocation.lng}
                 readOnly
               ></input>
@@ -329,6 +337,7 @@ function EditRisk(props) {
               <select
                 required
                 name="likelihood"
+                defaultValue={props.data.likelihood}
                 className={setColorClass(likelihood)}
                 ref={register}
                 onChange={handleLikelihoodChange}
@@ -367,6 +376,7 @@ function EditRisk(props) {
               <select
                 required
                 name="severity"
+                defaultValue={props.data.severity}
                 className={setColorClass(severity)}
                 ref={register}
                 onChange={handleSeverityChange}

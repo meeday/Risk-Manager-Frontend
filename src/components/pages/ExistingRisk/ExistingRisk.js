@@ -58,9 +58,9 @@ const ExistingRisk = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     const { content } = data;
-    
+
     // ****** user data should be retrieved from project context
     const user = {
       name: "Joe Dodgson",
@@ -71,20 +71,47 @@ const ExistingRisk = () => {
       content,
       user,
       date: Date.now(),
-    }
-    
+    };
+
     // ****** riskId should be retrieved from risk context
     const riskId = "5f58e059beafd371b8e337c0";
 
     try {
-      const savedComment = await ProjectService.createComment(riskId, newComment);
+      const savedComment = await ProjectService.createComment(
+        riskId,
+        newComment
+      );
       console.log(savedComment);
 
       // ****** Display a message alerting the user that their comment has been saved
-    }
-    catch (err) {
+    } catch (err) {
       console.log(`Error - ExistingRisk.js - onSubmit() - ${err}`);
     }
+  };
+
+  const data = {
+    _id: { $oid: "5f5ba33493d9387958ea16b0" },
+    title: "Workers falling",
+    riskId: "LE001",
+    description: "Risk of workers falling from height from the London Eye",
+    designDiscipline: "Maintenance",
+    status: { $numberInt: "3" },
+    location: {
+      lat: { $numberDouble: "51.502859" },
+      lng: { $numberDouble: "-0.119732" },
+    },
+    comments: [
+      {
+        user: { name: "Ian Cheng", userId: "5f5a22646157b937082c422a" },
+        content:
+          "Workers will be secured to fixed structural components by harness, thereby reducing risk likelihood.",
+        dateRaised: { $numberDouble: "1599835141000" },
+      },
+    ],
+    likelihood: { $numberInt: "1" },
+    severity: { $numberInt: "4" },
+    risk: { $numberInt: "5" },
+    projectId: "5f59f053a94acd5aa0e4ebeb",
   };
 
   return (
@@ -136,10 +163,7 @@ const ExistingRisk = () => {
               id="newPost"
               placeholder="Add Comment"
             ></textarea>
-            <button
-              type="submit"
-              className="btn btn-primary risk-btn"
-            >
+            <button type="submit" className="btn btn-primary risk-btn">
               Add Comment
             </button>
             <button
@@ -165,7 +189,7 @@ const ExistingRisk = () => {
             </button>
             <Modal show={modalState === "modal-two"}>
               <Modal.Header onClick={handleClose} closeButton></Modal.Header>
-              <EditRisk className="edit-form" />
+              <EditRisk className="edit-form" data={data} />
             </Modal>
             <button
               onClick={handleDelete}
