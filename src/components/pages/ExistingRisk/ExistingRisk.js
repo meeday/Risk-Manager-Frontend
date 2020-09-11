@@ -10,6 +10,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import "./styles/ExistingRisk.css";
+import LoadScriptOnlyIfNeeded from "../../LoadScriptOnlyIfNeeded/LoadScriptOnlyIfNeeded";
 dotenv.config();
 
 const mapOptions = {
@@ -19,15 +20,45 @@ const mapOptions = {
 
 const marker = { lat: 52.479738, lng: -1.903979 };
 
+const statusIndex = {
+  1: "open",
+  2: "transferred",
+  3: "closed",
+};
+
+const showResultingRisk = (value) => {
+  if (value <= 4) {
+    return `${value} - Negligible risk`;
+  }
+  if (value <= 6) {
+    return `${value} - Tolerable risk`;
+  }
+  return `${value} - Intolerable risk`;
+};
+
 const ExistingRisk = () => {
   const history = useHistory();
+  const [risk, setRisk] = useState();
 
   let timerID = useRef(null);
 
+  const getRisk = async riskId => {
+    try {
+      const res = await ProjectService.getRisk(riskId);
+      setRisk(res.data.risk)
+      return () => {
+        clearTimeout(timerID);
+      };
+    }
+    catch (err) {
+      console.log(`Error - ExistingRisk.js - useEffect() - ${err}`);
+    }
+  }
+  
   useEffect(() => {
-    return () => {
-      clearTimeout(timerID);
-    };
+    const strPath = window.location.pathname;
+    const id = strPath.slice(strPath.length - 24, strPath.length);
+    getRisk(id);
   }, []);
 
   const [message, setMessage] = useState(null);
@@ -53,7 +84,6 @@ const ExistingRisk = () => {
       history.push("/project");
     }, 1500);
     const res = await ProjectService.deleteRisk("003");
-    console.log(res);
   };
 
   const { register, handleSubmit } = useForm();
@@ -73,12 +103,8 @@ const ExistingRisk = () => {
       date: Date.now(),
     }
     
-    // ****** riskId should be retrieved from risk context
-    const riskId = "5f58e059beafd371b8e337c0";
-
     try {
-      const savedComment = await ProjectService.createComment(riskId, newComment);
-      console.log(savedComment);
+      const savedComment = await ProjectService.createComment(risk._id, newComment);
 
       // ****** Display a message alerting the user that their comment has been saved
     }
@@ -93,43 +119,42 @@ const ExistingRisk = () => {
       <br />
       <div className="map">
         <div className="map-c">
-          <h1>Bridge Issue</h1>
+          <h1>{(risk || {}).title || null}</h1>
           <div className="row">
             <div className="col-sm-6">
               <h3>
-                ID:<span className="text-white">003</span>
+                ID:<span className="text-white">{(risk || {}).riskId || null}</span>
               </h3>
             </div>
             <div className="col-sm-6">
               <h3>
-                Status:<span className="text-white">Open</span>
+                Status:<span className="text-white">{statusIndex[(risk || {}).status || null]}</span>
               </h3>
             </div>
           </div>
           <p className="riskDetails">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Accusantium id cumque est dolores voluptatibus.
+            {(risk || {}).description || null}
           </p>
           <div className="det">
             <p className="riskDetails">
               <i className="fa fa-map-marker icon marker-icon"></i>{" "}
               <h2>Location</h2>
-              Westminster, London SW1A 0AA
+              Latitude: {((risk || {}).location || {}).lat || null}, Longitude: {((risk || {}).location || {}).lng || null}
             </p>
             <p className="riskDetails">
               <i className="fas fa-pencil-ruler icon design-icon"></i>
               <h2>Design Discipline</h2>
-              Bridge
+              {(risk || {}).designDiscipline || null}
             </p>
             <p className="riskDetails">
               <i className="fas fa-exclamation-triangle icon risk-icon"></i>
               <h2>Risk Score</h2>
-              <div className="risk">Intolerable 8</div>
+              <div className="risk">{showResultingRisk((risk || {}).risk || null)}</div>
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="comments">
             <i className="fas fa-comments icon comments-icon"></i>
-            <h2>Comments & Suggested Mitigations</h2>
+            <h2>Comments</h2>
             <textarea
               name="content"
               ref={register}
@@ -178,13 +203,13 @@ const ExistingRisk = () => {
           </div>
         </div>
 
-        <LoadScript
+        <LoadScriptOnlyIfNeeded
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
         >
-          <GoogleMap options={mapOptions} center={marker} zoom={18} id="map">
-            <Marker position={marker}></Marker>
+          <GoogleMap options={mapOptions} center={(risk || {}).location || null} zoom={18} id="map">
+            <Marker position={(risk || {}).location || null}></Marker>
           </GoogleMap>
-        </LoadScript>
+        </LoadScriptOnlyIfNeeded>
       </div>
     </>
   );
