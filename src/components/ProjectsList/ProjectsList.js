@@ -16,7 +16,7 @@ export default function ProjectList() {
       setProjects(arrayData);
     }
     catch (err) {
-      console.log(err);
+      console.log(`Error - ProjectsList.js - getProject() - ${err}`);
     }
   } 
 
