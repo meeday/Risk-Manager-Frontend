@@ -12,7 +12,6 @@ export default function ProjectList() {
     try {
       const dataReturn = await projectService.getAllProjects();
       const arrayData = dataReturn.data.projectsData;
-      console.log(arrayData);
 
       setProjects(arrayData);
     }
@@ -28,8 +27,8 @@ export default function ProjectList() {
   return (
     <div className="projectList">
       <List className="list">
-        {projects.map((project, index) => (
-          <a href={"project/" + project._id} key={index}>
+        {projects.map((project) => (
+          <a href={"project/" + project._id} key={project._id}>
             <LinkItem className="listItem btn btn-primary">
             {project.title}
             </LinkItem>

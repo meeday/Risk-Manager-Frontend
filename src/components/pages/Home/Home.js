@@ -15,7 +15,6 @@ function Home(props) {
   const getData = async () => {
     try {
       const {data} = await AuthService.getInfo("5f5a1ef56157b937082c4229");
-      console.log(data)
       setUser(data.firstName + " " + data.lastName);
       setProject(data.project.length);
     }
