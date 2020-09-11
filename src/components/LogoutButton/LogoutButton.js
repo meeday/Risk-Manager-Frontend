@@ -11,7 +11,7 @@ function Logout(props) {
   const logoutHandler = () => {
     AuthService.logout().then((data) => {
       if (data.success) {
-        setUser(data.user);
+        setName(data.user);
         setIsAuthenticated(false);
       }
     });

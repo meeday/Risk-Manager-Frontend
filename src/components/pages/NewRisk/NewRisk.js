@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
@@ -8,6 +8,7 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewRisk.css";
 import ProjectService from "../../../Services/ProjectService";
 import { config } from "../../../config";
+import {ProjectContext} from "../../../Context/ProjectContext"
 
 // Lookup object for risk scoring categorisation
 const colorClasses = {
@@ -33,8 +34,7 @@ const mapContainerStyle = {
   margin: "0 auto",
 };
 
-// ******* projectID will need to be retrieved
-const projectId = "5f52a6cc0c5677512c956ded";
+
 
 // ******* mapCentre will need to be retrieved
 
@@ -45,12 +45,15 @@ const mapOptions = {
 };
 
 function NewRisk(props) {
+const projectContext = useContext(ProjectContext)
+console.log(projectContext.projectInfo);
+
   // Use the useHistory hook for pushing a new route into the history
   const history = useHistory();
-
+  
   // Declare hooks from useForm
   const { register, handleSubmit } = useForm();
-
+  
   // Declare states
   // const [message, setMessage] = useState(null);
   const [likelihood, setLikelihood] = useState(1);
@@ -60,14 +63,21 @@ function NewRisk(props) {
     lat: 52.475,
     lng: -1.9,
   });
+  
+  // get the project id from URL
+  const strPath = window.location.pathname;
+  const path = strPath.replace("/project/", "");
+  const id = path.replace("/new-risk", "");
+  const projectId = id;
 
   const getLocation = async () => {
-    const { data } = await ProjectService.getProject(
-      "5f53f1adeb1bd77a1004ba12"
-    );
-    setRiskLocation(data.project.location);
+    try {
+      const { data } = await ProjectService.getProject(id);
+      setRiskLocation(data.project.location);      
+    } catch (error) {
+      console.log(`Error - newRisk.js - getProject() - ${error}`);      
+    }
   };
-
   useEffect(() => {
     getLocation({});
   }, []);

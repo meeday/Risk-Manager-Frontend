@@ -9,7 +9,6 @@ import Project from "./components/pages/Project/Project";
 import NewRisk from "./components/pages/NewRisk/NewRisk";
 import ExistingRisk from "./components/pages/ExistingRisk/ExistingRisk";
 import AccountDashboard from "./components/pages/AccountDashboard/AccountDashboard";
-import AuthProvider from './Context/AuthContext'
 import "./App.css";
 
 function App(props) {
@@ -28,16 +27,13 @@ function App(props) {
                 <Register />
               </UserForm>
             )}
-          />
-          {/* Wrap AuthProvider round restricted routes so they don't render if user isn't logged in */}
-          {/* <AuthProvider> */}
+          />                  
             <Route exact path="/" component={Home} />
             <Route exact path="/new-project" component={NewProject} />
             <Route exact path="/project/:projectId" component={Project} />
             <Route exact path="/project/:projectId/new-risk" component={NewRisk} />
             <Route exact path="/project/:projectId/risk/:riskId" component={ExistingRisk} />
             <Route exact path="/account" component={AccountDashboard} />
-          {/* </AuthProvider> */}
         </Switch>
       </Router>
     </div>

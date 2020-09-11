@@ -15,7 +15,16 @@ export default {
     getAllProjects : async () => {
         try {
             const res = await fetch(`/api/project`)
-            return res;
+            return res.json();
+        }
+        catch (error) {
+            console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
+        }
+    },
+    getProjectByUserId:async id => {
+        try {
+            const res = await fetch(`/api/project/user/${id}`)
+            return res.json();
         }
         catch (error) {
             console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
@@ -69,7 +78,16 @@ export default {
             return res.json(res);
         }
         catch (error) {
-            console.log(`Error - ProjectService.js - getRiskByProjectId() - ${error}`)
+            console.log(`Error - ProjectService.js - getRisksByProjectId() - ${error}`)
+        }
+    },
+    getRisksByUserId : async id => {
+        try {
+            const res = await fetch(`/api/project/risk/user/${id}`)
+            return res.json(res);
+        }
+        catch (error) {
+            console.log(`Error - ProjectService.js - getRisksByUserId() - ${error}`)
         }
     },
 
