@@ -92,8 +92,8 @@ const Projects = () => {
   }, []);
 
   const mapCenter = {
-    lat: 52.479161,
-    lng: -1.895446,
+    lat: 51.505550,
+    lng: -0.075278,
   };
 
   return (
