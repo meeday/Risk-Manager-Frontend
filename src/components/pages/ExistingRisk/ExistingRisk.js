@@ -84,6 +84,8 @@ const showResultingRisk = (value) => {
 
 const ExistingRisk = () => {
   const history = useHistory();
+
+
   const [risk, setRisk] = useState();
 
   let timerID = useRef(null);
@@ -145,6 +147,7 @@ const ExistingRisk = () => {
       console.log(`Error - ExistingRisk.js - handleDelete() - ${err}`);
     }
   };
+ 
 
   const { register, handleSubmit } = useForm();
 
