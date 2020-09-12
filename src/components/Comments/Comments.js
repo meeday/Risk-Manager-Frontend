@@ -1,6 +1,5 @@
 import React from "react";
 import "./style/Comments.css";
-import { formatRelative } from "date-fns";
 
 export default function Comments(props) {
   return (
