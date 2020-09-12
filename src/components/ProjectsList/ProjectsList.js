@@ -8,7 +8,23 @@ import { ProjectContext } from "../../Context/ProjectContext";
 export default function ProjectList(props) {
   const { IdValue } = useContext(AuthContext);
   const { projectInfo, setProjectInfo } = useContext(ProjectContext);
+  const { userRisks, setUserRisks } = useContext(ProjectContext);
+  const { singleProject, setSingleProject } = useContext(ProjectContext);
+  const { projectRisk, setProjectRisk} = useContext(ProjectContext);
+  
 
+  const handleProjectClick = async (projectData) => {
+    try {
+      setSingleProject(projectData);
+      console.log(singleProject);
+      const { data } = await ProjectService.getRisksByProjectId(
+        projectData._id
+      );
+      setProjectRisk(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const userProjects = async () => {
     try {
       const { data } = await ProjectService.getProjectByUserId(IdValue.userId);
@@ -21,14 +37,17 @@ export default function ProjectList(props) {
   useEffect(() => {
     userProjects();
   }, []);
-  console.log(projectInfo);
 
   return (
     <div className="projectList">
       <List className="list">
         {projectInfo
           ? projectInfo.map((project) => (
-              <a href={"project/" + project._id} key={project._id}>
+              <a
+                onClick={ () =>{(handleProjectClick(project))}}
+                href={"project/" + project._id}
+                key={project._id}
+              >
                 <LinkItem
                   className="listItem btn btn-primary"
                   key={project._id}
