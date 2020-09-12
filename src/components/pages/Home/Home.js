@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import AccountDashboard from "../AccountDashboard/AccountDashboard";
-import Comments from "../../Comments/Comment";
+import Comments from "../../Comments/Comments";
 import ProjectsList from "../../ProjectsList/ProjectsList";
+import {ProjectContext} from "../../../Context/ProjectContext";
 import Navbar from "../../Nav/Nav";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Home.css";
 
 function Home(props) {
+  const { userRisks } = useContext(ProjectContext);
+
   return (
     <>
       <Navbar />
@@ -20,7 +23,7 @@ function Home(props) {
           <ProjectsList />
         </Tab>
         <Tab eventKey="comments" title="Comments">
-          <Comments />
+          <Comments risks={userRisks} />
         </Tab>
       </Tabs>
     </>

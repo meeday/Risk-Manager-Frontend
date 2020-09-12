@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
 import Toast from "../../Toasts/Toast";
 import  {AuthContext}  from "../../../Context/AuthContext";
+import  {ProjectContext}  from "../../../Context/ProjectContext";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 
@@ -14,15 +15,20 @@ export default function Login() {
   const [message, setMessage] = useState(null);
 
   // destructuring Authcontext, we can set new state
-  const authContext = useContext(AuthContext);
+  const {userValue, authValue, IdValue} = useContext(AuthContext);
+  const { projectValue, projectIdValue } = useContext(ProjectContext);
   const onSubmit = (user, e) => {
     e.preventDefault();
     AuthService.login(user).then((data) => {
-      const { isAuthenticated, user, _id } = data;
+      const { isAuthenticated, user } = data;
+    //  console.log(user.project);
+     projectIdValue.setProjectId(user.project)
+      IdValue.setUserId(user._id);
+      userValue.setUserInfo(user)
       if (isAuthenticated) {
         // ---
-        authContext.setUserInfo(data);
-        authContext.setIsAuthenticated(isAuthenticated);
+        // userValue.setUserInfo(data);
+        authValue.setIsAuthenticated(isAuthenticated);
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/");
       } else {
@@ -34,7 +40,6 @@ export default function Login() {
       }
     });
   };
-  
   return (
     <div>
       {message ? <Toast message={message} /> : null}

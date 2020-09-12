@@ -1,5 +1,6 @@
-// Import npm modules
+// Import npm modules and components
 import React from "react";
+import Message from "../../Toasts/Toast";
 
 // Import CSS
 import "./styles/Warning.css";
@@ -17,6 +18,7 @@ export default function Warning(props) {
       <button className="btn btn-danger btn-inline btn-center" onClick={props.confirmDelete(props.deleteArg)}>
         <a href="/">{`Delete ${props.deletingComponent}`}</a>
       </button>
+      {props.warningMessage ? <Message message={props.warningMessage} /> : null}
     </div>
   );
 }
