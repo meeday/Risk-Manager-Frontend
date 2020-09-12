@@ -10,6 +10,11 @@ export default ({ children }) => {
   // the data we want to pass to the context using useState method.
   const [projectInfo, setProjectInfo] = useState(null);
   const [projectId, setProjectId] = useState([]);
+  const [userRisks, setUserRisks] = useState([]);
+  const [singleRisk, setSingleRisk] = useState([]);
+  const [projectRisk, setProjectRisk] = useState([]);
+  const [singleProject, setSingleProject] = useState([])
+
   const projectIdValue = useMemo(() => ({ projectId, setProjectId }), [
     projectId,
     setProjectId,
@@ -18,7 +23,7 @@ export default ({ children }) => {
   return (
     <div>
       {/* set the data what we going to use in the contextApi, inside the provider's value property if browser is loaded. */}
-      <ProjectContext.Provider value={{ projectInfo, setProjectInfo, projectIdValue }}>
+      <ProjectContext.Provider value={{projectRisk, setProjectRisk, singleRisk, setSingleRisk, singleProject, setSingleProject, userRisks, setUserRisks, projectInfo, setProjectInfo, projectIdValue }}>
         {children}
       </ProjectContext.Provider>
     </div>
