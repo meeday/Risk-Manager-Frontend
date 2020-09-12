@@ -8,14 +8,14 @@ import { ProjectContext } from "../../../Context/ProjectContext";
 
 function AccountDashboard() {
   const { userValue, authValue, IdValue } = useContext(AuthContext);
-  const { projectValue, projectIdValue } = useContext(ProjectContext);
+  const { userRisks, setUserRisks } = useContext(ProjectContext);
+  
 
   // console.log(projectIdValue.projectId)
 
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [projects, setProjects] = useState([]);
-  const [risks, setRisks] = useState([]);
   const [comments, setComments] = useState([]);
 
   const fetchUser = async () => {
@@ -28,7 +28,7 @@ function AccountDashboard() {
   const fetchRisks = async () => {
     try {
       const { data } = await ProjectService.getRisksByUserId(IdValue.userId);
-      setRisks(data.userRisks);
+      setUserRisks(data.userRisks);
     } catch (error) {}
   };
 
@@ -42,7 +42,7 @@ function AccountDashboard() {
     }
     return null;
   };
-  const numComments = numMessage(risks);
+  const numComments = numMessage(userRisks);
 
   useEffect(() => {
     fetchUser();
@@ -77,7 +77,7 @@ function AccountDashboard() {
             <i className="fas fa-exclamation-circle"></i>
           </div>
           <div className="profile__value">
-            {risks.length}
+            {userRisks.length}
             <div className="profile__key">Issues</div>
           </div>
         </div>
