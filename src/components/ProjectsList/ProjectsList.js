@@ -3,48 +3,60 @@ import { List, LinkItem } from "../List/List";
 import "./ProjectsList.css";
 import ProjectService from "../../Services/ProjectService";
 import { AuthContext } from "../../Context/AuthContext";
+import { ProjectContext } from "../../Context/ProjectContext";
 
 export default function ProjectList(props) {
-  const authContext = useContext(AuthContext);
-  const id= (((authContext || {}).userInfo || {}).user || {})._id || null;
+  const { IdValue } = useContext(AuthContext);
+  const { projectInfo, setProjectInfo } = useContext(ProjectContext);
+  const { userRisks, setUserRisks } = useContext(ProjectContext);
+  const { singleProject, setSingleProject } = useContext(ProjectContext);
+  const { projectRisk, setProjectRisk} = useContext(ProjectContext);
   
-  const [projects, setProjects] = useState([]);
-  const [project, setProject] = useState(null)
 
-  const userProjects = async (id) => {
+  const handleProjectClick = async (projectData) => {
     try {
-      const userProjectData =   await ProjectService.getProjectByUserId(id);
-      console.log(userProjectData);      
+      setSingleProject(projectData);
+      console.log(singleProject);
+      const { data } = await ProjectService.getRisksByProjectId(
+        projectData._id
+      );
+      setProjectRisk(data);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  const getProjects = async () => {
+  };
+  const userProjects = async () => {
     try {
-      const allProjects = await ProjectService.getAllProjects();
-      // console.log(allProjects);
-      const Model = allProjects.data.projectsData;
-      setProjects(Model);
+      const { data } = await ProjectService.getProjectByUserId(IdValue.userId);
+      setProjectInfo(data.usersProjects);
     } catch (error) {
-      console.log(`Error - ProjectsList.js - getProjects() - ${error}`);
+      console.log(error);
     }
   };
+
   useEffect(() => {
-    getProjects();
-    userProjects()
+    userProjects();
   }, []);
 
   return (
     <div className="projectList">
       <List className="list">
-        {projects.map((project) => (
-          <a href={"project/" + project._id} key={project._id}>
-            <LinkItem className="listItem btn btn-primary" key={project._id}>
-              {project.title}
-            </LinkItem>
-          </a>
-        ))}
+        {projectInfo
+          ? projectInfo.map((project) => (
+              <a
+                onClick={ () =>{(handleProjectClick(project))}}
+                href={"project/" + project._id}
+                key={project._id}
+              >
+                <LinkItem
+                  className="listItem btn btn-primary"
+                  key={project._id}
+                >
+                  {project.title}
+                </LinkItem>
+              </a>
+            ))
+          : null}
       </List>
       <div className="text-center">
         <button className="btn btn-primary add">
