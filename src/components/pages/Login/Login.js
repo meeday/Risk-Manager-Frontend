@@ -24,9 +24,10 @@ export default function Login() {
     //  console.log(user.project);
      projectIdValue.setProjectId(user.project)
       IdValue.setUserId(user._id);
+      userValue.setUserInfo(user)
       if (isAuthenticated) {
         // ---
-        userValue.setUserInfo(data);
+        // userValue.setUserInfo(data);
         authValue.setIsAuthenticated(isAuthenticated);
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/");
