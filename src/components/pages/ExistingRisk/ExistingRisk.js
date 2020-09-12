@@ -1,14 +1,17 @@
-// Import npm modules, components and files
+// NPM
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import dotenv from "dotenv";
-import Navbar from "../../Nav/Nav";
-import Comments from "../../Comments/Comments";
-import EditRisk from "./subComponents/editRisk";
-import ProjectService from "../../../Services/ProjectService";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
+
+// Config
+import dotenv from "dotenv";
+
+// Components
+import Navbar from "../../Nav/Nav";
+import Comments from "../../Comments/Comments";
+import EditRisk from "./subComponents/editRisk";
 import LoadScriptOnlyIfNeeded from "../../LoadScriptOnlyIfNeeded/LoadScriptOnlyIfNeeded";
 import SeverityHelpIcon from "../../helpIcons/SeverityHelpIcon";
 import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
@@ -16,6 +19,9 @@ import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
 import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
 import Message from "../../Toasts/Toast";
 import Warning from "../Warning/Warning";
+
+// API
+import ProjectService from "../../../Services/ProjectService";
 
 // Import CSS
 import "./styles/ExistingRisk.css";
@@ -181,30 +187,7 @@ const ExistingRisk = () => {
     }
   };
 
-  const data = {
-    _id: { $oid: "5f5ba33493d9387958ea16b0" },
-    title: "Workers falling",
-    riskId: "LE001",
-    description: "Risk of workers falling from height from the London Eye",
-    designDiscipline: "Maintenance",
-    status: { $numberInt: "3" },
-    location: {
-      lat: { $numberDouble: "51.502859" },
-      lng: { $numberDouble: "-0.119732" },
-    },
-    comments: [
-      {
-        user: { name: "Ian Cheng", userId: "5f5a22646157b937082c422a" },
-        content:
-          "Workers will be secured to fixed structural components by harness, thereby reducing risk likelihood.",
-        dateRaised: { $numberDouble: "1599835141000" },
-      },
-    ],
-    likelihood: { $numberInt: "1" },
-    severity: { $numberInt: "4" },
-    risk: { $numberInt: "5" },
-    projectId: "5f59f053a94acd5aa0e4ebeb",
-  };
+
 
   return (
     <>
@@ -340,7 +323,7 @@ const ExistingRisk = () => {
             </button>
             <Modal show={modalState === "modal-two"}>
               <Modal.Header onClick={handleClose} closeButton></Modal.Header>
-              <EditRisk className="edit-form" data={data} />
+              <EditRisk className="edit-form" data={risk}/>
             </Modal>
           </div>
           <div className="col-6">

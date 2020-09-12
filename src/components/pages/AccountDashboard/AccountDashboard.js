@@ -20,9 +20,9 @@ function AccountDashboard() {
 
   const fetchUser = async () => {
     const { data } = await AuthService.getInfo(IdValue.userId);
-    setFirstName(data.firstName);
-    setLastName(data.lastName);
-    setProjects(data.project);
+    setFirstName((data || {} ).firstName || null);
+    setLastName((data || {} ).lastName || null);
+    setProjects((data || {} ).project || null);
   };
 
   const fetchRisks = async () => {

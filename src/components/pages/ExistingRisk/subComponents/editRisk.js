@@ -8,7 +8,11 @@ import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../styles/ExistingRisk.css";
 import ProjectService from "../../../../Services/ProjectService";
 import { config } from "../../../../config";
+import ProjectContext from "../../../../Context/ProjectContext";
 
+const xyz = ProjectContext.projectId
+
+console.log(xyz)
 // Lookup object for risk scoring categorisation
 const colorClasses = {
   1: "very-low",
