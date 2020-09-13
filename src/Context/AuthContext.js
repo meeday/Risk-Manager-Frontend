@@ -15,23 +15,23 @@ export default ({ children }) => {
   // To check App is loaded(coz we are going to make a req to the server)
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const auth =  async() => {
-    try {
-        const data = await AuthService.isAuthenticated()
-        console.log(data);
-            // update state using the data what we got from the server
-            setUserInfo(data);
-            setIsAuthenticated(data.user.isAuthenticated);
-            // if user authenticated that mean browser is loaded, we can set it to true.
-            setIsLoaded(true);          
-    } catch (error) {
-        console.log(`Error - AuthContext.js - isAuthenticated() - ${error}`);
-    }
-  // check, if user authenticated using authenticated end-point
-}
-  useEffect(() => {
-    auth()
-  },[]);
+//   const auth =  async() => {
+//     try {
+//         const data = await AuthService.isAuthenticated()
+//         console.log(data);
+//             // update state using the data what we got from the server
+//             setUserInfo(data);
+//             setIsAuthenticated(data.user.isAuthenticated);
+//             // if user authenticated that mean browser is loaded, we can set it to true.
+//             setIsLoaded(true);          
+//     } catch (error) {
+//         console.log(`Error - AuthContext.js - isAuthenticated() - ${error}`);
+//     }
+//   // check, if user authenticated using authenticated end-point
+// }
+//   useEffect(() => {
+//     auth()
+//   },[]);
 
   return (
     <div>

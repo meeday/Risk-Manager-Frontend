@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
+import ProjectService from "../../../Services/ProjectService";
 import Toast from "../../Toasts/Toast";
 import  {AuthContext}  from "../../../Context/AuthContext";
+import  {UserContext}  from "../../../Context/UserContext";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 
@@ -15,11 +17,18 @@ export default function Login() {
 
   // destructuring Authcontext, we can set new state
   const authContext = useContext(AuthContext);
+  const userContext = useContext(UserContext);
   const onSubmit = (user, e) => {
     e.preventDefault();
     AuthService.login(user).then((data) => {
-      const { isAuthenticated, user, _id } = data;
+      const { isAuthenticated, user} = data;
+      const{firstName, lastName, _id, email, project} = data.user;
       if (isAuthenticated) {
+        userContext.setUserId(_id);
+        userContext.setUserFName(firstName);
+        userContext.setUserLName(lastName);
+        userContext.setUserProjects(project);
+        userContext.setUserEmail(email);
         // ---
         authContext.setUserInfo(data);
         authContext.setIsAuthenticated(isAuthenticated);
@@ -32,7 +41,29 @@ export default function Login() {
           msgErr: true,
         });
       }
+      ProjectService.getRisksByUserId(_id)
+      .then((res) =>{ 
+          // userRisks, setUserRisks
+          console.log(res);
+          console.log(res.data.userRisks.length);
+          userContext.setUserRisks(res.data.userRisks.length);
+          const risks = res.data.userRisks;
+          let numOfComments = 0;
+          for (let i = 0; i < risks.length; i++) {
+           numOfComments =+ risks[i].comments.length;
+            
+          }
+          userContext.setUserComments(numOfComments);
+      });
+      ProjectService.getProjectByUserId(_id)
+      .then((res) => {
+        userContext.setUserProjects(res.data.usersProjects)
+        userContext.setProjects(res.data.usersProjects.length);
+
+      })
+
     });
+    
   };
   
   return (

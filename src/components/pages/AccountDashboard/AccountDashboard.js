@@ -4,29 +4,12 @@ import AuthService from "../../../Services/AuthService";
 import ProjectService from "../../../Services/ProjectService";
 import "./styles/AccountDashboard.css";
 import { AuthContext } from "../../../Context/AuthContext";
+import { UserContext } from "../../../Context/UserContext";
 
 function AccountDashboard() {
 
-  const [id, setId] = useState(null)
-  const authContext = useContext(AuthContext) 
-  const projects= ((((authContext || {}).userInfo || {}).user || {}).project || null);
-
-  const Id= (((authContext || {}).userInfo || {}).user || {})._id || null;
-
-  const userRisks = async (id) => {
-    try {
-      const res = await ProjectService.getRisksByUserId(id); 
-    } catch (error) {
-      console.log(`Error - AccountDashboard.js - getProjectByUserId() - ${error}`);
-    }
-  }
-  
-  useEffect( () =>{
-    userRisks(id)
-  }, [id, ])
- 
-  
-  
+  const userContext = useContext(UserContext); 
+  const project= userContext.projects;
   
   return (
       <div className="profile">
@@ -35,7 +18,7 @@ function AccountDashboard() {
         </div>
         <div className="profile__header">
           <div className="profile__account">
-            <h4 className="profile__username">{((((authContext || {}).userInfo || {}).user || {}).firstName || null)}{" "}{((((authContext || {}).userInfo || {}).user || {}).lastName || null)}</h4>
+            <h4 className="profile__username">{userContext.firstName} {userContext.lastName}</h4>
           </div>
         </div>
         <div className="profile__stats">
@@ -44,7 +27,7 @@ function AccountDashboard() {
               <i className="material-icons">engineering</i>
             </div>
             <div className="profile__value">
-              {projects ? projects.length : 0}
+              {project}
               <div className="profile__key">Projects</div>
             </div>
           </div>
@@ -53,7 +36,7 @@ function AccountDashboard() {
               <i className="fas fa-exclamation-circle"></i>
             </div>
             <div className="profile__value">
-              38
+              {userContext.userRisks}
               <div className="profile__key">Issues</div>
             </div>
           </div>
@@ -62,7 +45,7 @@ function AccountDashboard() {
               <i className="fas fa-comments"></i>
             </div>
             <div className="profile__value">
-              18<div className="profile__key">Comments</div>
+              {userContext.userComments}<div className="profile__key">Comments</div>
             </div>
           </div>
         </div>
