@@ -1,16 +1,15 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useContext } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import AccountDashboard from "../AccountDashboard/AccountDashboard";
 import Comments from "../../Comments/Comments";
 import ProjectsList from "../../ProjectsList/ProjectsList";
-import {ProjectContext} from "../../../Context/ProjectContext";
+import { UserContext } from "../../../Context/UserContext";
 import Navbar from "../../Nav/Nav";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Home.css";
 
-function Home(props) {
-  const { userRisks } = useContext(ProjectContext);
-
+function Home() {
+  const { userRisks } = useContext(UserContext);
   return (
     <>
       <Navbar />
