@@ -40,13 +40,13 @@ export default function Login() {
         });
       }
       ProjectService.getRisksByUserId(_id).then((res) => {
-        userContext.setUserRisks(res.data.userRisks.length);
+        userContext.setUserRisks(res.data.userRisks);
         const risks = res.data.userRisks;
-        let numOfComments = 0;
+        let comments = [];
         for (let i = 0; i < risks.length; i++) {
-          numOfComments = +risks[i].comments.length;
+          comments.push(risks[i].comments);
         }
-        userContext.setUserComments(numOfComments);
+        userContext.setUserComments(comments);
       });
       ProjectService.getProjectByUserId(_id).then((res) => {
         userContext.setUserProjects(res.data.usersProjects);
