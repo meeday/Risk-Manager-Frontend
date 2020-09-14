@@ -13,6 +13,8 @@ import Warning from "../Warning/Warning";
 import ProjectService from "../../../Services/ProjectService";
 import { Modal } from "react-bootstrap";
 import { ProjectContext } from "../../../Context/ProjectContext";
+
+
 // Import CSS
 import "./styles/Project.css";
 
@@ -20,6 +22,11 @@ import "./styles/Project.css";
 dotenv.config();
 
 const Projects = () => {
+  const [projectData, setProjectData] = useState([]);
+  const [projectRisks, setProjectRisks] = useState([]);
+  const [selected, setSelected] = useState();
+  const [modalState, setModalState] = useState("show" | "hide");
+  
   const projectContext = useContext(ProjectContext);
   const strPath = window.location.pathname;
   const id = strPath.replace("/project/", "");
@@ -29,19 +36,13 @@ const Projects = () => {
       const data = await ProjectService.getProject(id);
       const projectData = data.data.project;
       projectContext.setProjectInfo(projectData);
-    } catch (error) {
-      console.log(error);
+      setProjectData(projectData)
+    } catch (err) {
+      console.log(`Error - Project.js - getProject.js - ${err}`);
     }
   };
-  if (projectContext.projectInfo) {
-    console.log(projectContext.projectInfo.teamMembers);
-  }
 
   const projectId = id;
-  // Set state
-  const [projectRisks, setProjectRisks] = useState([]);
-  const [selected, setSelected] = useState();
-  const [modalState, setModalState] = useState("show" | "hide");
 
   // Function to toggle the modalState between "show" and "hide"
   const toggleModal = () =>
@@ -91,10 +92,7 @@ const Projects = () => {
     getProject(id);
   }, []);
 
-  const mapCenter = {
-    lat: 51.505550,
-    lng: -0.075278,
-  };
+  const mapCenter = projectData.location;
 
   return (
     <>

@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
 import ProjectService from "../../../Services/ProjectService";
 import Toast from "../../Toasts/Toast";
-import  {AuthContext}  from "../../../Context/AuthContext";
-import  {UserContext}  from "../../../Context/UserContext";
+import { AuthContext } from "../../../Context/AuthContext";
+import { UserContext } from "../../../Context/UserContext";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 
@@ -21,8 +21,8 @@ export default function Login() {
   const onSubmit = (user, e) => {
     e.preventDefault();
     AuthService.login(user).then((data) => {
-      const { isAuthenticated, user} = data;
-      const{firstName, lastName, _id, email, project} = data.user;
+      const { isAuthenticated, user } = data;
+      const { firstName, lastName, _id, email, project } = data.user;
       if (isAuthenticated) {
         userContext.setUserId(_id);
         userContext.setUserFName(firstName);
@@ -30,8 +30,6 @@ export default function Login() {
         userContext.setUserProjects(project);
         userContext.setUserEmail(email);
         // ---
-        authContext.setUserInfo(data);
-        authContext.setIsAuthenticated(isAuthenticated);
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/");
       } else {
@@ -41,31 +39,21 @@ export default function Login() {
           msgErr: true,
         });
       }
-      ProjectService.getRisksByUserId(_id)
-      .then((res) =>{ 
-          // userRisks, setUserRisks
-          console.log(res);
-          console.log(res.data.userRisks.length);
-          userContext.setUserRisks(res.data.userRisks.length);
-          const risks = res.data.userRisks;
-          let numOfComments = 0;
-          for (let i = 0; i < risks.length; i++) {
-           numOfComments =+ risks[i].comments.length;
-            
-          }
-          userContext.setUserComments(numOfComments);
+      ProjectService.getRisksByUserId(_id).then((res) => {
+        userContext.setUserRisks(res.data.userRisks.length);
+        const risks = res.data.userRisks;
+        let numOfComments = 0;
+        for (let i = 0; i < risks.length; i++) {
+          numOfComments = +risks[i].comments.length;
+        }
+        userContext.setUserComments(numOfComments);
       });
-      ProjectService.getProjectByUserId(_id)
-      .then((res) => {
-        userContext.setUserProjects(res.data.usersProjects)
+      ProjectService.getProjectByUserId(_id).then((res) => {
+        userContext.setUserProjects(res.data.usersProjects);
         userContext.setProjects(res.data.usersProjects.length);
-
-      })
-
+      });
     });
-    
   };
-  
   return (
     <div>
       {message ? <Toast message={message} /> : null}

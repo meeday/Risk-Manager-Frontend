@@ -1,14 +1,19 @@
+// Import npm modules, components and files
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "./styles/NewRisk.css";
 import ProjectService from "../../../Services/ProjectService";
 import { config } from "../../../config";
-import {ProjectContext} from "../../../Context/ProjectContext"
+import { ProjectContext } from "../../../Context/ProjectContext";
+import SeverityHelpIcon from "../../helpIcons/SeverityHelpIcon";
+import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
+import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
+import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
+
+// Import CSS
+import "./styles/NewRisk.css";
 
 // Lookup object for risk scoring categorisation
 const colorClasses = {
@@ -203,21 +208,7 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-3 col-xs-12">
               <label>
                 Status
-                <span
-                  className="label-popover"
-                  data-toggle="popover"
-                  data-trigger="hover"
-                  data-placement="top"
-                  data-html="true"
-                  title="Status"
-                  data-content="<strong>Open:</strong> The risk is present in the design.
-                    <br />
-                    <strong>Closed:</strong> The risk has been mitigated, so it is no longer present in the design.
-                    <br />
-                    <strong>Transferred:</strong> Ownership of the risk has been transferred to another party."
-                >
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </span>
+                <StatusHelpIcon/>
               </label>
               <select
                 required
@@ -326,25 +317,7 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-6 col-xs-12">
               <label>
                 Likelihood
-                <span
-                  className="label-popover"
-                  data-toggle="popover"
-                  data-trigger="hover"
-                  data-placement="top"
-                  data-html="true"
-                  title="Likelihood scoring"
-                  data-content="<span class='very-low'> 1 - Very low:</span> The event is unlikely to occur but may by exception occur.
-                    <br />
-                    <span class='low'> 2 - Low:</span> The event can be expected to occur during the lifecycle.
-                    <br />
-                    <span class='medium'> 3 - Medium:</span> The event is likely to occur several times.
-                    <br />
-                    <span class='high'> 4 - High:</span> The event will occur several times and is likely to occur often.
-                    <br />
-                    <span class='very-high'> 5 - Very high:</span> The event is likely to occur on a daily basis."
-                >
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </span>
+                <LikelihoodHelpIcon/>
               </label>
               <select
                 required
@@ -364,25 +337,7 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-6 col-xs-12">
               <label>
                 Severity
-                <span
-                  className="label-popover"
-                  data-toggle="popover"
-                  data-trigger="hover"
-                  data-placement="top"
-                  data-html="true"
-                  title="Severity scoring"
-                  data-content="<span class='very-low'> 1 - Very low:</span> Non-reportable injury.
-                    <br />
-                    <span class='low'> 2 - Low:</span> Minor injury.
-                    <br />
-                    <span class='medium'> 3 - Medium:</span> Major injury or multiple minor injuries.
-                    <br />
-                    <span class='high'> 4 - High:</span> Single fatality or multiple major injuries.
-                    <br />
-                    <span class='very-high'> 5 - Very high:</span> Multiple fatalities."
-                >
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </span>
+                <SeverityHelpIcon/>
               </label>
               <select
                 required
@@ -402,23 +357,7 @@ console.log(projectContext.projectInfo);
             <div className="form-group form-center col-sm-6 col-xs-12">
               <label>
                 Risk score
-                <span
-                  className="label-popover"
-                  data-toggle="popover"
-                  data-trigger="hover"
-                  data-placement="top"
-                  data-html="true"
-                  title="Risk score"
-                  data-content="Overall risk score is calculated as the sum of the likelihood and severity scores.
-                    <br />
-                    <span class='very-low'> 2-4 = Negligible risk:</span> Ensure control measures are maintained and reviewed as necessary to control residual risk as far as is reasonably practicable.
-                    <br />
-                    <span class='medium'> 5-6 = Tolerable risk:</span> Control measures to reduce risk rating to a level which is as low as reasonably practicable (ALARP). Add details of residual risk to drawings/docs.
-                    <br />
-                    <span class='very-high'> 7-10 = Intolerable risk:</span> Activity not permitted. Hazard to be avoided or reduced."
-                >
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </span>
+                <RiskScoreHelpIcon/>
               </label>
               <div className={riskColorClass(riskScore)}>
                 <p>{showResultingRisk(riskScore)}</p>

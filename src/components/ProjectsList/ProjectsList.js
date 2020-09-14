@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { List, LinkItem } from "../List/List";
 import "./ProjectsList.css";
-import ProjectService from "../../Services/ProjectService";
 import { AuthContext } from "../../Context/AuthContext";
 import { UserContext } from "../../Context/UserContext";
 
