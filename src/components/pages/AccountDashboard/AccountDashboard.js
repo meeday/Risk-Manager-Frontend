@@ -35,7 +35,7 @@ function AccountDashboard() {
             <i className="fas fa-exclamation-circle"></i>
           </div>
           <div className="profile__value">
-            {userContext.userRisks}
+            {((userContext || {}).userRisks || []).length}
             <div className="profile__key">Issues</div>
           </div>
         </div>
@@ -44,7 +44,7 @@ function AccountDashboard() {
             <i className="fas fa-comments"></i>
           </div>
           <div className="profile__value">
-            {userContext.userComments}
+            {(userContext.userComments || []).length}
             <div className="profile__key">Comments</div>
           </div>
         </div>
