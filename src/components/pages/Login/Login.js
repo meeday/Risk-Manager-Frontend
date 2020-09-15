@@ -44,7 +44,7 @@ export default function Login() {
         const risks = res.data.userRisks;
         let comments = [];
         for (let i = 0; i < risks.length; i++) {
-          comments.push(risks[i].comments);
+          comments = comments.concat(risks[i].comments);
         }
         userContext.setUserComments(comments);
       });
