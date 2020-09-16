@@ -13,6 +13,8 @@ import Warning from "../Warning/Warning";
 import ProjectService from "../../../Services/ProjectService";
 import { Modal } from "react-bootstrap";
 import { ProjectContext } from "../../../Context/ProjectContext";
+
+
 // Import CSS
 import "./styles/Project.css";
 
@@ -35,16 +37,12 @@ const Projects = () => {
       const projectData = data.data.project;
       projectContext.setProjectInfo(projectData);
       setProjectData(projectData)
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(`Error - Project.js - getProject.js - ${err}`);
     }
   };
-  if (projectContext.projectInfo) {
-    console.log(projectContext.projectInfo.teamMembers);
-  }
 
   const projectId = id;
-  // Set state
 
   // Function to toggle the modalState between "show" and "hide"
   const toggleModal = () =>
@@ -94,7 +92,6 @@ const Projects = () => {
     getProject(id);
   }, []);
 
-  console.log(projectData);
   const mapCenter = projectData.location;
 
   return (

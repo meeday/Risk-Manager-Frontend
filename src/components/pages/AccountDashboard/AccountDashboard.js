@@ -1,54 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import Avatar from "./worker.png";
-import AuthService from "../../../Services/AuthService";
-import ProjectService from "../../../Services/ProjectService";
 import "./styles/AccountDashboard.css";
 import { AuthContext } from "../../../Context/AuthContext";
-import { ProjectContext } from "../../../Context/ProjectContext";
+import { UserContext } from "../../../Context/UserContext";
 
 function AccountDashboard() {
-  const { userValue, authValue, IdValue } = useContext(AuthContext);
-  const { userRisks, setUserRisks } = useContext(ProjectContext);
-  
-
-  // console.log(projectIdValue.projectId)
-
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [projects, setProjects] = useState([]);
-  const [comments, setComments] = useState([]);
-
-  const fetchUser = async () => {
-    const { data } = await AuthService.getInfo(IdValue.userId);
-    setFirstName(data.firstName);
-    setLastName(data.lastName);
-    setProjects(data.project);
-  };
-
-  const fetchRisks = async () => {
-    try {
-      const { data } = await ProjectService.getRisksByUserId(IdValue.userId);
-      setUserRisks(data.userRisks);
-    } catch (error) {}
-  };
-
-  const numMessage = (risks) => {
-    if (risks) {
-      let totalComments = 0;
-      for (let i = 0; i < risks.length; i++) {
-        totalComments += risks[i].comments.length;
-      }
-      return totalComments;
-    }
-    return null;
-  };
-  const numComments = numMessage(userRisks);
-
-  useEffect(() => {
-    fetchUser();
-    fetchRisks();
-    
-  }, []);
+  const userContext = useContext(UserContext);
+  const project = userContext.projects;
 
   return (
     <div className="profile">
@@ -58,7 +16,7 @@ function AccountDashboard() {
       <div className="profile__header">
         <div className="profile__account">
           <h4 className="profile__username">
-            {firstName} {lastName}
+          {userContext.firstName} {userContext.lastName}
           </h4>
         </div>
       </div>
@@ -68,7 +26,7 @@ function AccountDashboard() {
             <i className="material-icons">engineering</i>
           </div>
           <div className="profile__value">
-            {projects.length}
+            {project}
             <div className="profile__key">Projects</div>
           </div>
         </div>
@@ -77,7 +35,7 @@ function AccountDashboard() {
             <i className="fas fa-exclamation-circle"></i>
           </div>
           <div className="profile__value">
-            {userRisks.length}
+            {((userContext || {}).userRisks || []).length}
             <div className="profile__key">Issues</div>
           </div>
         </div>
@@ -86,7 +44,7 @@ function AccountDashboard() {
             <i className="fas fa-comments"></i>
           </div>
           <div className="profile__value">
-            {numComments}
+            {(userContext.userComments || []).length}
             <div className="profile__key">Comments</div>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import AuthService from "../../../Services/AuthService";
+import ProjectService from "../../../Services/ProjectService";
 import Toast from "../../Toasts/Toast";
-import  {AuthContext}  from "../../../Context/AuthContext";
-import  {ProjectContext}  from "../../../Context/ProjectContext";
+import { AuthContext } from "../../../Context/AuthContext";
+import { UserContext } from "../../../Context/UserContext";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 
@@ -15,20 +16,20 @@ export default function Login() {
   const [message, setMessage] = useState(null);
 
   // destructuring Authcontext, we can set new state
-  const {userValue, authValue, IdValue} = useContext(AuthContext);
-  const { projectValue, projectIdValue } = useContext(ProjectContext);
+  const authContext = useContext(AuthContext);
+  const userContext = useContext(UserContext);
   const onSubmit = (user, e) => {
     e.preventDefault();
     AuthService.login(user).then((data) => {
       const { isAuthenticated, user } = data;
-    //  console.log(user.project);
-     projectIdValue.setProjectId(user.project)
-      IdValue.setUserId(user._id);
-      userValue.setUserInfo(user)
+      const { firstName, lastName, _id, email, project } = data.user;
       if (isAuthenticated) {
+        userContext.setUserId(_id);
+        userContext.setUserFName(firstName);
+        userContext.setUserLName(lastName);
+        userContext.setUserProjects(project);
+        userContext.setUserEmail(email);
         // ---
-        // userValue.setUserInfo(data);
-        authValue.setIsAuthenticated(isAuthenticated);
         // If authenticated, use useHistory hook from react-router-dom to redirect to /projects route
         history.push("/");
       } else {
@@ -38,6 +39,19 @@ export default function Login() {
           msgErr: true,
         });
       }
+      ProjectService.getRisksByUserId(_id).then((res) => {
+        userContext.setUserRisks(res.data.userRisks);
+        const risks = res.data.userRisks;
+        let comments = [];
+        for (let i = 0; i < risks.length; i++) {
+          comments = comments.concat(risks[i].comments);
+        }
+        userContext.setUserComments(comments);
+      });
+      ProjectService.getProjectByUserId(_id).then((res) => {
+        userContext.setUserProjects(res.data.usersProjects);
+        userContext.setProjects(res.data.usersProjects.length);
+      });
     });
   };
   return (
