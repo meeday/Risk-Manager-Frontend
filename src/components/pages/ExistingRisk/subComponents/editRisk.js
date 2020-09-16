@@ -1,19 +1,13 @@
-// Import npm modules, components and files
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import ProjectService from "../../../Services/ProjectService";
-import { config } from "../../../config";
-import { ProjectContext } from "../../../Context/ProjectContext";
-import SeverityHelpIcon from "../../helpIcons/SeverityHelpIcon";
-import StatusHelpIcon from "../../helpIcons/StatusHelpIcon";
-import LikelihoodHelpIcon from "../../helpIcons/LikelihoodHelpIcon";
-import RiskScoreHelpIcon from "../../helpIcons/RiskScoreHelpIcon";
-
-// Import CSS
-import "./styles/NewRisk.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../styles/ExistingRisk.css";
+import ProjectService from "../../../../Services/ProjectService";
+import { config } from "../../../../config";
 
 // Lookup object for risk scoring categorisation
 const colorClasses = {
@@ -39,7 +33,8 @@ const mapContainerStyle = {
   margin: "0 auto",
 };
 
-
+// ******* projectID will need to be retrieved
+const projectId = "5f52a6cc0c5677512c956ded";
 
 // ******* mapCentre will need to be retrieved
 
@@ -49,16 +44,13 @@ const mapOptions = {
   zoomControl: true,
 };
 
-function NewRisk(props) {
-const projectContext = useContext(ProjectContext)
-console.log(projectContext.projectInfo);
-
+function EditRisk(props) {
   // Use the useHistory hook for pushing a new route into the history
   const history = useHistory();
-  
+
   // Declare hooks from useForm
   const { register, handleSubmit } = useForm();
-  
+
   // Declare states
   // const [message, setMessage] = useState(null);
   const [likelihood, setLikelihood] = useState(1);
@@ -68,21 +60,14 @@ console.log(projectContext.projectInfo);
     lat: 52.475,
     lng: -1.9,
   });
-  
-  // get the project id from URL
-  const strPath = window.location.pathname;
-  const path = strPath.replace("/project/", "");
-  const id = path.replace("/new-risk", "");
-  const projectId = id;
 
   const getLocation = async () => {
-    try {
-      const { data } = await ProjectService.getProject(id);
-      setRiskLocation(data.project.location);      
-    } catch (error) {
-      console.log(`Error - newRisk.js - getProject() - ${error}`);      
-    }
+    const { data } = await ProjectService.getProject(
+      "5f53f1adeb1bd77a1004ba12"
+    );
+    setRiskLocation(data.project.location);
   };
+
   useEffect(() => {
     getLocation({});
   }, []);
@@ -187,9 +172,9 @@ console.log(projectContext.projectInfo);
   if (!isLoaded) return "Loading Google Maps";
 
   return (
-    <div className="new-risk-wrapper">
-      <div className="new-risk-inner">
-        <h1>New risk</h1>
+    <div className="edit-risk-wrapper">
+      <div className="edit-risk-inner">
+        <h1>Edit risk</h1>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group row">
@@ -208,7 +193,21 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-3 col-xs-12">
               <label>
                 Status
-                <StatusHelpIcon/>
+                <span
+                  className="label-popover"
+                  data-toggle="popover"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-html="true"
+                  title="Status"
+                  data-content="<strong>Open:</strong> The risk is present in the design.
+                    <br />
+                    <strong>Closed:</strong> The risk has been mitigated, so it is no longer present in the design.
+                    <br />
+                    <strong>Transferred:</strong> Ownership of the risk has been transferred to another party."
+                >
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                </span>
               </label>
               <select
                 required
@@ -224,17 +223,7 @@ console.log(projectContext.projectInfo);
           </div>
 
           <div className="form-group row">
-            <div className="form-group col-sm-6 col-xs-12">
-              <label>ID</label>
-              <input
-                required
-                name="riskId"
-                type="text"
-                className="form-control"
-                placeholder="Risk ID (must be unique)"
-                ref={register}
-              />
-            </div>
+            
 
             <div className="form-group col-sm-6 col-xs-12">
               <label>Discipline</label>
@@ -284,7 +273,7 @@ console.log(projectContext.projectInfo);
                 onClick={handleLocationChange}
               >
                 <Marker
-                  position={{ lat: riskLocation.lat, lng: riskLocation.lng }}
+                  position={riskLocation}
                 />
               </GoogleMap>
             </div>
@@ -317,7 +306,25 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-6 col-xs-12">
               <label>
                 Likelihood
-                <LikelihoodHelpIcon/>
+                <span
+                  className="label-popover"
+                  data-toggle="popover"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-html="true"
+                  title="Likelihood scoring"
+                  data-content="<span class='very-low'> 1 - Very low:</span> The event is unlikely to occur but may by exception occur.
+                    <br />
+                    <span class='low'> 2 - Low:</span> The event can be expected to occur during the lifecycle.
+                    <br />
+                    <span class='medium'> 3 - Medium:</span> The event is likely to occur several times.
+                    <br />
+                    <span class='high'> 4 - High:</span> The event will occur several times and is likely to occur often.
+                    <br />
+                    <span class='very-high'> 5 - Very high:</span> The event is likely to occur on a daily basis."
+                >
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                </span>
               </label>
               <select
                 required
@@ -337,7 +344,25 @@ console.log(projectContext.projectInfo);
             <div className="form-group col-sm-6 col-xs-12">
               <label>
                 Severity
-                <SeverityHelpIcon/>
+                <span
+                  className="label-popover"
+                  data-toggle="popover"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-html="true"
+                  title="Severity scoring"
+                  data-content="<span class='very-low'> 1 - Very low:</span> Non-reportable injury.
+                    <br />
+                    <span class='low'> 2 - Low:</span> Minor injury.
+                    <br />
+                    <span class='medium'> 3 - Medium:</span> Major injury or multiple minor injuries.
+                    <br />
+                    <span class='high'> 4 - High:</span> Single fatality or multiple major injuries.
+                    <br />
+                    <span class='very-high'> 5 - Very high:</span> Multiple fatalities."
+                >
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                </span>
               </label>
               <select
                 required
@@ -357,7 +382,23 @@ console.log(projectContext.projectInfo);
             <div className="form-group form-center col-sm-6 col-xs-12">
               <label>
                 Risk score
-                <RiskScoreHelpIcon/>
+                <span
+                  className="label-popover"
+                  data-toggle="popover"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-html="true"
+                  title="Risk score"
+                  data-content="Overall risk score is calculated as the sum of the likelihood and severity scores.
+                    <br />
+                    <span class='very-low'> 2-4 = Negligible risk:</span> Ensure control measures are maintained and reviewed as necessary to control residual risk as far as is reasonably practicable.
+                    <br />
+                    <span class='medium'> 5-6 = Tolerable risk:</span> Control measures to reduce risk rating to a level which is as low as reasonably practicable (ALARP). Add details of residual risk to drawings/docs.
+                    <br />
+                    <span class='very-high'> 7-10 = Intolerable risk:</span> Activity not permitted. Hazard to be avoided or reduced."
+                >
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                </span>
               </label>
               <div className={riskColorClass(riskScore)}>
                 <p>{showResultingRisk(riskScore)}</p>
@@ -369,7 +410,7 @@ console.log(projectContext.projectInfo);
             type="submit"
             className="btn btn-primary btn-block submit-btn"
           >
-            Submit
+            Save Edit
           </button>
         </form>
       </div>
@@ -377,4 +418,4 @@ console.log(projectContext.projectInfo);
   );
 }
 
-export default NewRisk;
+export default EditRisk;

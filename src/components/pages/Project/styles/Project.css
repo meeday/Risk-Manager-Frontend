@@ -1,24 +1,23 @@
 .map {
   width: 900px;
-  height: 650px;
-  margin: calc(50vh - 190px) auto;
+  margin: 75px auto 25px auto;
   box-shadow: 0 0 40px -10px #000000;
   background: #bdbdbd;
   max-width: calc(100vw - 60px);
 }
 
 #map {
-  width: 50%;
-  height: 650px;
+  width: 100%;
+  height: 400px;
   display: inline-block;
 }
 
-.map-c {
-  float: left;
-  width: 50%;
-  margin-top: 30px;
-  padding: 25px;
-  box-sizing: border-box;
+.project-details {
+  padding: 20px 0 0 25px;
+}
+
+.map-container {
+  padding: 20px 25px 0 0;
 }
 
 h1 {
@@ -28,21 +27,24 @@ h1 {
 }
 
 h2 {
-  margin: 5px;
   font-size: 18px;
   align-self: center;
   color: #2196f3;
 }
 
-p {
+.data-block, .info-text {
   font-size: 18px;
-  margin-top: 20px;
-  margin-bottom: 45px;
+  margin: 15px 0;
   color: #ffffff;
 }
 
-.date {
-  margin-left: 35px;
+.data-block h2 {
+  display: inline-block;
+}
+
+.project-content {
+  margin-left: 25px;
+  display: block;
 }
 
 .users {
@@ -55,31 +57,80 @@ p {
   content: ",";
   color: #ffffff;
 }
-.det {
-  text-align: justify;
-  font-size: 12px;
-  margin-bottom: 15px;
-}
 
-i {
+.icon {
   float: left;
   color: #2196f3;
   font-size: 18px !important;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
-@media only screen and (max-width: 720px) {
-  .map {
-    height: 100%;
-    margin: calc(50vh - 225px) auto;
+.btn-center {
+  display: block;
+  margin: 20px auto;
+}
+
+.map-popup h2, .map-popup p, .map-popup a {
+  margin: 10px 0;
+}
+
+.key {
+  padding: 0;
+  text-align: center;
+}
+
+@media only screen and (max-width: 992px) {
+  .key-icon {
+    width: 24px;
+    height: auto;
   }
 
-  #map {
-    width: 100%;
+  .key-definition {
+    font-size: 14px;
+  }
+}
+
+
+@media only screen and (min-width: 576px) and (max-width: 675px) {
+  .key-icon {
+    width: 18px;
+    height: auto;
   }
 
-  .map-c {
-    float: none;
-    width: 100%;
+  .key-definition {
+    font-size: 12px;
+  }
+  
+  .data-block h2, .data-block p, .project-content {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .project-details {
+    padding: 15px;
+  }
+  
+  .map-container {
+    padding: 0 15px 15px 15px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .key-icon {
+    width: 18px;
+    height: auto;
+  }
+  
+  .key-definition {
+    font-size: 12px;
+  }
+
+  .data-block h2, .data-block p, .project-content {
+    font-size: 14px;
+  }
+  
+  .map p, .map h2 {
+    font-size: 14px;
   }
 }

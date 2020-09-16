@@ -1,19 +1,30 @@
+// Import npm modules, components and methods
 import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../../../Services/AuthService";
 import { useForm } from "react-hook-form";
 import Toast from "../../Toasts/Toast";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import PrivacyPolicy from "../../PrivacyPolicy/PrivacyPolicy";
+
+// Import CSS
+import "./styles/Register.css";
 
 // creating the Register component
 export default function Register() {
+  // Set states. Message holds any message returned from the server. Modal state is for modal visibility
+  const [message, setMessage] = useState(null);
+  const [modalState, setModalState] = useState("show" | "hide");
+
   // Using the useHistory hook for pushing a new route into the history
   const history = useHistory();
 
-  //  pull out the in-built methods, what we going to use from userForm hook
+  //  pull out the in-built methods, what we going to use from UserForm hook
   const { register, handleSubmit } = useForm();
 
-  // the message new state going to setup what we get from the server(error message or confirm message)
-  const [message, setMessage] = useState(null);
+  // Function to toggle the modalState between "show" and "hide"
+  const toggleModal = () => modalState === "show" ? setModalState("hide") : setModalState("show");
+
   // setting up a timer
   let timerID = useRef(null);
 
@@ -51,7 +62,7 @@ export default function Register() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <h3>Sign Up</h3>
         <div className="form-group row">
-          <div className="form-group col">
+          <div className="col">
             <label>First name</label>
             <input
               required
@@ -62,7 +73,7 @@ export default function Register() {
               ref={register}
             />
           </div>
-          <div className="form-group col">
+          <div className="col">
             <label>Last name</label>
             <input
               required
@@ -99,7 +110,7 @@ export default function Register() {
           />
         </div>
         <div className="form-group row">
-          <div className="form-group col">
+          <div className="col">
             <label>Company</label>
             <input
               required
@@ -110,7 +121,7 @@ export default function Register() {
               ref={register}
             />
           </div>
-          <div className="form-group col">
+          <div className="col">
             <label>Job Title</label>
             <input
               required
@@ -122,7 +133,13 @@ export default function Register() {
             />
           </div>
         </div>
-
+        <div className="text-center privacy">
+          <p>By signing up you agree to our <a onClick={toggleModal}>privacy policy</a></p>
+        </div>
+        <Modal show={modalState === "show"}>
+          <Modal.Header onClick={toggleModal} closeButton style={{background: "#007bff", color: "#FFFFFF"}}>Privacy policy</Modal.Header>
+          <PrivacyPolicy />
+        </Modal>
         <button type="submit" className="btn btn-primary btn-block">
           Sign Up
         </button>
