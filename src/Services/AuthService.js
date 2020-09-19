@@ -4,7 +4,7 @@
 export default {
   register: async (user) => {
     try {
-      const res = await fetch(`/api/user/register`, {
+      const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/register`, {
         method: "post",
         body: JSON.stringify(user),
         headers: {
@@ -19,7 +19,7 @@ export default {
 
   login: async (user) => {
     try {
-      const res = await fetch(`/api/user/login`, {
+      const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/login`, {
         method: "post",
         credentials: "include",
         body: JSON.stringify(user),
@@ -36,7 +36,7 @@ export default {
 
   logout: async () => {
     try {
-      const res = await fetch(`/api/user/logout`);
+      const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/logout`);
       return res.json();
     } catch (error) {
       console.log(`Error - AuthService.js - logout() - ${error}`);
@@ -50,7 +50,7 @@ export default {
   //we use context-API to call this function, it is a global state for our react app
   isAuthenticated: async () => {
     try {
-      const res = await fetch(`/api/user/authenticated`);
+      const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/authenticated`);
       if (res.status !== 401) return res.json().then((data) => data);
       else return { isAuthenticated: false, user: { email: "" } };
     } catch (error) {
@@ -60,7 +60,7 @@ export default {
 
   getInfo: async (id) => {
     try {
-      const res = await fetch(`/api/user/info/${id}`);
+      const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/info/${id}`);
       if (res.status !== 401) return res.json().then((data) => data);
       else return console.error("Not Found");
     } catch (error) {
