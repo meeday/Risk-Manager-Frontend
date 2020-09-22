@@ -5,7 +5,7 @@ export default {
     // api/project/... routes
     getProject : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/${id}`);
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/${id}`);
             return res.json();
         }
         catch (error) {
@@ -14,7 +14,7 @@ export default {
     },
     getAllProjects : async () => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project`)
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project`)
             return res.json();
         }
         catch (error) {
@@ -23,7 +23,7 @@ export default {
     },
     getProjectByUserId:async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/user/${id}`)
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/user/${id}`)
             return res.json();
         }
         catch (error) {
@@ -32,7 +32,7 @@ export default {
     },
     createProject : async project => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project`, {
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project`, {
                 method: "post",
                 body: JSON.stringify(project),
                 headers : {
@@ -47,7 +47,7 @@ export default {
     },
     deleteProject : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/${id}`, {
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/${id}`, {
                 method: "delete",
                 headers : {
                     'Content-Type' : 'application/json'
@@ -63,7 +63,7 @@ export default {
     // api/project/risk/... routes
     getRisk : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`)
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/${id}`)
             return res.json(res);
         }
         catch (error) {
@@ -74,7 +74,7 @@ export default {
     // api/project/risk/... routes
     getRisksByProjectId : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/project/${id}`)
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/project/${id}`)
             return res.json(res);
         }
         catch (error) {
@@ -83,7 +83,7 @@ export default {
     },
     getRisksByUserId : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/user/${id}`)
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/user/${id}`)
             return res.json(res);
         }
         catch (error) {
@@ -93,7 +93,7 @@ export default {
 
     createRisk : async newRisk => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/`, {
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/`, {
                 method: "post",
                 body: JSON.stringify(newRisk),
                 headers : {
@@ -109,7 +109,7 @@ export default {
 
     createComment : async (id, newComment) => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}/comment`, {
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/${id}/comment`, {
                 method: "put",
                 body: JSON.stringify(newComment),
                 headers : {
@@ -125,7 +125,7 @@ export default {
 
     deleteRisk : async id => {
         try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`, {
+            const res = await fetch(`https://risk-manager-jmni-backend.herokuapp.com/api/project/risk/${id}`, {
                 method: "delete",
                 headers : {
                     'Content-Type' : 'application/json'
