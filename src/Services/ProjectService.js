@@ -1,140 +1,150 @@
-import { config } from "../config";
+import Axios from "axios";
 
 // Fetch requests for backend end-points
 export default {
-    // api/project/... routes
-    getProject : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/${id}`);
-            return res.json();
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getProject() - ${error}`)
-        }
-    },
-    getAllProjects : async () => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project`)
-            return res.json();
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
-        }
-    },
-    getProjectByUserId:async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/user/${id}`)
-            return res.json();
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getAllProjects() - ${error}`)
-        }
-    },
-    createProject : async project => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project`, {
-                method: "post",
-                body: JSON.stringify(project),
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            })
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - createProject() - ${error}`)
-        }
-    },
-    deleteProject : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/${id}`, {
-                method: "delete",
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            })
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - deleteProject() - ${error}`)
-        }
-    },
+  // api/project/... routes
+  getProject: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - getProject() - ${error}`);
+    }
+  },
+  getAllProjects: async (token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - getAllProjects() - ${error}`);
+    }
+  },
+  getProjectByUserId: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project/user/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - getAllProjects() - ${error}`);
+    }
+  },
+  createProject: async (project, token) => {
+    try {
+      const { data } = await Axios({
+        method: "post",
+        url: `http://localhost:8080/api/project`,
+        data: project,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - createProject() - ${error}`);
+    }
+  },
+  deleteProject: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "delete",
+        url: `http://localhost:8080/api/project/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - deleteProject() - ${error}`);
+    }
+  },
 
-    // api/project/risk/... routes
-    getRisk : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`)
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getRisk() - ${error}`)
-        }
-    },
+  // api/project/risk/... routes
+  getRisk: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project/risk/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - getRisk() - ${error}`);
+    }
+  },
 
-    // api/project/risk/... routes
-    getRisksByProjectId : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/project/${id}`)
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getRisksByProjectId() - ${error}`)
-        }
-    },
-    getRisksByUserId : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/user/${id}`)
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - getRisksByUserId() - ${error}`)
-        }
-    },
+  // api/project/risk/... routes
+  getRisksByProjectId: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project/risk/project/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(
+        `Error - ProjectService.js - getRisksByProjectId() - ${error}`
+      );
+    }
+  },
+  getRisksByUserId: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "get",
+        url: `http://localhost:8080/api/project/risk/user/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - getRisksByUserId() - ${error}`);
+    }
+  },
 
-    createRisk : async newRisk => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/`, {
-                method: "post",
-                body: JSON.stringify(newRisk),
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            })
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - createRisk() - ${error}`)
-        }
-    },
+  createRisk: async (newRisk, token) => {
+    try {
+      const { data } = await Axios({
+        method: "post",
+        url: `http://localhost:8080/api/project/risk/`,
+        data: newRisk,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - createRisk() - ${error}`);
+    }
+  },
 
-    createComment : async (id, newComment) => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}/comment`, {
-                method: "put",
-                body: JSON.stringify(newComment),
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            })
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - createComment() - ${error}`)
-        }
-    },
+  createComment: async (id, newComment, token) => {
+    try {
+      const { data } = await Axios({
+        method: "put",
+        url: `http://localhost:8080/api/project/risk/${id}/comment`,
+        data: newComment,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - createComment() - ${error}`);
+    }
+  },
 
-    deleteRisk : async id => {
-        try {
-            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`, {
-                method: "delete",
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            })
-            return res.json(res);
-        }
-        catch (error) {
-            console.log(`Error - ProjectService.js - deleteRisk() - ${error}`)
-        }
-    },
-}
+  deleteRisk: async (id, token) => {
+    try {
+      const { data } = await Axios({
+        method: "delete",
+        url: `http://localhost:8080/api/project/risk/${id}`,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - deleteRisk() - ${error}`);
+    }
+  },
+};
