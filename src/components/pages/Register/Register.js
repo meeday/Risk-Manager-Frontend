@@ -9,6 +9,7 @@ import PrivacyPolicy from "../../PrivacyPolicy/PrivacyPolicy";
 
 // Import CSS
 import "./styles/Register.css";
+import Axios from "axios";
 
 // creating the Register component
 export default function Register() {
@@ -36,23 +37,26 @@ export default function Register() {
 
   // when user click the Sign Up button pass all the data to the server using
   // registor method as on AuthService.js
-  const onSubmit = (user, e) => {
-    AuthService.register(user).then((data) => {
+  const onSubmit = async (user, e) => {
+
+    const data = await AuthService.register(user);
+    console.log(data);
+    // 
       // pull out the message from the data what we get from the server
       const { message } = data;
-      console.log(message);
-      // pass server message to the message new state
+      // // console.log(message);
+      // // // pass server message to the message new state
       setMessage(message);
-      // after we recivered server data we can clear the user infromation from Sign Up page
+      // // after we recivered server data we can clear the user infromation from Sign Up page
       e.target.reset();
-      // if there is no message error, after 3sec redirect user to the login page
+      // // if there is no message error, after 3sec redirect user to the login page
       if (!message.msgErr) {
         timerID = setTimeout(() => {
           // Use useHistory hook from react-router-dom to redirect to /login route
           history.push("/login");
         }, 3000);
       }
-    });
+    
   };
 
   return (
