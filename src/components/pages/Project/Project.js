@@ -1,6 +1,7 @@
 // Import npm modules, components and methods
 import dotenv from "dotenv";
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import {
   GoogleMap,
   LoadScript,
@@ -13,7 +14,7 @@ import Warning from "../Warning/Warning";
 import ProjectService from "../../../Services/ProjectService";
 import { Modal } from "react-bootstrap";
 import { ProjectContext } from "../../../Context/ProjectContext";
-
+import { UserContext } from "../../../Context/UserContext";
 
 // Import CSS
 import "./styles/Project.css";
@@ -22,21 +23,27 @@ import "./styles/Project.css";
 dotenv.config();
 
 const Projects = () => {
+
+  const history = useHistory();
+
+  const { projectInfo, setProjectInfo } = useContext(ProjectContext);
+  
+  const token = localStorage.getItem("x-auth-token");
+
   const [projectData, setProjectData] = useState([]);
   const [projectRisks, setProjectRisks] = useState([]);
   const [selected, setSelected] = useState();
   const [modalState, setModalState] = useState("show" | "hide");
-  
-  const projectContext = useContext(ProjectContext);
+
   const strPath = window.location.pathname;
   const id = strPath.replace("/project/", "");
 
-  const getProject = async (id) => {
+  const getProject = async (id, userToken) => {
     try {
-      const data = await ProjectService.getProject(id);
+      const data = await ProjectService.getProject(id, userToken);
       const projectData = data.data.project;
-      projectContext.setProjectInfo(projectData);
-      setProjectData(projectData)
+      setProjectInfo(projectData);
+      setProjectData(projectData);
     } catch (err) {
       console.log(`Error - Project.js - getProject.js - ${err}`);
     }
@@ -69,9 +76,12 @@ const Projects = () => {
   };
 
   // API call to get all all risks of the current project
-  const getProjectRisks = async (projectId) => {
+  const getProjectRisks = async (projectId, userToken) => {
     try {
-      const dataReturn = await ProjectService.getRisksByProjectId(projectId);
+      const dataReturn = await ProjectService.getRisksByProjectId(
+        projectId,
+        userToken
+      );
       const arrayData = dataReturn.data.projectRisks;
       setProjectRisks(arrayData);
     } catch (err) {
@@ -79,33 +89,35 @@ const Projects = () => {
     }
   };
 
-  const deleteProject = async (id) => {
+  const deleteProject = async () => {
     try {
-      const deletedProject = await ProjectService.deleteProject(id);
+      const deletedProject = await ProjectService.deleteProject(id, token);
+      history.push("/home");
+      
     } catch (err) {
       console.log(`Error - Project.js - deleteProject() - ${err}`);
     }
   };
   // Call the function which gets all users and sets to state
   useEffect(() => {
-    getProjectRisks(projectId);
-    getProject(id);
+    getProjectRisks(projectId, token);
+    getProject(id, token);
   }, []);
 
   const mapCenter = projectData.location;
 
   return (
     <>
-      {projectContext.projectInfo ? (
+      {projectInfo ? (
         <>
           <Navbar />
           <div className="map">
             <div className="row">
               <div className="col-xs-12 col-sm-6">
                 <div className="project-details">
-                  <h1>{projectContext.projectInfo.title}</h1>
+                  <h1>{projectInfo ? projectInfo.title : null}</h1>
                   <div className="data-block">
-                    <p>{projectContext.projectInfo.description}</p>
+                    <p>{projectInfo ? projectInfo.description : null}</p>
                   </div>
                   <div className="row">
                     <div className="col-6">
@@ -113,8 +125,7 @@ const Projects = () => {
                         <i className="icon fa fa-map-marker"></i>
                         <h2>Latitude</h2>
                         <span className="project-content">{`${
-                          ((projectContext.projectInfo || {}).location || {})
-                            .lat || null
+                          projectInfo ? projectInfo.location.lat : null
                         }`}</span>
                       </div>
                     </div>
@@ -122,8 +133,7 @@ const Projects = () => {
                       <div className="data-block">
                         <h2>Longitude</h2>
                         <span className="project-content">{`${
-                          ((projectContext.projectInfo || {}).location || {})
-                            .lng || null
+                          projectInfo ? projectInfo.location.lng : null
                         }`}</span>
                       </div>
                     </div>
@@ -132,7 +142,7 @@ const Projects = () => {
                     <i className="icon fas fa-user-tie"></i>
                     <h2>Client</h2>
                     <span className="project-content">
-                      {projectContext.projectInfo.client}
+                      {projectInfo ? projectInfo.client : null}
                     </span>
                   </div>
                   <div className="row">
@@ -141,7 +151,9 @@ const Projects = () => {
                         <i className="icon far fa-clock"></i>
                         <h2>Start Date</h2>
                         <span className="project-content">
-                          {projectContext.projectInfo.startDate.slice(0, 10)}
+                          {projectInfo
+                            ? projectInfo.startDate.slice(0, 10)
+                            : null}
                         </span>
                       </div>
                     </div>
@@ -149,7 +161,9 @@ const Projects = () => {
                       <div className="data-block">
                         <h2>End Date</h2>
                         <span className="project-content">
-                          {projectContext.projectInfo.endDate.slice(0, 10)}
+                          {projectInfo
+                            ? projectInfo.endDate.slice(0, 10)
+                            : null}
                         </span>
                       </div>
                     </div>
@@ -158,9 +172,11 @@ const Projects = () => {
                     <i className="icon fas fa-users"></i>
                     <h2>Team Members</h2>
                     <div className="project-content">
-                      {projectContext.projectInfo.teamMembers.map((user) => (
-                        <li className="users">{user[0].name}</li>
-                      ))}
+                      {projectInfo
+                        ? projectInfo.teamMembers.map((user) => (
+                            <li className="users">{user[0].name}</li>
+                          ))
+                        : null}
                     </div>
                   </div>
                 </div>
@@ -178,17 +194,19 @@ const Projects = () => {
                       zoom={12}
                       id="map"
                     >
-                      {projectRisks.map((risk) => (
-                        <Marker
-                          key={risk._id}
-                          position={risk.location}
-                          icon={markerColor(risk.risk)}
-                          title={risk.title}
-                          onClick={() => {
-                            setSelected(risk);
-                          }}
-                        />
-                      ))}
+                      {projectRisks
+                        ? projectRisks.map((risk) => (
+                            <Marker
+                              key={risk._id}
+                              position={risk.location}
+                              icon={markerColor(risk.risk)}
+                              title={risk.title}
+                              onClick={() => {
+                                setSelected(risk);
+                              }}
+                            />
+                          ))
+                        : null}
 
                       {selected ? (
                         <InfoWindow
