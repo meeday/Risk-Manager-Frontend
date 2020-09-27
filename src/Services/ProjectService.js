@@ -121,6 +121,20 @@ export default {
     }
   },
 
+  changeRisk: async (id, editedRisk, token) => {
+    try {
+      const { data } = await Axios({
+        method: "put",
+        url: `http://localhost:8080/api/project//risk/${id}`,
+        data: editedRisk,
+        headers: { "x-auth-token": token },
+      });
+      return data;
+    } catch (error) {
+      console.log(`Error - ProjectService.js - createRisk() - ${error}`);
+    }
+  },
+
   createComment: async (id, newComment, token) => {
     try {
       const { data } = await Axios({
