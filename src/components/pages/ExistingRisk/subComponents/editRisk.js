@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
@@ -7,6 +7,7 @@ import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../styles/ExistingRisk.css";
 import ProjectService from "../../../../Services/ProjectService";
+import {ProjectContext} from "../../../../Context/ProjectContext";
 import { config } from "../../../../config";
 
 // Lookup object for risk scoring categorisation
@@ -33,10 +34,6 @@ const mapContainerStyle = {
   margin: "0 auto",
 };
 
-// ******* projectID will need to be retrieved
-const projectId = "5f52a6cc0c5677512c956ded";
-
-// ******* mapCentre will need to be retrieved
 
 // Disable all Google Maps UI features. Activate zoom control
 const mapOptions = {
@@ -47,10 +44,11 @@ const mapOptions = {
 function EditRisk(props) {
   // Use the useHistory hook for pushing a new route into the history
   const history = useHistory();
-
+ const token = localStorage.getItem("x-auth-token");
   // Declare hooks from useForm
   const { register, handleSubmit } = useForm();
-
+  const { singleRisk, setSingleRisk } = useContext(ProjectContext)
+ 
   // Declare states
   // const [message, setMessage] = useState(null);
   const [likelihood, setLikelihood] = useState(1);
@@ -62,19 +60,25 @@ function EditRisk(props) {
   });
 
   const getLocation = async () => {
-    const { data } = await ProjectService.getProject(
-      "5f53f1adeb1bd77a1004ba12"
-    );
+    const { data } = await ProjectService.getProject(singleRisk.projectId, token);
     setRiskLocation(data.project.location);
   };
 
   useEffect(() => {
     getLocation({});
   }, []);
-
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setSingleRisk({
+      ...singleRisk,
+      [name]: value
+    });
+  }
   // Event to handle user adding a new risk
   const onSubmit = async (data, event) => {
     event.preventDefault();
+    console.log(data);
     // Store properties of the data object which was created from the useForm
     const {
       title,
@@ -87,7 +91,7 @@ function EditRisk(props) {
     } = data;
 
     // Create a newRisk object using the submitted form data
-    const newRisk = {
+    const editedRisk = {
       title,
       riskId,
       description,
@@ -100,18 +104,18 @@ function EditRisk(props) {
       likelihood: parseInt(likelihood),
       severity: parseInt(severity),
       risk: riskScore,
-      projectId,
+      projectId: singleRisk.projectId,
     };
 
     try {
       // Submitting a post request to add the new risk to the backend application
-      const res = await ProjectService.createRisk(newRisk);
+      // const res = await ProjectService.changeRisk(singleRisk._id, editedRisk, token);
 
       // ******* Add toast message to confirm risk has been added
-      console.log(res);
+      // console.log(res);
 
       // Redirect user back to the project page
-      history.push(`/project/${projectId}`);
+      history.push(`/project/${singleRisk.projectId}`);
     } catch (error) {
       console.error(`Error: NewRisk.js - onSubmit() - ${error}`);
     }
@@ -185,7 +189,8 @@ function EditRisk(props) {
                 name="title"
                 type="text"
                 className="form-control"
-                placeholder="Risk Title"
+                value={singleRisk.title}
+                onChange={handleChange}
                 ref={register}
               />
             </div>
@@ -232,8 +237,10 @@ function EditRisk(props) {
                 name="designDiscipline"
                 type="text"
                 className="form-control"
-                placeholder="Design discipline"
+                value={singleRisk.designDiscipline}
+                onChange={handleChange}
                 ref={register}
+                contentEditable={true}
               />
             </div>
           </div>
@@ -245,7 +252,8 @@ function EditRisk(props) {
               name="description"
               type="text"
               className="form-control form-description"
-              placeholder="Description"
+              value={singleRisk.description}
+              onChange={handleChange}
               ref={register}
             />
           </div>
