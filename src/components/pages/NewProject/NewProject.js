@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/NewProject.css";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { Link, useHistory } from "react-router-dom";
+
 
 // Component
 import Years from "./components/Years";
@@ -20,20 +22,22 @@ import projectService from "../../../Services/ProjectService";
 // Config
 import { config } from "../../../config";
 
-function NewProject(props) {
+function NewProject() {
+  const history = useHistory();
+  const token = localStorage.getItem("x-auth-token");
   // Center point of the Google map
   let mapCenter = {
     lat: 52.475,
-    lng: -1.900,
+    lng: -1.9,
   };
-  
+
   // Declare hooks from useForm
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const [members, setMembers] = useState([]);
   const [riskLocation, setRiskLocation] = useState(mapCenter);
 
   // Google Maps
-  const {isLoaded, loadError} = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: config.GOOGLE_MAPS_API_KEY,
   });
 
@@ -48,9 +52,9 @@ function NewProject(props) {
 
   // Disable all Google Maps UI features. Activate zoom control
   const mapOptions = {
-    disableDefaultUI: true,  
+    disableDefaultUI: true,
     zoomControl: true,
-  }
+  };
 
   // Return errors or loading message if Google Maps does not load or is loading
   if (loadError) return "Error loading Google Maps";
@@ -65,7 +69,20 @@ function NewProject(props) {
     years.push(i);
   }
 
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   let dates = [];
   const datesMin = 1;
@@ -74,20 +91,19 @@ function NewProject(props) {
     dates.push(k);
   }
 
-
   // ---Event Handler---
 
   // Google Map
-  const handleLocationChange = event => {
+  const handleLocationChange = (event) => {
     // Take the lat and long from Google Maps click event, rounded to 6.d.p
     setRiskLocation({
       lat: Math.floor(event.latLng.lat() * 1000000) / 1000000,
       lng: Math.floor(event.latLng.lng() * 1000000) / 1000000,
     });
-  }
+  };
 
   // When Submit Button is Clicked
-  const onSubmit = (user, e) => {
+  const onSubmit = async (user, e) => {
     const {
       startD,
       startMonth,
@@ -99,7 +115,7 @@ function NewProject(props) {
       description,
       locationLat,
       locationLng,
-      title
+      title,
     } = user;
     const newStartMonth = months.indexOf(startMonth) + 1;
     const newEndMonth = months.indexOf(endMonth) + 1;
@@ -113,29 +129,24 @@ function NewProject(props) {
       description,
       location: {
         lat: parseFloat(locationLat),
-        lng: parseFloat(locationLng)
+        lng: parseFloat(locationLng),
       },
       startDate,
       endDate,
       client,
-      teamMembers
+      teamMembers,
     };
-    console.log(newProject);
-
-    projectService.createProject(newProject)
-      .then((res) => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(`Error - NewProject.js - onSubmit() - ${err}`);
-      });
+    try {
+      const { data } = await projectService.createProject(newProject, token);
+      history.push("/home");
+    } catch (error) {
+      console.log(`Error - NewProject.js - onSubmit() - ${error}`);
+    }
   };
 
   // Functions to handle user selecting and unselecting members of the project
   const membersAdd = (m) => {
-    setMembers(oldMembers => [...oldMembers, m]);
+    setMembers((oldMembers) => [...oldMembers, m]);
   };
 
   const membersRemove = (m) => {
@@ -147,7 +158,7 @@ function NewProject(props) {
   const onchange = (e) => {
     const data = {
       name: e.target.name,
-      _id: e.target.id
+      _id: e.target.id,
     };
     if (e.target.type === "checkbox" && !e.target.checked) {
       membersRemove(data);
@@ -175,24 +186,26 @@ function NewProject(props) {
           <div>
             <br></br>
             <h6>Select approximate project location:</h6>
-            <a 
+            <a
               className="btn btn-primary show-map text-white"
               data-toggle="collapse"
               data-target="#collapseMap"
               aria-expanded="false"
               aria-controls="collapseMap"
-              >
+            >
               Show map
             </a>
             <div className="collapse" id="collapseMap">
-              <GoogleMap 
-                mapContainerStyle={mapContainerStyle} 
-                zoom={12} 
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                zoom={12}
                 center={mapCenter}
                 options={mapOptions}
                 onClick={handleLocationChange}
-                >
-                <Marker position={{lat: riskLocation.lat, lng: riskLocation.lng}}/>
+              >
+                <Marker
+                  position={{ lat: riskLocation.lat, lng: riskLocation.lng }}
+                />
               </GoogleMap>
             </div>
           </div>
@@ -200,25 +213,23 @@ function NewProject(props) {
           <div className="form-group row">
             <div className="form-group col-6">
               <label>Latitude</label>
-              <input 
+              <input
                 name="locationLat"
                 className="form-control disabled-form"
                 ref={register}
                 value={riskLocation.lat}
                 readOnly
-                >
-              </input>
+              ></input>
             </div>
             <div className="form-group col-6">
               <label>Longitude</label>
-              <input 
+              <input
                 name="locationLng"
                 className="form-control disabled-form"
                 ref={register}
                 value={riskLocation.lng}
                 readOnly
-              >
-              </input>
+              ></input>
             </div>
           </div>
 
@@ -302,7 +313,6 @@ function NewProject(props) {
             Submit
           </button>
         </form>
-
       </div>
     </div>
   );
