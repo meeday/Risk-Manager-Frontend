@@ -5,7 +5,7 @@ export default {
 
     getAllUser : async () => {
         try {
-            const res = await fetch(`http://localhost:8080/api/user/allUser`)
+            const res = await fetch(`https://risk-manager-backend.herokuapp.com/api/user/allUser`)
             return res.json();
         }
         catch (err) {

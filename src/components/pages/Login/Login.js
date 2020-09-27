@@ -57,7 +57,7 @@ export default function Login() {
     }
     const {data} = await Axios({
       method: 'post',
-      url: 'http://localhost:8080/api/user/authenticated',
+      url: 'https://risk-manager-backend.herokuapp.com/api/user/authenticated',
       headers: {'x-auth-token': userToken}
     });
 

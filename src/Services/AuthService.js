@@ -5,7 +5,7 @@ export default {
   register: async (user) => {
     try {
       const { data } = await Axios.post(
-        `http://localhost:8080/api/user/register`,
+        `https://risk-manager-backend.herokuapp.com/api/user/register`,
         user
       );
       return data;
@@ -17,7 +17,7 @@ export default {
   login: async (user) => {
     try {
       const { data } = await Axios.post(
-        `http://localhost:8080/api/user/login`,
+        `https://risk-manager-backend.herokuapp.com/api/user/login`,
         user
       );
       return data;
@@ -35,7 +35,7 @@ export default {
     try {
       const {data } = await Axios({
         method: "post",
-        url: `http://localhost:8080/api/user/authenticated`,
+        url: `https://risk-manager-backend.herokuapp.com/api/user/authenticated`,
         headers: { "x-auth-token": token },
       })
       return data

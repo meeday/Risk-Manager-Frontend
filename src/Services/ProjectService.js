@@ -7,7 +7,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -19,7 +19,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -31,7 +31,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project/user/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/user/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -43,7 +43,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "post",
-        url: `http://localhost:8080/api/project`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project`,
         data: project,
         headers: { "x-auth-token": token },
       });
@@ -56,7 +56,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "delete",
-        url: `http://localhost:8080/api/project/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -70,7 +70,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project/risk/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -84,7 +84,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project/risk/project/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/project/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -98,7 +98,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "get",
-        url: `http://localhost:8080/api/project/risk/user/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/user/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
@@ -111,7 +111,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "post",
-        url: `http://localhost:8080/api/project/risk/`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/`,
         data: newRisk,
         headers: { "x-auth-token": token },
       });
@@ -125,7 +125,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "put",
-        url: `http://localhost:8080/api/project//risk/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project//risk/${id}`,
         data: editedRisk,
         headers: { "x-auth-token": token },
       });
@@ -139,7 +139,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "put",
-        url: `http://localhost:8080/api/project/risk/${id}/comment`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/${id}/comment`,
         data: newComment,
         headers: { "x-auth-token": token },
       });
@@ -153,7 +153,7 @@ export default {
     try {
       const { data } = await Axios({
         method: "delete",
-        url: `http://localhost:8080/api/project/risk/${id}`,
+        url: `https://risk-manager-backend.herokuapp.com/api/project/risk/${id}`,
         headers: { "x-auth-token": token },
       });
       return data;
