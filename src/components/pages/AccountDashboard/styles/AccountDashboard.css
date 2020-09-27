@@ -110,8 +110,8 @@
   border: 10px solid #ffffff;
   height: 125px;
   position: absolute;
-  left: 40%;
-  top: -80px;
+  left: 10%;
+  top: -70px;
   width: 125px;
 }
 .profile__picture:before {
