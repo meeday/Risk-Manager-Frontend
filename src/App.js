@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import AuthService from "./Services/AuthService";
+import React from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import UserForm from "./components/UserForm/UserForm";
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
@@ -18,22 +12,6 @@ import AccountDashboard from "./components/pages/AccountDashboard/AccountDashboa
 import "./App.css";
 
 function App(props) {
-  const [token, setToken] = useState("");
-  const [authed, setAuthed] = useState();
-  useEffect(() => {
-    const checkAuth = async () => {
-      if (token === null) {
-        localStorage.setItem("x-auth-token", "");
-      } else {
-        const userToken = localStorage.getItem("x-auth-token");
-        setToken(userToken);
-      }
-      const { data } = await AuthService.isAuthenticated(token);
-      setAuthed(data);
-    };
-    checkAuth();
-  }, [token]);
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -56,26 +34,20 @@ function App(props) {
               </UserForm>
             )}
           />
-          {authed ? (
-            <>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/new-project" component={NewProject} />
-              <Route exact path="/project/:projectId" component={Project} />
-              <Route
-                exact
-                path="/project/:projectId/new-risk"
-                component={NewRisk}
-              />
-              <Route
-                exact
-                path="/project/:projectId/risk/:riskId"
-                component={ExistingRisk}
-              />
-              <Route exact path="/account" component={AccountDashboard} />
-            </>
-          ) : (
-            <Redirect to="/login" />
-          )}
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/new-project" component={NewProject} />
+          <Route exact path="/project/:projectId" component={Project} />
+          <Route
+            exact
+            path="/project/:projectId/new-risk"
+            component={NewRisk}
+          />
+          <Route
+            exact
+            path="/project/:projectId/risk/:riskId"
+            component={ExistingRisk}
+          />
+          <Route exact path="/account" component={AccountDashboard} />
         </Switch>
       </BrowserRouter>
     </div>
