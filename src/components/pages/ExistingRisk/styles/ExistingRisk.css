@@ -1,20 +1,44 @@
 h3 {
-  margin: 5px;
   font-size: 14px;
-  align-self: center;
   color: #2196f2;
 }
 
-h3>span {
+h3 > span {
   margin-left: 5px;
 }
 
 .map {
-  padding: 20px 25px;
+  padding: 20px 20px;
+  width: 980px;
+  box-shadow: 0 0 40px -10px #000000;
+  background: #bdbdbd;
 }
 
 .map h1 {
   font-size: 36px;
+}
+.infoside{
+  width: 50%;
+  height: 400px;
+  display: inline-block;
+  /* padding: 30px; */
+}
+.mapSide {
+  width: 50%;
+  height: 610px;
+  display: inline-block;
+  justify-content: end;
+  /* padding: 0px 30px; */
+}
+.riskPage{
+  margin: 0px;
+  padding: 0px;
+  justify-content: center;
+}
+
+#Riskmap {
+  height: 100%;
+  /* margin-bottom: 10px; */
 }
 
 .risk-icon {
@@ -22,11 +46,11 @@ h3>span {
 }
 
 .design-icon {
-  color: #ffd900
+  color: #ffd900;
 }
 
 .comments-icon {
-  color: #f5deb3
+  color: #f5deb3;
 }
 
 .riskDetails {
@@ -34,7 +58,8 @@ h3>span {
   margin-bottom: 20px;
 }
 
-.riskDetails h3, .riskDetails p {
+.riskDetails h3,
+.riskDetails p {
   font-size: 18px;
 }
 
@@ -45,6 +70,7 @@ h3>span {
 .risk-btn {
   margin: 0px 5px 0px 0px;
 }
+
 
 .btn-center {
   display: block;
@@ -57,7 +83,7 @@ h3>span {
   margin-bottom: 15px;
 }
 
-.modal-body{
+.modal-body {
   background-color: #bdbdbd;
 }
 
@@ -126,7 +152,8 @@ h3>span {
 }
 
 @media (max-width: 625px) {
-  .riskDetails h3, .riskDetails p {
+  .riskDetails h3,
+  .riskDetails p {
     font-size: 15px;
   }
 }
@@ -151,14 +178,15 @@ h3>span {
 }
 
 @media (max-width: 375px) {
-  .riskDetails h3, .riskDetails p {
+  .riskDetails h3,
+  .riskDetails p {
     font-size: 16px;
   }
-  
+
   .riskDetails h2 {
     font-size: 18px;
   }
-  
+
   .btn-center {
     font-size: 12px;
     padding: 2px 4px;

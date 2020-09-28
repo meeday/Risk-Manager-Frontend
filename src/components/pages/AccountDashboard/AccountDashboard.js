@@ -1,12 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
 import Avatar from "./worker.png";
 import "./styles/AccountDashboard.css";
-import { AuthContext } from "../../../Context/AuthContext";
 import { UserContext } from "../../../Context/UserContext";
 
 function AccountDashboard() {
   const userContext = useContext(UserContext);
-  const project = userContext.projects;
+  const {
+    userId,
+    setUserId,
+    userFName,
+    setUserFName,
+    userLName,
+    setUserLName,
+    userProjects,
+    setUserProjects,
+    userEmail,
+    setUserEmail,
+    userRisks,
+    setUserRisks,
+    userComments,
+    setUserComments,
+    projects,
+    setProjects,
+  } = userContext;
+  
 
   return (
     <div className="profile">
@@ -16,7 +33,7 @@ function AccountDashboard() {
       <div className="profile__header">
         <div className="profile__account">
           <h4 className="profile__username">
-          {userContext.firstName} {userContext.lastName}
+          {userFName} {userLName}
           </h4>
         </div>
       </div>
@@ -26,7 +43,7 @@ function AccountDashboard() {
             <i className="material-icons">engineering</i>
           </div>
           <div className="profile__value">
-            {project}
+            {projects ? projects: 0}
             <div className="profile__key">Projects</div>
           </div>
         </div>
@@ -35,7 +52,7 @@ function AccountDashboard() {
             <i className="fas fa-exclamation-circle"></i>
           </div>
           <div className="profile__value">
-            {((userContext || {}).userRisks || []).length}
+            {userRisks ? userRisks.length: 0}
             <div className="profile__key">Issues</div>
           </div>
         </div>
@@ -44,7 +61,7 @@ function AccountDashboard() {
             <i className="fas fa-comments"></i>
           </div>
           <div className="profile__value">
-            {(userContext.userComments || []).length}
+            {userComments ? userComments.length: 0}
             <div className="profile__key">Comments</div>
           </div>
         </div>

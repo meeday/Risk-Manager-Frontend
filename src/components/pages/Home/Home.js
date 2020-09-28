@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import Axios from "axios";
 import { Tabs, Tab } from "react-bootstrap";
 import AccountDashboard from "../AccountDashboard/AccountDashboard";
 import Comments from "../../Comments/Comments";
@@ -9,7 +10,9 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Home.css";
 
 function Home() {
-  const { userRisks } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+  const { userFName, userLName, userRisks, userComments, projects } = userContext;
+  
   return (
     <>
       <Navbar />

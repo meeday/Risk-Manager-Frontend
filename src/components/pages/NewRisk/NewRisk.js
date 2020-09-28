@@ -50,6 +50,7 @@ const mapOptions = {
 };
 
 function NewRisk(props) {
+const token = localStorage.getItem("x-auth-token")
 const projectContext = useContext(ProjectContext)
 console.log(projectContext.projectInfo);
 
@@ -77,7 +78,7 @@ console.log(projectContext.projectInfo);
 
   const getLocation = async () => {
     try {
-      const { data } = await ProjectService.getProject(id);
+      const { data } = await ProjectService.getProject(id, token);
       setRiskLocation(data.project.location);      
     } catch (error) {
       console.log(`Error - newRisk.js - getProject() - ${error}`);      
@@ -120,7 +121,7 @@ console.log(projectContext.projectInfo);
 
     try {
       // Submitting a post request to add the new risk to the backend application
-      const res = await ProjectService.createRisk(newRisk);
+      const res = await ProjectService.createRisk(newRisk, token);
 
       // ******* Add toast message to confirm risk has been added
       console.log(res);
